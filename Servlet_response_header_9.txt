@@ -1,0 +1,72 @@
+1. Accessing the session object associated with the current 
+request. Call request.getSession to get an HttpSession
+object, which is a simple hash table for storing user-specific data.
+2. Looking up information associated with a session. Call 
+getAttribute on the HttpSession object, cast the return value 
+to the appropriate type, and check whether the result is null. 
+3. Storing information in a session. Use setAttribute with a key 
+and a value.
+4. Discarding session data. Call removeAttribute to discard a specific value. Call invalidate to discard an entire session. Call 
+logout to log the client out of the Web server and invalidate all sessions associated with that user.
+
+HttpSession session = request.getSession();
+
+HttpSession session = request.getSession(false);
+if (session == null) {
+printMessageSayingCartIsEmpty();
+} else {
+extractCartAndPrintContents(session);
+}
+
+HttpSession session = request.getSession();
+SomeClass value =
+(SomeClass)session.getAttribute("someIdentifier");
+if (value == null) { // No such object already in session
+value = new SomeClass(...);
+session.setAttribute("someIdentifier", value);
+}
+doSomethingWith(value);
+
+In most cases, you have a specific attribute name in mind and want to find the
+value (if any) already associated with that name. However, you can also discover all
+the attribute names in a given session by calling getAttributeNames, which
+returns an Enumeration.
+
+public Object getAttribute(String name)
+This method extracts a previously stored value from a session object. It returns 
+null if no value is associated with the given name. 
+public Enumeration getAttributeNames()
+This method returns the names of all attributes in the session.
+public void setAttribute(String name, Object value)
+This method associates a value with a name. If the object supplied to 
+setAttribute implements the HttpSessionBindingListener interface, 
+the object’s valueBound method is called after it is stored in the session. Similarly, if the previous value implements HttpSessionBindingListener, its 
+valueUnbound method is called.
+public void removeAttribute(String name)
+This method removes any values associated with the designated name. If the 
+value being removed implements HttpSessionBindingListener, its 
+valueUnbound method is called. 
+public void invalidate()
+This method invalidates the session and unbinds all objects associated with it. 
+Use this method with caution; remember that sessions are associated with 
+users (i.e., clients), not with individual servlets or JSP pages. So, if you invalidate a session, you might be destroying data that another servlet or JSP page is 
+using.
+public void logout()
+This method logs the client out of the Web server and invalidates all sessions 
+associated with that client. The scope of the logout is the same as the scope of 
+the authentication. For example, if the server implements single sign-on, calling logout logs the client out of all Web applications on the server and invalidates all sessions (at most one per Web application) associated with the client. 
+For details, see the chapters on Web application security in Volume 2 of this 
+book.
+public String getId()
+This method returns the unique identifier generated for each session. It is useful for debugging or logging or, in rare cases, for programmatically moving values out of memory and into a database (however, some J2EE servers can do 
+this automatically).
+public boolean isNew()
+This method returns true if the client (browser) has never seen the session, 
+usually because the session was just created rather than being referenced by an 
+incoming client request. It returns false for preexisting sessions. The main 
+reason for mentioning this method is to steer you away from it: isNew is much 
+less useful than it appears at first glance. Many beginning developers try to use 
+isNew to determine whether users have been to their servlet before (within 
+the session timeout period), writing code like the following:
+
+

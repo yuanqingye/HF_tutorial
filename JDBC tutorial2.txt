@@ -1,0 +1,45 @@
+DriverManager.getConnection(oracleURL, username, password);
+The Connection class includes other useful methods, which we briefly describe
+below. The first three methods are covered in detail in Sections 17.4–17.6. 
+• prepareStatement. Creates precompiled queries for submission to 
+the database. See Section 17.4 (Using Prepared Statements) for 
+details. 
+• prepareCall. Accesses stored procedures in the database. For 
+details, see Section 17.5 (Creating Callable Statements). 
+• rollback/commit. Controls transaction management. See Section 
+17.6 (Using Database Transactions) for details. 
+• close. Terminates the open connection. 
+• isClosed. Determines whether the connection timed out or was 
+explicitly closed.
+
+DatabaseMetaData dbMetaData = connection.getMetaData();
+String productName = 
+dbMetaData.getDatabaseProductName();
+System.out.println("Database: " + productName);
+String productVersion = 
+dbMetaData.getDatabaseProductVersion();
+System.out.println("Version: " + productVersion);
+
+Once you have a Statement object, you can use it to send SQL queries by using the
+executeQuery method, which returns an object of type ResultSet. Here is an
+example.
+String query = "SELECT col1, col2, col3 FROM sometable";
+ResultSet resultSet = statement.executeQuery(query);
+
+The following list summarizes commonly used methods in the Statement class.
+• executeQuery. Executes an SQL query and returns the data in a 
+ResultSet. The ResultSet may be empty, but never null. 
+• executeUpdate. Used for UPDATE, INSERT, or DELETE commands. 
+Returns the number of rows affected, which could be zero. Also 
+provides support for Data Definition Language (DDL) commands, for 
+example, CREATE TABLE, DROP TABLE, and ALTER TABLE. 
+• executeBatch. Executes a group of commands as a unit, returning 
+an array with the update counts for each command. Use addBatch to 
+add a command to the batch group. Note that vendors are not 
+required to implement this method in their driver to be JDBC 
+compliant.
+• setQueryTimeout. Specifies the amount of time a driver waits for 
+the result before throwing an SQLException. 
+• getMaxRows/setMaxRows. Determines the number of rows a 
+ResultSet may contain. Excess rows are silently dropped. The 
+default is zero for no limit.

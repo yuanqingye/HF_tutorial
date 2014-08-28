@@ -1,0 +1,163 @@
+Table 10.1 gives some common scenarios and tells whether or not each step
+occurs in that scenario. The most frequently misunderstood entries are highlighted.
+When referring to the table, note that servlets resulting from JSP pages use the
+_jspService method (called for both GET and POST requests), not doGet or
+doPost. Also, for initialization, they use the jspInit method, not the init
+method.
+
+Table 10.1 JSP Operations in Various Scenarios
+JSP page translated into servlet|Servlet compiled|Servlet loaded into server’s memory|jspInit called|_jspService called
+Page first written
+Request 1 Yes Yes Yes Yes Yes
+Request 2 No  No  No  No  Yes
+Server restarted
+Request 3 No No Yes Yes Yes
+Request 4 No No No  No  Yes
+Page modified
+Request 5 Yes Yes Yes Yes Yes
+Request 6 No  No  No  No Yes
+
+JSP Expression
+• Description:
+Expression that is evaluated and sent to the client each time the page 
+is requested
+• Example:
+<%= Java Value %>
+• Discussed in:
+Section 11.4
+JSP Scriptlet
+• Description:
+Statement or statements that are executed each time the page is 
+requested
+• Example:
+<% Java Statement %>
+• Discussed in:
+Section 11.7
+JSP Declaration
+• Description:
+Field or method that becomes part of class definition when page is 
+translated into a servlet
+• Examples:
+<%! Field Definition %>
+<%! Method Definition %>
+• Discussed in:
+Section 11.10
+
+JSP Directive
+• Description:
+High-level information about the structure of the servlet code (page), 
+code that is included at page-translation time (include), or custom 
+tag libraries used (taglib)
+
+• Example:
+<%@ directive att="val" %>
+• Discussed in:
+page: Chapter 12
+include: Chapter 13
+taglib and tag: Volume 2
+JSP Action
+• Description:
+Action that takes place when the page is requested
+• Example:
+<jsp:blah>...</jsp:blah>
+• Discussed in:
+jsp:include and related: Chapter 13
+jsp:useBean and related: Chapter 14
+jsp:invoke and related: Volume 2
+
+
+JSP Expression Language Element
+• Description:
+Shorthand JSP expression
+• Example:
+${ EL Expression }
+• Discussed in:
+Chapter 16
+
+Custom Tag (Custom Action)
+• Description:
+Invocation of custom tag
+• Example:
+<prefix:name>
+Body
+</prefix:name>
+
+
+Escaped Template Text
+• Description:
+Text that would otherwise be interpreted specially. Slash is removed 
+and remaining text is sent to the client
+• Examples:
+<\%
+%\>
+• Discussed in:
+Section 11.1
+
+
+• Call Java code directly. Place all Java code in JSP page. 
+Appropriate only for very small amounts of code. This chapter.
+• Call Java code indirectly. Develop separate utility classes. 
+Insert into JSP page only the Java code needed to invoke the 
+utility classes. This chapter.
+• Use beans. Develop separate utility classes structured as 
+beans. Use jsp:useBean, jsp:getProperty, and 
+jsp:setProperty to invoke the code. Chapter 14.
+• Use the MVC architecture. Have a servlet respond to 
+original request, look up data, and store results in beans. 
+Forward to a JSP page to present results. JSP page uses beans. 
+Chapter 15.
+• Use the JSP expression language. Use shorthand syntax to 
+access and output object properties. Usually used in 
+conjunction with beans and MVC. Chapter 16.
+• Use custom tags. Develop tag handler classes. Invoke the tag 
+handlers with XML-like custom tags. Volume 2.
+
+
+Why we put as few as possible java code inside jsp?
+1Development:Java file have better IDE;
+2Compile: you don't need to load the server time and time again to get java code compiled
+3Testing: you can run a method in java file 100 times,Have a test routine;
+4Division Of Labour: divide developer from web from java 
+4reuse: reuse java code easily instead of copy/paste
+
+The expression is evaluated, converted to a string, and inserted in the page. This
+evaluation is performed at runtime (when the page is requested) and thus has full
+access to information about the request. For example, the following shows the
+date/time that the page was requested. 
+
+Predefined Variables in _jspService
+• request, the HttpServletRequest.
+• response, the HttpServletResponse.
+• session, the HttpSession associated with the request (unless 
+disabled with the session attribute of the page directive—see 
+Section 12.4).
+• out, the Writer (a buffered version of type JspWriter) used to 
+send output to the client.
+• application, the ServletContext. This is a data structure 
+shared by all servlets and JSP pages in the Web application and is good 
+for storing shared data. We discuss it further in the chapters on beans 
+(Chapter 14) and MVC (Chapter 15). 
+
+XML Syntax for Expressions
+XML authors can use the following alternative syntax for JSP expressions: 
+<jsp:expression>Java Expression</jsp:expression>
+
+Notice that we include META tags and a style sheet link in the HEAD section of the
+JSP page. It is good practice to include these elements, but there are two reasons
+why they are often omitted from pages generated by normal servlets. 
+First, with servlets, it is tedious to generate the required println statements.
+With JSP, however, the format is simpler and you can make use of the code reuse
+options in your usual HTML building tools. This convenience is an important factor
+in the use of JSP. JSP pages are not more powerful than servlets (they are servlets
+behind the scenes), but they are sometimes more convenient than servlets. 
+Second, servlets cannot use the simplest form of relative URLs (ones that refer to
+files in the same directory as the current page), since the servlet directories are not
+mapped to URLs in the same manner as are URLs for normal Web pages. Moreover,
+servers are expressly prohibited from making content in WEB-INF/classes (or anywhere in WEB-INF) directly accessible to clients. So, it is impossible to put style sheets
+in the same directory as servlet class files, even if you use the web.xml servlet and
+servlet-mapping elements (see Section 2.11, “Web Applications: A Preview”) to
+customize servlet URLs. JSP pages, on the other hand, are installed in the normal
+Web page hierarchy on the server, and relative URLs are resolved properly as long as
+the JSP page is accessed directly by the client rather than indirectly by means of a
+RequestDispatcher (see Chapter 15, “Integrating Servlets and JSP: The Model
+View Controller (MVC) Architecture”).

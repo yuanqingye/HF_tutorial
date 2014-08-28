@@ -1,0 +1,99 @@
+• Storing data that the JSP page will use only in this request.
+First, the servlet would create and store data as follows:
+ValueObject value = new ValueObject(...);
+request.setAttribute("key", value);
+
+Next, the servlet would forward the request to a JSP page that uses the 
+following to retrieve the data.
+<jsp:useBean id="key" type="somePackage.ValueObject"
+scope="request" />
+Note that request attributes have nothing to do with request parameters or request headers. The request attributes are independent of the 
+information coming from the client; they are just application-specific 
+entries in a hash table that is attached to the request object. This table 
+simply stores data in a place that can be accessed by both the current 
+servlet and JSP page, but not by any other resource or request.
+• Storing data that the JSP page will use in this request and in 
+later requests from the same client. First, the servlet would create 
+and store data as follows:
+ValueObject value = new ValueObject(...);
+HttpSession session = request.getSession();
+session.setAttribute("key", value);
+Next, the servlet would forward to a JSP page that uses the following 
+to retrieve the data:
+<jsp:useBean id="key" type="somePackage.ValueObject"
+scope="session" />
+• Storing data that the JSP page will use in this request and in 
+later requests from any client. First, the servlet would create and 
+store data as follows:
+ValueObject value = new ValueObject(...);
+getServletContext().setAttribute("key", value);
+Next, the servlet would forward to a JSP page that uses the following 
+to retrieve the data:
+<jsp:useBean id="key" type="somePackage.ValueObject"
+scope="application" />
+As described in Section 15.3, the servlet code is normally synchronized to prevent the data changing between the servlet and the JSP 
+page.
+
+Core Approach
+If your JSP pages only make sense in the context of servlet-generated 
+data, place the pages under the WEB-INF directory. That way, servlets can 
+forward requests to the pages, but clients cannot access them directly
+
+<jsp:useBean id="key" type="somePackage.SomeBeanClass"
+scope="request" />
+<jsp:useBean id="key" type="somePackage.SomeBeanClass"
+scope="session" />
+<jsp:useBean id="key" type="somePackage.SomeBeanClass"
+scope="application" />
+
+<jsp:useBean id="key" type="somePackage.ValueObject"
+scope="request" />
+<jsp:getProperty name="key" property="someProperty" />
+
+
+Although a servlet can forward the request to an arbitrary location on the same
+server, the process is quite different from that of using the sendRedirect method
+of HttpServletResponse. First, sendRedirect requires the client to reconnect
+to the new resource, whereas the forward method of RequestDispatcher is
+handled completely on the server. Second, sendRedirect does not automatically
+preserve all of the request data; forward does. Third, sendRedirect results in a
+different final URL, whereas with forward, the URL of the original servlet is
+maintained.
+
+This final point means that if the destination page uses relative URLs for images
+or style sheets, it needs to make them relative to the servlet URL or the server root,
+not to the destination page’s actual location. For example, consider the following
+style sheet entry:
+<LINK REL=STYLESHEET
+HREF="my-styles.css"
+TYPE="text/css">
+
+HttpSession session = request.getSession();
+ NameBean nameBean =
+ (NameBean)session.getAttribute("nameBean");
+ if (nameBean == null) {
+ nameBean = new NameBean();
+session.setAttribute("nameBean", nameBean);
+ }
+ 
+ ServletContext context = getServletContext();
+ synchronized(this) {
+  if ((context.getAttribute("primeBean") == null) ||
+  (length != null)) {
+  PrimeBean primeBean = new PrimeBean(length);
+ context.setAttribute("primeBean", primeBean);
+ }
+ 
+ <jsp:useBean id="primeBean" type="coreservlets.PrimeBean" 
+scope="application" />
+
+<% String destination;
+if (Math.random() > 0.5) {
+destination = "/examples/page1.jsp";
+} else {
+destination = "/examples/page2.jsp";
+}
+%>
+<jsp:forward page="<%= destination %>" />
+The jsp:forward action, like jsp:include, can make use of jsp:param elements to supply extra request parameters to the destination page. For details, see the
+discussion of jsp:include in Section 13.2

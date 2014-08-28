@@ -1,0 +1,21 @@
+create view paymentview as
+select payment_id,amount,payment_type
+from payment p
+where payment_type in(
+select payment_type
+from payment
+group by payment_type
+having avg(amount)>50
+)
+
+create view cities(city)as
+select city
+from qingye
+union
+select city_name
+from profile
+
+view as variables in database;
+All the result from database is actually table
+
+only look at col related to this example

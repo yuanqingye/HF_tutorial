@@ -1,0 +1,595 @@
+var selection = document.getElementById('region');
+var number = <%=ctx.getItem("CA",ProviderImmunizationRegistryEnum.REGION)%>;
+selection.selectedIndex = number;
+
+You can use quotes inside a string, as long as they don't match the quotes surrounding the string:
+var answer="It's alright";
+var answer="He is called 'Johnny'";
+var answer='He is called "Johnny"';
+Or you can put quotes inside a string by using the \ escape character:
+var answer='It\'s alright';
+var answer="He is called \"Johnny\"";
+
+Convert a String to an Array
+A string is converted to an array with the built in method string.split():
+txt="a,b,c,d,e"   // String
+txt.split(",");   // Split on commas
+txt.split(" ");   // Split on spaces
+
+String Properties and Methods
+Properties:
+length
+prototype
+constructor
+
+Methods:
+charAt()
+charCodeAt()
+concat()
+fromCharCode()
+indexOf()
+lastIndexOf()
+match()
+replace()
+search()
+slice()
+split()
+substr()
+substring()
+toLowerCase()
+toUpperCase()
+valueOf()
+
+var today = new Date()
+var d1 = new Date("October 13, 1975 11:13:00")
+var d2 = new Date(79,5,24)
+var d3 = new Date(79,5,24,11,33,0)
+
+Array.prototype.myUcase=function()
+{
+for (i=0;i<this.length;i++)
+  {
+  this[i]=this[i].toUpperCase();
+  }
+}
+
+Changing image, content,style
+reacting to an event,writing into html output
+
+Break up a Code Line
+
+You can break up a code line within a text string with a backslash. The example below will be displayed properly:
+
+document.write("Hello \
+World!");
+
+You can just check if the variable has a truthy value or not. That means
+
+if( value ) {
+}
+will evaluate to true if value is not:
+null
+undefined
+NaN
+empty string ("")
+0
+false
+
+Is the variable null:
+
+if (a === null)
+// or
+if (a == null)
+...but note the latter will also be true if a is undefined.
+
+Comments will not be executed by JavaScript.
+Comments can be added to explain the JavaScript, or to make the code more readable.
+Single line comments start with //.
+
+JavaScript Multi-Line Comments
+
+Multi line comments start with /* and end with */.
+
+Re-Declaring JavaScript Variables
+If you re-declare a JavaScript variable, it will not lose its value:
+
+var carname="Volvo"; 
+var carname;
+
+Extra large or extra small numbers can be written with scientific (exponential) notation:
+
+Example
+
+var y=123e5;      // 12300000
+var z=123e-5;     // 0.00123
+
+JavaScript Arrays
+
+The following code creates an Array called cars:
+
+var cars=new Array();
+cars[0]="Saab";
+cars[1]="Volvo";
+cars[2]="BMW";
+
+or (condensed array):
+var cars=new Array("Saab","Volvo","BMW");
+
+or (literal array):
+var cars=["Saab","Volvo","BMW"];
+
+JavaScript Objects
+
+An object is delimited by curly braces. Inside the braces the object's properties are defined as name and value pairs (name : value). The properties are separated by commas:
+
+var person={firstname:"John", lastname:"Doe", id:5566};
+You can address the object properties in two ways:
+name=person.lastname;
+name=person["lastname"];
+
+Declaring Variable Types
+
+When you declare a new variable, you can declare its type using the "new" keyword:
+
+var carname=new String;
+var x=      new Number;
+var y=      new Boolean;
+var cars=   new Array;
+var person= new Object;
+JavaScript variables are all objects. When you declare a variable you create a new object.
+
+Creating JavaScript Objects
+
+
+Almost "everything" in JavaScript is an object. Strings, Dates, Arrays, Functions.
+
+You can also create your own objects.
+
+This example creates an object called "person", and adds four properties to it:
+
+Example
+
+person=new Object();
+person.firstname="John";
+person.lastname="Doe";
+person.age=50;
+person.eyecolor="blue";
+
+or
+function person(a,b,c,d){
+this.a1=a;
+this.b1=b;
+this.c1=c;
+this.d1=d;
+this.change=change
+function change(d){
+this.d1=d;
+}
+or
+this.change=function(){
+}
+}}
+
+var friend=new person("a","b","c","d");
+
+Number Object Properties
+Property	Description
+constructor	Returns the function that created the Number object's prototype
+MAX_VALUE	Returns the largest number possible in JavaScript
+MIN_VALUE	Returns the smallest number possible in JavaScript
+NEGATIVE_INFINITY	Represents negative infinity (returned on overflow)
+NaN	Represents a "Not-a-Number" value
+POSITIVE_INFINITY	Represents infinity (returned on overflow)
+prototype	Allows you to add properties and methods to an object
+
+Number.prototype.myMet=function()
+{
+this.myProp=this.valueOf()/2;
+}
+var d = new Number(55);
+d.myMet();
+var x=document.getElementById("demo");
+x.innerHTML=d.myProp;
+
+object.prototype.name=value(used for established object in javascript)
+
+Local JavaScript Variables
+
+A variable declared (using var) within a JavaScript function becomes LOCAL and can only be accessed from within that function. (the variable has local scope).
+
+You can have local variables with the same name in different functions, because local variables are only recognized by the function in which they are declared.
+
+Local variables are deleted as soon as the function is completed.
+
+Global JavaScript Variables
+
+Variables declared outside a function, become GLOBAL, and all scripts and functions on the web page can access it.
+
+Assigning Values to Undeclared JavaScript Variables
+
+If you assign a value to variable that has not yet been declared, the variable will automatically be declared as a  GLOBAL variable.
+
+carname="Volvo";
+will declare the variable carname as a global variable , even if it is executed inside a function.
+=== is exactly equal to (value and type) x==="5"(false)
+
+!==is not equal(either value not equal or type not equal)
+
+
+
+The throw statement allows you to create a custom error.
+The correct technical term is to create or throw an exception.
+If you use the throw statement together with try and catch, you can control program flow and generate custom error messages.
+throw exception
+The exception can be a JavaScript String, a Number, a Boolean or an Object.
+
+  var x=document.getElementById("demo").value;
+  if(x=="")    throw "empty";
+  if(isNaN(x)) throw "not a number";
+  if(x>10)     throw "to high";
+  if(x<5)      throw "too low";
+
+<form name="myForm" action="demo_form.asp" onsubmit="return validateForm()" method="post">
+First name: <input type="text" name="fname">
+<input type="submit" value="Submit">
+</form>
+
+the value of input is the default value of the field;
+the value of the submit or button is what show up on the button
+the value of the selection is the value need to be submitted
+
+With a programmable object model, JavaScript gets all the power it needs to create dynamic HTML:
+
+JavaScript can change all the HTML elements in the page
+JavaScript can change all the HTML attributes in the page
+JavaScript can change all the CSS styles in the page
+JavaScript can react to all the events in the page
+
+Finding HTML Elements
+
+Often, with JavaScript, you want to manipulate HTML elements.
+
+To do so, you have to find the elements first. There are a couple of ways to do this:
+
+Finding HTML elements by id(If the element is found, the method will return the element as an object (in x).If the element is not found, x will contain null.)
+Finding HTML elements by tag name
+Finding HTML elements by class name
+
+var y=x.getElementsByTagName("p");
+document.getElementById(id).style.property=new style
+
+Changing an HTML Attribute
+To change the attribute of an HTML element, use this syntax:
+document.getElementById(id).attribute=new value
+
+<script>
+document.getElementById("myBtn").onclick=function(){displayDate()};
+</script>
+
+var child=document.getElementById("p1");
+child.parentNode.removeChild(child);
+parent.removeChild(child);
+
+for(x in person)
+property loop
+
+You Can Have Different Objects in One Array
+All JavaScript variables are objects. Array elements are objects. Functions are objects.
+Because of this, you can have variables of different types in the same Array.
+You can have objects in an Array. You can have functions in an Array. You can have arrays in an Array:
+myArray[0]=Date.now;
+myArray[1]=myFunction;
+myArray[2]=myCars;
+
+Create New Methods
+
+Prototype is a global constructor in JavaScript. It can construct new properties and methods for any JavaScript Objects.
+Array.prototype.ucase=function()
+{
+  for (i=0;i<this.length;i++)
+  {this[i]=this[i].toUpperCase();}
+}
+Array.prototype.myLcase=function(){}
+
+var myvar=new Boolean(1);
+var x=document.getElementById("demo");
+x.innerHTML=myvar.constructor;
+
+str.match(RegExp Object);
+var patt=new RegExp(pattern,modifiers);
+or more simply:
+var patt=/pattern/modifiers;
+
+Join two arrays - concat()
+Join all elements of an array into a string - join()
+Remove the last element of an array - pop()
+Add new elements to the end of an array - push()
+Reverse the order of the elements in an array - reverse()
+Remove the first element of an array - shift()
+Select elements from an array - slice()
+Sort an array (alphabetically and ascending) - sort()
+Sort numbers (numerically and descending) - sort()
+Add an element to position 2 in an array - splice()
+Convert an array to a string - toString()
+Add new elements to the beginning of an array - unshift()
+
+RegExp Object Methods
+Method	Description
+compile()	Compiles a regular expression
+exec()	Tests for a match in a string. Returns the first match
+test()	Tests for a match in a string. Returns true or false
+
+function validateForm()
+{
+var x=document.forms["myForm"]["fname"].value; or use document.formname.submit
+if (x==null || x=="")
+  {
+  alert("First name must be filled out");
+  return false;
+  }
+}
+<form name="myForm" action="demo_form.asp" onsubmit="return validateForm()" method="post">
+First name: <input type="text" name="fname">
+<input type="submit" value="Submit">
+</form>
+
+This example finds the element with id="main", and then finds all <p> elements inside "main":
+var x=document.getElementById("main");
+var y=x.getElementsByTagName("p");
+
+<body>
+
+<h1 id="id1">My Heading 1</h1>
+<button type="button" 
+onclick="document.getElementById('id1').style.color='red'">
+Click Me!</button>
+
+</body>
+
+window.open("http://www.w3schools.com");
+window.open("http://www.w3schools.com","_blank","copyhistory=yes");
+
+function open_multiplewindows() 
+{
+window.open("http://www.microsoft.com/");
+window.open("http://www.w3schools.com/");
+}
+
+var p=document.createPopup();
+pbody=p.body;
+pbody.innerHTML="This is a popup window";
+pbody.style.backgroundColor="lime";
+p.show(150,150,400,400,document.body);
+
+
+p=window.open("","","");
+p.document.write("<p></p>");
+p.blur();
+p.focus();
+p.close();
+
+myWindow.moveBy(250,250);
+myWindow.moveTo(0,0);
+myWindow.opener.document.write("<p>This is the source window!</p>");//write something inside the parent window;
+
+var x=document.getElementById('txt');
+setTimeout(function(){x.value="2 seconds"},2000);
+<input type="text" id="txt" />
+
+t=setTimeout(function(){timedCount()},1000);
+clearTimeout(t);
+
+Examples of HTML events:
+
+When a user clicks the mouse
+When a web page has loaded
+When an image has been loaded
+When the mouse moves over an element
+When an input field is changed
+When an HTML form is submitted
+When a user strokes a key
+
+The history object contains the URLs visited by the user (within a browser window).
+The history object is part of the window object and is accessed through the window.history property.
+document.write("Number of URLs in history list: " + history.length);
+
+var textToFind = 'Google';
+
+var dd = document.getElementById('MyDropDown');
+for (var i = 0; i < dd.options.length; i++) {
+    if (dd.options[i].text === textToFind) {
+        dd.selectedIndex = i;
+        break;
+    }
+}
+
+el = el.parentNode;
+xmlhttp.onreadystatechange=function(){}
+xmlhttp.open("GET","FILENAME",true);
+xmlhttp.send();
+Note: When you use async=false, do NOT write an onreadystatechange function - just put the code after the send() statement:
+
+id=<%=ScheduleEnum.NOTES.name()%>  class=formdata rows=4 cols=40 onkeypress="return isMaxLength(event,this, 250);" ><% if (UserSession.hasPlatinumPatientPortal(request) && ctx.getApptRequestId() != null) { %><%= ctx.getPatientReason() %><% } else { %><%=ctx.getNotes()%><% } %></TEXTAREA> 
+
+map method for the array:
+
+Example: Pluralizing the words (strings) in an array
+
+The following code creates an array of "plural" forms of nouns from an array of their singular forms.
+
+function fuzzyPlural(single) {
+  var result = single.replace(/o/g, 'e');  
+  if( single === 'kangaroo'){
+    result += 'se';
+  }
+  return result; 
+}
+
+var words = ["foot", "goose", "moose", "kangaroo"];
+console.log(words.map(fuzzyPlural));
+
+// ["feet", "geese", "meese", "kangareese"]
+Example: Mapping an array of numbers to an array of square roots
+
+The following code takes an array of numbers and creates a new array containing the square roots of the numbers in the first array.
+
+var numbers = [1, 4, 9];
+var roots = numbers.map(Math.sqrt);
+/* roots is now [1, 2, 3], numbers is still [1, 4, 9] */
+Example: using map generically
+
+This example shows how to use map on a string to get an array of bytes in the ASCII encoding representing the character values:
+
+var map = Array.prototype.map
+var a = map.call("Hello World", function(x) { return x.charCodeAt(0); })
+// a now equals [72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]
+
+
+The shift() method removes the first item of an array, and returns that item.
+
+Note: This method changes the length of an array!
+
+Tip: To remove the last item of an array, use the pop() method.
+
+for (var key in validation_messages) {
+   var obj = validation_messages[key];
+   for (var prop in obj) {
+      // important check that this is objects own property 
+      // not from prototype prop inherited
+      if(obj.hasOwnProperty(prop)){
+        alert(prop + " = " + obj[prop]);
+      }
+   }
+}
+
+the first function has no relationship with an object instance of that constructor function, you can consider it like a 'static method'.
+
+In JavaScript functions are first-class objects, that means you can treat them just like any object, in this case, you are only adding a property to the function object.
+
+The second function, as you are extending the constructor function prototype, it will be available to all the object instances created with the new keyword, and the context within that function (the this keyword) will refer to the actual object instance where you call it.
+
+Consider this example:
+
+// constructor function
+function MyClass () {
+  var privateVariable; // private member only available within the constructor fn
+
+  this.privilegedMethod = function () { // it can access private members
+    //..
+  };
+}
+
+// A 'static method', it's just like a normal function 
+// it has no relation with any 'MyClass' object instance
+MyClass.staticMethod = function () {};
+
+MyClass.prototype.publicMethod = function () {
+  // the 'this' keyword refers to the object instance
+  // you can access only 'privileged' and 'public' members
+};
+
+var myObj = new MyClass(); // new object instance
+
+myObj.publicMethod();
+MyClass.staticMethod();
+
+if javascript define a method with parameter, but you call it without parameter,it will still be get called.
+
+$('#selectBox option[value=C]').attr('selected', 'selected');
+
+Redirect:
+jQuery is not necessary, and window.location.replace(...) will best simulate an HTTP redirect.
+It is better than using window.location.href =, because replace() does not put the originating page in the session history, meaning the user won't get stuck in a never-ending back-button fiasco. If you want to simulate someone clicking on a link, use location.href. If you want to simulate an HTTP redirect, use location.replace.
+For example:
+// similar behavior as an HTTP redirect
+window.location.replace("http://stackoverflow.com");
+// similar behavior as clicking on a link
+window.location.href = "http://stackoverflow.com";
+
+WARNING: This answer has been provided as a possible solution. Although, obviously, the pure JavaScript approach is the best one, as this requires jQuery.
+var url = "http://stackoverflow.com";    
+$(location).attr('href',url);
+
+var str = "319CDXB".slice( -3 ); // DXB
+var str = "319CDXB";
+var lastThree = str.substr(str.length - 3);
+
+Date()
+
+With this you call a function called Date(). It accepts date in format "yyyy-mm-dd hh:mm:ss"
+
+new Date()
+
+With this you're creating a new instance of Date.
+
+You can use only the following constructors:
+
+new Date() // current date and time
+new Date(milliseconds) //milliseconds since 1970/01/01
+new Date(dateString)
+new Date(year, month, day, hours, minutes, seconds, milliseconds)
+So, use 2010-08-17 12:09:36 as parameter to constructor is not allowed.
+
+See w3schools.
+
+EDIT: new Date(dateString) uses one of these formats:
+
+"October 13, 1975 11:13:00"
+"October 13, 1975 11:13"
+"October 13, 1975"
+
+if (typeof String.prototype.startsWith != 'function') {
+  // see below for better implementation!
+  String.prototype.startsWith = function (str){
+    return this.indexOf(str) == 0;
+  };
+}
+Then you can use it directly on string values:
+
+"Hello World!".startsWith("He"); // true
+
+var data = "Hello world";
+var input = 'He';
+data.startsWith(input); // true
+Edit: Note that I'm checking if the function exists before defining it, that's because in the future, the language might have this strings extras methods defined as built-in functions, and native implementations are always faster and preferred, see the ECMAScript Harmony String Extras proposal.
+
+Edit: As others noted, indexOf will be inefficient for large strings, its complexity is O(N). For a constant-time solution (O(1)), you can use either, substring as @cobbal suggested, or String.prototype.slice, which behaves similarly (note that I don't recommend using the substr, because it's inconsistent between implementations (most notably on JScript) ):
+
+if (typeof String.prototype.startsWith != 'function') {
+  String.prototype.startsWith = function (str){
+    return this.slice(0, str.length) == str;
+  };
+}
+The difference between substring and slice is basically that slice can take negative indexes, to manipulate characters from the end of the string, for example you could write the counterpart endsWith method by:
+
+if (typeof String.prototype.endsWith != 'function') {
+  String.prototype.endsWith = function (str){
+    return this.slice(-str.length) == str;
+  };
+}
+
+data.substring(0, input.length) === input
+
+Create a method called askTeller within the Person class that returns the returnBalance method. This means that it returns the method itself and NOT the result of calling that method. So you should NOT have parentheses after returnBalance.
+
+Because askTeller returns a method, we need to call it to make it any use. This is what var myBalance = myBalanceMethod(); does.
+
+window.onload = function() {
+	if (document.getElementsByTagName) {
+	   	var s = document.getElementsByTagName("SELECT");
+		var apptTypePrefix = "<%=CalendarResourceParamEnum.APPT_TYPE_PREFIX.name()%>";
+   		window.select_current = new Array();
+	   	for (var i=0, select; select = s[i]; i++) {
+	   		if( select.name.indexOf(apptTypePrefix) > -1 ) {
+		   		select.onfocus = function(){ window.select_current[this.name] = this.selectedIndex; }
+		   		select.onchange = function(){ checkAptTypeUniqueness(this); }
+	   		}
+	 	}
+  	}
+}
+
+function foo() {
+  for (var i = 0; i < arguments.length; i++) {
+    alert(arguments[i]);
+  }
+}

@@ -1,0 +1,35 @@
+<table id="pagingTable">
+	<colgroup>
+		<col width="50" />
+		<col width="50" />
+		<col width="300" />
+		<col width="135" />
+		<col width="300" />
+		<col width="50" />
+		<col width="50" />
+	</colgroup>
+	<tr>	        					
+		<td><div class="selectButton" id="first">First</div></td>
+		<td><div class="selectButton" id="prev">Prev</div></td>
+		<td>&nbsp;</td>	
+		<td>
+			<div class="txtC b14" id="curPage">1</div>
+		</td>
+		<td>&nbsp;</td>
+		<td><div class="selectButton" id="next">Next</div></td>
+		<td><div class="selectButton" id="last">Last</div></td>
+	</tr>
+	<tr><td colspan="7">&nbsp;</td></tr>
+	<tr><td colspan="7">&nbsp;</td></tr>
+	<tr><td colspan="7">&nbsp;</td></tr>
+	<tr><td colspan="7">&nbsp;</td></tr>
+	<tr><td colspan="7">&nbsp;</td></tr>
+	<tr><td colspan="7">&nbsp;</td></tr>
+</table>
+
+			/*	TOTAL_PAGES=parseInt(data[1].count);
+				alert(TOTAL_PAGES);
+				getPageCount();*/
+				/*$("#pagingTable #first").click(function(){
+					alert("You are getting in the final");
+					);*/

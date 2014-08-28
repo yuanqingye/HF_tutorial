@@ -1,0 +1,7 @@
+This previous example demonstrates that assertions are not appropriate for checking pre-
+conditions in public methods.
+
+In Java terminology, the avoidable exceptions that are your fault are known as runtime 
+exceptions.
+The term isn’t very descriptive; you might want to think of it as an abbreviation 
+for “these-should-never-happen-at-runtime” exceptions

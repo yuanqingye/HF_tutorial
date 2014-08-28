@@ -1,0 +1,23 @@
+Real-Time application, Claim Application - relied on Servlets - PM where we started to play around with this concept of Controller and Actions
+
+fileUpload=new FileUploadUtil();
+fileUpload.processRequest(_request);
+fileUpload.printRequestParameters();
+action=EHRActionEnum.valueOf((String) fileUpload.getParameter("ACTION_NAME"));
+
+Map the HTTP Request
+Perform some Action - invoke the BL
+Prepare Response Parameter
+Identify the next URL you will be heading to.
+All the above only if the login is still valid 
+If invalid login - then go to the logout page!
+
+AbstractAction - Has two flavors - 
+EHRAbstractAction - all EHR Related minor methods included and it implies you are going to URL next.
+AbstractJSONAction - Which extends from AbstractEHRAction - but does not result URL instead the concrete class must override buildJSONArray - which will be returned to the client.
+
+The abstract method buildJSONArray() is to be overriden.
+The template method in this case is prepareresponsepatameter.
+Notice getURL returns null - since you wrote the JSON string in the outputstream.
+
+PLEASE DO NOT BE LAZY AND USE STRING REQUEST PARAMETER NAME - JUST TAKE A MINUTE TO DEFINE A PARAM ENUM OR IF YOU ARE DEALING WITH PROVIDER_ID, PRACTICE_ID CHANCES ARE THEY ARE ALREADY PRESENT IN EHRPARAMENUM!

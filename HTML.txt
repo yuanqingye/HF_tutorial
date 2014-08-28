@@ -1,0 +1,115 @@
+HTML Block Elements
+Most HTML elements are defined as block level elements or as inline elements.
+
+Block level elements normally start (and end) with a new line when displayed in a browser.
+
+Examples: <h1>, <p>, <ul>, <table>, <div>
+
+HTML Inline Elements
+Inline elements are normally displayed without starting a new line.
+
+Examples: <b>, <td>, <a>, <img>, <span>
+
+
+<table border="1">
+  <caption>Monthly savings</caption>
+  <tr>
+    <th>Month</th>
+    <th>Savings</th>
+  </tr>
+</table>
+
+<th colspan="2">Telephone</th>
+The <thead> tag is used to group header content in an HTML table.
+The <thead> element is used in conjunction with the <tbody> and <tfoot> elements to specify each part of a table (header, body, footer).
+
+<table border="1" cellspacing="10" cellpadding="10">
+<tr>
+  <td>
+   <p>This is a paragraph</p>
+   <p>This is another paragraph</p>
+  </td>
+  <td>This cell contains a table:
+   <table border="1">
+   <tr>
+     <td>A</td>
+     <td>B</td>
+   </tr>
+   <tr>
+     <td>C</td>
+     <td>D</td>
+   </tr>
+   </table>
+  </td>
+</tr>
+<tr>
+  <td>This cell contains a list
+   <ul>
+    <li>apples</li>
+    <li>bananas</li>
+    <li>pineapples</li>
+   </ul>
+  </td>
+  <td>HELLO</td>
+</tr>
+</table>
+
+<ul><ol><dl><dd><dt>
+
+<table border="1">
+  <colgroup>
+    <col span="2" style="background-color:red">
+    <col style="background-color:yellow">
+  </colgroup>
+  <tr>
+    <th>ISBN</th>
+    <th>Title</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>3476896</td>
+    <td>My first HTML</td>
+    <td>$53</td>
+  </tr>
+  <tr>
+    <td>5869207</td>
+    <td>My first CSS</td>
+    <td>$49</td>
+  </tr>
+</table>
+
+HTML Images - The <img> Tag and the Src Attribute
+In HTML, images are defined with the <img> tag. 
+The <img> tag is empty, which means that it contains attributes only, and has no closing tag.
+To display an image on a page, you need to use the src attribute. Src stands for "source". The value of the src attribute is the URL of the image you want to display.
+
+HTML Images - The Alt Attribute
+The required alt attribute specifies an alternate text for an image, if the image cannot be displayed.
+The value of the alt attribute is an author-defined text:
+<img src="boat.gif" alt="Big Boat">
+<a href="default.asp"><img src="smiley.gif" alt="HTML tutorial" width="32" height="32"></a></p>
+
+Character entities are used to display reserved characters in HTML. 
+
+A character entity looks like this: 
+&entity_name; 
+
+OR 
+&#entity_number; 
+
+Non Breaking Space 
+
+A common character entity used in HTML is the non breaking space (&nbsp;). 
+
+Remember that browsers will always truncate spaces in HTML pages. If you write 10 spaces in your text, the browser will remove 9 of them. To add real spaces to your text, you can use the &nbsp; character entity. 
+Result Description Entity Name Entity Number 
+non-breaking space &nbsp; &#160; 
+< less than &lt; &#60; 
+> greater than &gt; &#62; 
+& ampersand &amp; &#38; 
+¢ cent &cent; &#162; 
+£ pound &pound; &#163; 
+¥ yen &yen; &#165; 
+€ euro &euro; &#8364; 
+© copyright &copy; &#169; 
+® registered trademark &reg; &#174;

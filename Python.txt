@@ -1,0 +1,3 @@
+s1 = "cats"
+s2 = "dogs"
+s3 = " %s and %s living together" % (s1, s2)

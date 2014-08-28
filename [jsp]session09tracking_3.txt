@@ -1,0 +1,25 @@
+So, although you call getSession on the
+request, the call can affect the response. Consequently, you are permitted to call
+request.getSession only when it would be legal to set HTTP response headers:
+before any document content has been sent (i.e., flushed or committed) to the client.
+
+There are two possible situations in which you might use URLs that refer to your
+own site. 
+The first one is where the URLs are embedded in the Web page that the servlet
+generates. These URLs should be passed through the encodeURL method of
+HttpServletResponse. The method determines if URL rewriting is currently in
+use and appends the session information only if necessary. The URL is returned
+unchanged otherwise. 
+Here’s an example:
+String originalURL = someRelativeOrAbsoluteURL;
+String encodedURL = response.encodeURL(originalURL);
+out.println("<A HREF=\"" + encodedURL + "\">...</A>");
+
+The second situation in which you might use a URL that refers to your own site is
+in a sendRedirect call (i.e., placed into the Location response header). In this
+second situation, different rules determine whether session information needs to be
+attached, so you cannot use encodeURL. Fortunately, HttpServletResponse
+supplies an encodeRedirectURL method to handle that case. Here’s an example:
+String originalURL = someURL; 
+String encodedURL = response.encodeRedirectURL(originalURL);
+response.sendRedirect(encodedURL);

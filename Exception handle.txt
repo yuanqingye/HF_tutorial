@@ -1,0 +1,11 @@
+st = new StringTokenizer(value, ",");
+while (st.hasMoreTokens()) {
+// do something with each token.
+System.err.println(st.nextToken());
+
+The Exception class is close to the top of the Throwable class hierarchy. Therefore, this handler will catch many other exceptions in addition to those that the handler is intended to catch. You may want to handle exceptions this way if all you want your program to do, for example, is print out an error message for the user and then exit.
+
+Why throw exceptions?
+1 make your flow goes in logic without handle to much exception in middle;
+2 deal with the exception at the end level of method stacks,propagating Errors up the call stack
+3 grouping and differentiating

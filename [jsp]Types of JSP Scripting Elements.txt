@@ -1,0 +1,76 @@
+Types of JSP Scripting Elements
+1. Expressions of the form <%= Java Expression %>, which are evaluated and inserted into the servlet’s output.
+2. Scriptlets of the form <% Java Code %>, which are inserted into the 
+servlet’s _jspService method (called by service).
+3. Declarations of the form <%! Field/Method Declaration %>, which 
+are inserted into the body of the servlet class, outside any existing 
+methods.
+
+
+
+Whenever you write Java classes, the class files are deployed in WEB-INF/classes/
+directoryMatchingPackageName (or inside a JAR file that is placed in WEB-INF/lib).
+This is true regardless of whether the class is a servlet, a regular helper class, a bean,
+a custom tag handler, or anything else. All code goes in the same place.
+
+Predefined Variables
+• request, the HttpServletRequest.
+• response, the HttpServletResponse.
+• session, the HttpSession associated with the request (unless 
+disabled with the session attribute of the page directive—see 
+Section 12.4).
+• out, the Writer (a buffered version of type JspWriter) used to 
+send output to the client.
+• application, the ServletContext. This is a data structure 
+shared by all servlets and JSP pages in the Web application and is good 
+for storing shared data. We discuss it further in the chapters on beans 
+(Chapter 14) and MVC (Chapter 15). 
+
+Sample JSP Expression: Random Number
+<H1>A Random Number</H1>
+<%= Math.random() %>
+
+Listing 11.2 Representative Resulting Servlet Code: Random Number
+public void _jspService(HttpServletRequest request,
+HttpServletResponse response)
+throws ServletException, IOException {
+response.setContentType("text/html");
+HttpSession session = request.getSession();
+JspWriter out = response.getWriter(); 
+out.println("<H1>A Random Number</H1>");
+out.println(Math.random());
+...
+}
+
+XML authors can use the following alternative syntax for JSP expressions: 
+<jsp:expression>Java Expression</jsp:expression>
+
+XML Syntax for Scriptlets
+The XML equivalent of 
+<% Java Code %> is 
+<jsp:scriptlet>Java Code</jsp:scriptlet>
+
+XML Syntax for Declarations
+The XML equivalent of <%! Field or Method Definition %> is 
+<jsp:declaration>Field or Method Definition</jsp:declaration>
+
+in most cases style sheets and JSP pages can be kept together in the same
+directory. The source code for the style sheet, like all code shown or referenced in
+the book, can be found at http://www.coreservlets.com.   
+
+servlets cannot use the simplest form of relative URLs (ones that refer to
+files in the same directory as the current page), since the servlet directories are not
+mapped to URLs in the same manner as are URLs for normal Web pages. Moreover,
+servers are expressly prohibited from making content in WEB-INF/classes (or anywhere in WEB-INF) directly accessible to clients. So, it is impossible to put style sheets
+in the same directory as servlet class files
+
+. So, the specification tells you. You are supplied with eight automatically defined local variables in _jspService, sometimes
+called “implicit objects.” 
+
+The available variables are request, response, out, session, application,
+config, pageContext, and page
+
+instance variables are initialized only when the object is built and servlets are built once and remain in memory between requests
+In this third example, the requirement is to generate a random number on the first
+request, then show the same number to all users until the server is restarted.
+Instance variables (fields) are the natural way to accomplish this persistence

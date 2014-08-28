@@ -1,0 +1,28 @@
+http://stackoverflow.com/questions/6455359/creating-a-mock-httpservletrequest-out-of-a-url-string
+
+1 Create an anonymous subclass:
+
+HttpServletRequest mock = new HttpServletRequest ()
+{
+    private final Map<String, String[]> params = /* whatever */
+
+    public Map<String, String[]> getParameterMap()
+    {
+        return params;
+    }
+
+    public String getParameter(String name)
+    {
+        String[] matches = params.get(name);
+        if (matches == null || matches.length == 0) return null;
+        return matches[0];
+    }
+
+    // TODO *many* methods to implement here
+};
+2 Use jMock, Mockito, or some other general-purpose mocking framework:
+
+HttpServletRequest mock = context.mock(HttpServletRequest.class); // jMock
+HttpServletRequest mock2 = Mockito.mock(HttpServletRequest.class); // Mockito
+
+3 Use HttpUnit's ServletUnit and don't mock the request at all.

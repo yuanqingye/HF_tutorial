@@ -1,0 +1,141 @@
+String dt = "2008-01-01";  // Start date
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+Calendar c = Calendar.getInstance();
+c.setTime(sdf.parse(dt));
+c.add(Calendar.DATE, 1);  // number of days to add
+dt = sdf.format(c.getTime());
+
+Class, all object which can be built by this class definition and the behavior(method) it may have.
+more generally, in object-oriented languages, an API usually includes a description of a set of class definitions, with a set of behaviors associated with those classes. This abstract concept is associated with the real functionality exposed, or made available, by the classes that are implemented in terms of class methods (or more generally by all its public components hence all public methods, but also possibly including any internal entity made public, like fields, constants, nested objects, enums, etc.).
+
+The API in this case can be conceived of as the totality of all the methods publicly exposed by the classes (usually called the class interface). This means that the API prescribes the methods by which one interacts with/handles the objects derived from the class definitions.
+
+More generally, one can see the API as the collection of all the kinds of objects one can derive from the class definitions, and their associated possible behaviors. Again: the use is mediated by the public methods, but in this interpretation, the methods are seen as a technical detail of how the behavior is implemented
+
+No consideration of how the background is built up and basecode of how implement it.
+So every software can be considered as an api or combination of some apis.
+
+Eliminate duplication in collections
+Set<String> set = new HashSet<String>();
+set.addAll(list);
+list.clear();
+list.addAll(set);
+
+List<String> list2 = new ArrayList<String>();
+HashSet<String> lookup = new HashSet<String>();
+for (String item : list) {
+    if (!lookup.contains(item)) {
+        lookup.add(item);
+        list2.add(item);
+    }
+}
+list = list2;
+
+If a parameter is not specified at all like so,
+
+http://example.com/context/servlet?x=foo
+then it will return null:
+
+String x = request.getParameter("x"); // "foo"
+String y = request.getParameter("y"); // null
+If a parameter is specified, but does not have a value like so,
+
+http://example.com/context/servlet?x=foo&y
+then it will return an empty string:
+
+String x = request.getParameter("x"); // "foo"
+String y = request.getParameter("y"); // ""
+
+How to update with lots of parameters.
+
+public void updateEncounterId(Long _encounterId, List<Long> _orderResultIdList) {
+		String sql = "UPDATE " + getTableName() + " SET ENCOUNTER_ID = ? WHERE ORDER_RESULT_ID in ( "+ SqlUtil.getPlaceHolder(_orderResultIdList.size()) +" )";
+		List<Object> params = new ArrayList<Object>();
+		params.add(_encounterId);
+		for (Long orId : _orderResultIdList) {
+			params.add(orId);
+		}
+		executeUpdate(sql, params);
+	}
+	
+TextUtil.convertListValsAsString 
+if empty String, then attach " "; 
+else if null, then nothing to attach;	
+
+Well, the API for Integer.valueOf(String) does indeed say that the String is interpreted exactly as if it were given to Integer.parseInt(String). 
+However, valueOf(String) returns a new Integer() object whereas parseInt(String) returns a primitive int.
+
+Type listType = new TypeToken<ArrayList<CommonCode>>() {
+}.getType();
+backlist = gson.fromJson(json, listType);
+}
+
+FileOutputStream = new FileOutputStream("a.txt")----file will be under project folder, the same apply to File()
+
+http://www.quizover.com/in-what-order-static-and-init-blocks-get-called-in-java
+First Load the class
+static block
+then anonymous block
+then super class' constructor
+
+public void testFirst(){
+    Second sec = mock(Second.class);
+    when(sec.doSecond()).thenReturn("Stubbed Second");
+
+
+    First first = new First();
+    Field privateField = PrivateObject.class.
+        getDeclaredField("second");
+
+    privateField.setAccessible(true);
+
+    privateField.set(first, sec);
+
+    assertEquals("Stubbed Second", first.doSecond());
+}
+
+http://stackoverflow.com/questions/3301635/change-private-static-final-field-using-java-reflection
+Assuming no SecurityManager is preventing you from doing this, you can use setAccessible to get around private and resetting the modifier to get rid of final, and actually modify a private static final field.
+
+Here's an example:
+
+import java.lang.reflect.*;
+
+public class EverythingIsTrue {
+   static void setFinalStatic(Field field, Object newValue) throws Exception {
+      field.setAccessible(true);
+
+      Field modifiersField = Field.class.getDeclaredField("modifiers");
+      modifiersField.setAccessible(true);
+      modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+      field.set(null, newValue);
+   }
+   public static void main(String args[]) throws Exception {      
+      setFinalStatic(Boolean.class.getField("FALSE"), true);
+
+      System.out.format("Everything is %s", false); // "Everything is true"
+   }
+}
+Assuming no SecurityException is thrown, the above code prints "Everything is true".
+
+What's actually done here is as follows:
+
+The primitive boolean values true and false in main are autoboxed to reference type Boolean "constants" Boolean.TRUE and Boolean.FALSE
+Reflection is used to change the public static final Boolean.FALSE to refer to the Boolean referred to by Boolean.TRUE
+As a result, subsequently whenever a false is autoboxed to Boolean.FALSE, it refers to the same Boolean as the one refered to by Boolean.TRUE
+Everything that was "false" now is "true"
+
+Imports have nothing to do with it. There are no imports at runtime.
+
+Referenced classes are loaded during the linking phase, which precedes the initialization phase. In this case A is loaded during the link resolution step for B, before B's static initializer executes.
+
+Reference: JVM Specification: Loading, Linking, and Initializing.
+
+obj1.getClass().equals(obj2.getClass())
+if(obj instanceof B)
+    < is B>
+else if(obj instanceof C)
+    < is C>
+else
+    <is D>

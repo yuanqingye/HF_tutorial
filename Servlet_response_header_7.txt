@@ -1,0 +1,129 @@
+The most general way to specify headers is to use the setHeader method of HttpServletResponse. 
+setHeader(String headerName, String headerValue)
+
+it is quite common to have multiple Accept and Set-Cookie headers that specify different supported MIME types and different cookies, respectively. The methods setHeader, setDateHeader, and setIntHeader replace any existing headers of the same name, whereas addHeader, addDateHeader, and addIntHeader add a header regardless of whether a header of that name already exists. 
+
+If it matters to you whether a specific header has already been set, use containsHeader to check.
+setContentType(String mimeType)
+setContentLength(int length)
+addCookie(Cookie c)
+sendRedirect(String address)
+
+It is best to explicitly check the HTTP version with request.getRequestProtocol before using HTTP-1.1-specific headers.
+
+Allow
+The Allow header specifies the request methods (GET, POST, etc.) that the server supports. It is required for 405 (Method Not Allowed) responses. 
+The default service method of servlets automatically generates this header for OPTIONS requests.
+
+Cache-Control
+public,private,no-cache
+response.setHeader("Cache-Control", "no-cache");
+response.setHeader("Pragma", "no-cache");
+no-store
+Document should never be cached and should not even be stored in a temporary location on disk. This header is intended to prevent inadvertent copies of sensitive information.
+must-revalidate.
+max-age=xxx.
+s-max-age=xxx.
+
+Connection
+Content-Disposition
+The Content-Disposition header lets you request that the browser ask the user to save the response to disk in a file of the given name. It is used as 
+follows:Content-Disposition: attachment; filename=some-file-name
+
+Content-Encoding
+Content-Language
+Content-Length
+Content-Type
+Setting this header is so common that there is a special method in HttpServletResponse for it: setContentType. MIME types are of the form maintype/subtype for officially registered types and of the form maintype/x-subtype for unregistered types.
+
+In addition to a basic MIME type, the Content-Type header can also designate a specific character encoding. If this is not specified, the default is 
+ISO-8859_1 (Latin).
+response.setContentType("text/html; charset=Shift_JIS");
+
+Type Meaning
+application/msword Microsoft Word document
+application/octet-stream Unrecognized or binary data
+application/pdf Acrobat (.pdf) file
+application/postscript PostScript file
+application/vnd.lotus-notes Lotus Notes file
+application/vnd.ms-excel Excel spreadsheet
+application/vnd.ms-powerpoint PowerPoint presentation
+application/x-gzip Gzip archive
+application/x-java-archive JAR file
+application/x-java-serialized-object Serialized Java object
+application/x-java-vm Java bytecode (.class) file
+application/zip Zip archive
+audio/basic Sound file in .au or .snd format
+audio/midi MIDI sound file
+audio/x-aiff AIFF sound file
+audio/x-wav Microsoft Windows sound file
+image/gif GIF image
+image/jpeg JPEG image
+image/png PNG image
+image/tiff TIFF image
+image/x-xbitmap X Windows bitmap image
+text/css HTML cascading style sheet
+text/html HTML document
+text/plain Plain text
+text/xml XML
+video/mpeg MPEG video clip
+video/quicktime QuickTime video clip
+
+Expires:long currentTime = System.currentTimeMillis();
+long tenMinutes = 10*60*1000; // In milliseconds
+response.setDateHeader("Expires", 
+currentTime + tenMinutes);
+
+Last-Modified
+This very useful header indicates when the document was last changed. The client 
+can then cache the document and supply a date by an If-Modified-Since
+request header in later requests. This request is treated as a conditional GET, with 
+the document being returned only if the Last-Modified date is later than the 
+one specified for If-Modified-Since. Otherwise, a 304 (Not Modified) 
+status line is returned, and the client uses the cached document. If you set this 
+header explicitly, use the setDateHeader method to save yourself the bother 
+of formatting GMT date strings. However, in most cases you simply implement 
+the getLastModified method (see the lottery number servlet of Section 3.6, 
+“The Servlet Life Cycle”) and let the standard service method handle 
+If-Modified-Since requests. 
+Set-Cookie
+WWW-Authenticate
+Location
+This header, which should be included with all responses that have a status code 
+in the 300s, notifies the browser of the document address. The browser automatically reconnects to this location and retrieves the new document. This header is usually set indirectly, along with a 302 status code, by the sendRedirect method of HttpServletResponse.
+
+Refresh:
+response.setIntHeader("Refresh", 30);
+Instead of having the browser just reload the current page, you can specify the 
+page to load. You do this by supplying a semicolon and a URL after the refresh 
+time. For example, to tell the browser to go to http://host/path after 5 seconds, 
+you would do the following.
+response.setHeader("Refresh", "5; URL=http://host/path/");
+
+Note that this header is commonly set indirectly by putting
+<META HTTP-EQUIV="Refresh" CONTENT="5; URL=http://host/path/">
+
+Retry-After
+This header can be used in conjunction with a 503 (Service Unavailable) 
+response to tell the client how soon it can repeat its request.
+
+A.Store data between requests:
+1 related to some user: session object; 
+2 not related: instance variable of servlet;
+3 To be used among servlets: ServletContext;
+B.Using thread to run something in background,setting low priority
+C.Using refresh header of response to get incessional process.
+
+7.5 Using servlet to generate JPEG images:
+1 set response contentType to proper status
+2 make sure the returned content are of the correct format,servlets will usually get the raw output stream by using the 
+getOutputStream method, rather than getting a PrintWriter by using getWriter.
+
+response.setContentType("type/subtype");
+OutputStream out = response.getOutputStream();
+
+try {
+ImageIO.write(image, "jpg", out);
+} catch(IOException ioe) {
+System.err.println("Error writing JPEG file: " + ioe);
+}

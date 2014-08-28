@@ -1,0 +1,12 @@
+?You can’t restart a dead thread by calling its start() or run() methods.
+?You can call other methods (besides start() and run()) of a dead thread.
+
+Running A running thread gets the full attention of the JVM’s processor, which executes the 
+thread’s run() method.
+Various non-running states The basic non-running states are Suspended, Sleeping, and Blocked. 
+There are also some non-running states that relate to monitors, which are explained later in this 
+chapter.
+Ready A ready thread can enter the Running state as soon as the JVM’s processor is assigned to it.
+Dead A dead thread has completed execution of its run() method.
+
+Running->Suspended,Sleeping,Blocked,Moniter States

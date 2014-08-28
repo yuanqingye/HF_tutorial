@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+  $("div").on("click","p",function(){
+    $(this).slideToggle();
+  });
+  $("button").click(function(){
+    $("<p>This is a new paragraph.</p>").insertAfter("button");
+  });
+});
+</script>
+</head>
+<body>
+
+<div style="background-color:yellow">
+<p>This is a paragraph.</p>
+<p>Click any p element to make it disappear. Including this one.</p>
+<button>Insert a new p element after this button</button>
+</div>
+
+</body>
+</html>

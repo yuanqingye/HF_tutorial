@@ -1,0 +1,37 @@
+Accessing the Session Object 
+Associated with the Current Request
+
+1. Accessing the session object associated with the current 
+request. Call request.getSession to get an HttpSession
+object, which is a simple hash table for storing user-specific data.
+2. Looking up information associated with a session. Call 
+getAttribute on the HttpSession object, cast the return value 
+to the appropriate type, and check whether the result is null. 
+3. Storing information in a session. Use setAttribute with a key 
+and a value.
+4. Discarding session data. Call removeAttribute to discard a specific value. Call invalidate to discard an entire session. Call 
+logout to log the client out of the Web server and invalidate all sessions associated with that user.
+
+HttpSession session = request.getSession();
+SomeClass value =
+(SomeClass)session.getAttribute("someIdentifier");
+if (value == null) { // No such object already in session
+value = new SomeClass(...);
+session.setAttribute("someIdentifier", value);
+}
+doSomethingWith(value);
+In most cases, you have a specific attribute name in mind and want to find the
+value (if any) already associated with that name. However, you can also discover all
+the attribute names in a given session by calling getAttributeNames, which
+returns an Enumeration.
+
+As discussed in the previous subsection, you read information associated with a session
+by using getAttribute. To specify information, use setAttribute. To let your values perform side effects when they are stored in a session, simply have the object you are associating with the session implement the HttpSessionBindingListener
+interface. That way, every time setAttribute is called on one of those objects, its
+valueBound method is called immediately afterward.
+In general, session attributes merely have to be of type Object (i.e., they can be
+anything other than null or a primitive like int, double, or boolean). However,
+some application servers support distributed Web applications in which an application is shared across a cluster of physical servers. Session tracking needs to still work
+in such a case, so the system needs to be able to move session objects from machine
+to machine. Thus, if you run in such an environment and you mark your Web application as being distributable, you must meet the additional requirement that session
+attributes implement the Serializable interface.

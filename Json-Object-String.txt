@@ -1,0 +1,23 @@
+http://stackoverflow.com/questions/191881/serializing-to-json-in-jquery
+To convert an object to a string, use JSON.stringify:
+
+var json_text = JSON.stringify(your_object, null, 2);
+To convert a string to JSON object, use JSON.parse:
+
+var your_object = JSON.parse(json_text);
+It was recently recommended by John Resig:
+
+...PLEASE start migrating your JSON-using applications over to Crockford's json2.js. It is fully compatible with the ECMAScript 5 specification and gracefully degrades if a native (faster!) implementation exists.
+
+In fact, I just landed a change in jQuery yesterday that utilizes the JSON.parse method if it exists, now that it has been completely specified.
+
+I tend to trust what he says on JavaScript matters :)
+
+Newer browsers support the JSON object natively. The current version of Crockford's JSON library will only define JSON.stringify and JSON.parse if they're not already defined, leaving any browser native implementation intact.
+
+I've been using jquery-json for 6 months and it works great. It's very simple to use:
+
+var myObj = {foo: "bar", "baz": "wockaflockafliz"};
+$.toJSON(myObj);
+
+// Result: {"foo":"bar","baz":"wockaflockafliz"}

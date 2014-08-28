@@ -1,0 +1,126 @@
+• It is easier to write and maintain the HTML. Your static code is 
+ordinary HTML: no extra backslashes, no double quotes, and no 
+lurking Java syntax.
+• You can use standard Web-site development tools. For example, 
+we use Macromedia Dreamweaver for most of the JSP pages in the 
+book. Even HTML tools that know nothing about JSP can be used 
+because they simply ignore the JSP tags.
+• You can divide up your development team. The Java 
+programmers can work on the dynamic code. The Web developers can 
+concentrate on the presentation layer. On large projects, this division 
+is very important. Depending on the size of your team and the 
+complexity of your project, you can enforce a weaker or stronger 
+separation between the static HTML and the dynamic content.
+
+
+HTML Text
+• Description:
+HTML content to be passed unchanged to the client
+• Example:
+<H1>Blah</H1>
+• Discussed in:
+Section 11.1
+
+HTML Comments
+• Description:
+HTML comment that is sent to the client but not displayed by the 
+browser
+• Example:
+<!-- Blah -->
+• Discussed in:
+Section 11.1
+
+Template Text
+• Description:
+Text sent unchanged to the client. HTML text and HTML comments 
+are just special cases of this.
+• Example:
+Anything other than the syntax of the following subsections
+• Discussed in:
+Section 11.1
+
+JSP Comment
+• Description:
+Developer comment that is not sent to the client
+• Example:
+<%-- Blah --%>
+• Discussed in:
+Section 11.1
+
+JSP Expression
+• Description:
+Expression that is evaluated and sent to the client each time the page 
+is requested
+• Example:
+<%= Java Value %>
+• Discussed in:
+Section 11.4
+
+JSP Scriptlet
+• Description:
+Statement or statements that are executed each time the page is 
+requested
+• Example:
+<% Java Statement %>
+• Discussed in:
+Section 11.7
+
+JSP Declaration
+• Description:
+Field or method that becomes part of class definition when page is 
+translated into a servlet
+• Examples:
+<%! Field Definition %>
+<%! Method Definition %>
+• Discussed in:
+Section 11.10
+
+JSP Directive
+• Description:
+High-level information about the structure of the servlet code (page), 
+code that is included at page-translation time (include), or custom 
+tag libraries used (taglib)
+• Example:
+<%@ directive att="val" %>
+• Discussed in:
+page: Chapter 12
+include: Chapter 13
+taglib and tag: Volume 2
+
+JSP Action
+• Description:
+Action that takes place when the page is requested
+• Example:
+<jsp:blah>...</jsp:blah>
+• Discussed in:
+jsp:include and related: Chapter 13
+jsp:useBean and related: Chapter 14
+jsp:invoke and related: Volume 2
+
+JSP Expression Language Element
+• Description:
+Shorthand JSP expression
+• Example:
+${ EL Expression }
+• Discussed in:
+Chapter 16
+
+Custom Tag (Custom Action)
+• Description:
+Invocation of custom tag
+• Example:
+<prefix:name>
+Body
+</prefix:name>
+• Discussed in:
+Volume 2
+
+Escaped Template Text
+• Description:
+Text that would otherwise be interpreted specially. Slash is removed 
+and remaining text is sent to the client
+• Examples:
+<\%
+%\>
+• Discussed in:
+Section 11.1

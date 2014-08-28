@@ -1,0 +1,59 @@
+1. Use the FORM element to create an HTML form. Use the 
+ACTION attribute to designate the address of the servlet or JSP page 
+that will process the results; you can use an absolute or relative URL. 
+For example:
+<FORM ACTION="...">...</FORM>
+If ACTION is omitted, the data is submitted to the URL of the current page. 
+
+
+2. Use input elements to collect user data. Place the elements 
+between the start and end tags of the FORM element and give each 
+input element a NAME. Textfields are the most common input element; 
+they are created with the following.
+<INPUT TYPE="TEXT" NAME="...">
+
+3. Place a submit button near the bottom of the form. For example: <INPUT TYPE="SUBMIT">
+When the button is pressed, the URL designated by the form’s 
+ACTION is invoked. With GET requests, a question mark and name/
+value pairs are attached to the end of the URL, where the names 
+come from the NAME attributes in the HTML input elements and the 
+values come from the end user. With POST requests, the same data is 
+sent, but on a separate request line instead of attached to the URL.
+
+First of all, before servlets you generally had to read the data one way for GET requests (in traditional CGI, this is usually through the QUERY_STRING environment variable) and a different way for POST requests (by reading the standard input in traditional CGI). 
+
+Second, you have to chop the pairs at the ampersands, then separate the parameter names (left of the equal signs) from the parameter values (right of the equal signs). 
+
+Third, you have to URL-decode the values: reverse the encoding that the browser uses on certain characters. Alphanumeric characters are sent unchanged by the browser, but spaces are converted to plus signs and other characters are converted to %XX, where XX is the ASCII (or ISO Latin-1) value of the character, in hex. For example, if someone enters a value of “~hall, ~gates, and ~mcnealy” into a textfield with the name users in an HTML form, the data is sent as “users=%7Ehall%2C+%7Egates%2C+and+%7Emcnealy”, and the server-side program has to reconstitute the original string
+
+Parameter names are case sensitive so, for example, request.getParameter("Param1") and request.getParameter("param1") are not interchangeable.
+
+Use getParameterNames to get this list in the form of an Enumeration, each entry of which can be cast to a String and used in a getParameter or getParameterValues call. If there are no parameters in the current request,getParameterNames returns an empty Enumeration (not null).
+
+The primary utility of the full list is debugging, but
+you occasionally use the list for applications where the parameter names are very
+dynamic. For example, the names themselves might tell the system what to do with
+the parameters (e.g., row-1-col-3-value), the system might build a database
+update assuming that the parameter names are database column names
+
+Don’t count on getParameterNames returning the names in any particular order.
+
+An alternative to getParameterNames is getParameterMap. This method returns a Map: the parameter names (strings) are the table keys and the parameter values (string arrays as returned by getParameterNames) are the table values.
+
+getParameterNames,getParameterMap,getParameter,getParameterValues,you can access the query data directly by calling getReader or getInputStream on the HttpServletRequest.
+
+The first case in which you might read and parse the data yourself is when the data comes from a custom client rather than by an HTML form. The most common custom client is an applet;
+
+The second situation in which you might read the data yourself is when the data is
+from  an uploaded file.  HTML supports a FORM element (< INPUT TYPE="FILE"...>)
+that lets the client upload a file to the server. Unfortunately, the servlet API defines no mechanism to read such files. So, you need a third-party library to do so. One of the most popular ones is from the Apache Jakarta Project.
+
+By default, request.getParameter interprets input using the server’s current character set. To change this default, use the setCharacterEncoding method of ServletRequest
+
+read the parameter in one character set and convert it to another
+String firstNameWrongEncoding = request.getParameter("firstName");
+String firstName = new String(firstNameWrongEncoding.getBytes(), "Shift_JIS");
+
+For the second option, you would use a character set that supports detection and conversion from the default set.
+request.setCharacterEncoding("JISAutoDetect");
+String firstName = request.getParameter("firstName")

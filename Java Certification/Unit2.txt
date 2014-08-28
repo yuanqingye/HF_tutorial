@@ -1,0 +1,20 @@
+assignment goes from right to left
+the cast is always allowed in compile time but may be checked in runtime
+
+In fact, the test
+Float.NaN != Float.NaN
+and the equivalent with Double.NaN return true, as you might deduce from the fact that x == 
+Float.NaN gives false even if x contains Float.NaN.
+The most appropriate way to test for a NaN result from a calculation is to use the Float
+.isNaN(float) or Double.isNaN(double) static method provided in the java.lang package.
+
+The instanceof operator tests the class of an object at runtime.
+
+Although it is not required by the Certification Exam, you might find it useful 
+to know that you can determine whether an object is in fact an array without 
+regard to the base type. You can do this using the isArray() method of the 
+Class class. For example, this test returns true if the variable myObject refers to 
+an array: myObject.getClass().isArray().
+
+Although programmers usually apply these operators to the bits in integer variables, it is also 
+permitted to apply them to Boolean operands.

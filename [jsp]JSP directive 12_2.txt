@@ -1,0 +1,142 @@
+Always put your utility classes and beans in packages.
+
+The import attribute is the only page attribute that is allowed to appear multiple
+times within the same document.
+
+contentType attribute of the page directive is appropriate
+
+The buffer attribute specifies the size of the buffer used by the out variable, which
+is of type JspWriter. Use of this attribute takes one of two forms:
+<%@ page buffer="sizekb" %>
+<%@ page buffer="none" %>
+
+The autoFlush attribute controls whether the output buffer should be automatically flushed when it is full (the default) or whether an exception should be raised
+when the buffer overflows (autoFlush="false"). Use of this attribute takes one
+of the following two forms.
+<%@ page autoFlush="true" %> <%-- Default --%>
+<%@ page autoFlush="false" %>
+A value of false is illegal when buffer="none" is also used. Use of autoFlush="false" is exceedingly rare when the client is a normal Web browser. However, if the client is a custom application, you might want to guarantee that the
+application either receives a complete message or no message at all. A value of
+false could also be used to catch database queries that generate too much data, but
+it is generally better to place that logic in the data access code, not the presentation
+code.
+
+<%@ page info="Some Message" %>
+The info attribute defines a string that can be retrieved from the servlet by means of the getServletInfo method.
+
+The errorPage attribute specifies a JSP page that should process any exceptions
+(i.e., something of type Throwable) thrown but not caught in the current page. It is
+used as follows:
+<%@ page errorPage="Relative URL" %>
+
+he isErrorPage attribute indicates whether or not the current page can act as
+the error page for another JSP page. Use of isErrorPage takes one of the following two forms:
+<%@ page isErrorPage="true" %> 
+<%@ page isErrorPage="false" %> <%-- Default --%>
+
+The isThreadSafe attribute controls whether the servlet that results from the JSP
+page will allow concurrent access (the default) or will guarantee that no servlet
+instance processes more than one request at a time (isThreadSafe="false").
+Use of the isThreadSafe attribute takes one of the following two forms.
+<%@ page isThreadSafe="true" %> <%-- Default --%>
+<%@ page isThreadSafe="false" %>
+
+<%! private int idNum = 0; %>
+<% 
+synchronized(this) {
+String userID = "userID" + idNum;
+out.println("Your ID is " + userID + ".");
+idNum = idNum + 1; 
+}
+%>
+
+The extends attribute designates the superclass of the servlet that will be generated
+for the JSP page. It takes the following form.
+<%@ page extends="package.class" %>
+This attribute is normally reserved for developers or vendors that implement fundamental changes to the way in which pages operate (e.g., to add in personalization
+features). Ordinary mortals should steer clear of this attribute except when referring
+to classes provided by the server vendor for this purpose.
+
+At some point, the language attribute is intended to specify the scripting language
+being used, as below.
+<%@ page language="cobol" %>
+For now, don’t bother with this attribute since java is both the default and the
+only legal choice. 
+
+If you are writing XML-compatible JSP pages, you can use an alternative XML-compatible syntax for directives as long as you don’t mix the XML syntax and the classic
+syntax in the same page. These constructs take the following form:
+<jsp:directive.directiveType attribute="value" />
+For example, the XML equivalent of 
+<%@ page import="java.util.*" %>
+is 
+<jsp:directive.page import="java.util.*" />
+
+Relative URLs that do not start with a slash are interpreted relative to the location
+of the main page. Relative URLs that start with a slash are interpreted relative to the
+base Web application directory, not relative to the server root.
+
+<jsp:include page="bios/cheng-yinghua.jsp" />
+<jsp:include page="/templates/footer.jsp" />
+In the first case, the system would look for cheng-yinghua.jsp in the bios subdirectory of sports (i.e., in the sports/bios sub-subdirectory of the main directory of
+the headlines application). In the second case, the system would look for
+footer.jsp in the templates subdirectory of the headlines application, not in the
+templates subdirectory of the server root. The jsp:include action never causes
+the system to look at files outside of the current Web application. If you have trouble
+remembering how the system interprets URLs that begin with slashes, remember
+this rule: they are interpreted relative to the current Web application whenever the
+server handles them; they are interpreted relative to the server root only when the
+client (browser) handles them. For example, the URL in 
+<jsp:include page="/path/file" /> 
+is interpreted within the context of the current Web application because the server
+resolves the URL; the browser never sees it. But, the URL in 
+<IMG SRC="/path/file" ...> 
+is interpreted relative to the server’s base directory because the browser resolves the
+URL; the browser knows nothing about Web applications. For information on Web
+applications, see Section 2.11.
+
+URLs that start with slashes are interpreted differently by the server than 
+by the browser. The server always interprets them relative to the current 
+Web application. The browser always interprets them relative to the 
+server root. 
+
+<jsp:include page="relative-path-to-resource" flush="true" />
+The included page uses the same request object as the originally requested page. As
+a result, the included page normally sees the same request parameters as the main
+page. If, however, you want to add to or replace those parameters, you can use the
+jsp:param element (which has name and value attributes) to do so. For example,
+consider the following snippet.
+<jsp:include page="/fragments/StandardHeading.jsp">
+<jsp:param name="bgColor" value="YELLOW" />
+</jsp:include>
+
+13.2 Including Files at Page Translation 
+Time: The include Directive
+You use the include directive to include a file in the main JSP document at the
+time the document is translated into a servlet (which is typically the first time it is
+accessed). The syntax is as follows:
+<%@ include file="Relative URL" %>
+
+jsp:include Action include Directive
+What does basic syntax look 
+like?
+<jsp:include page="..." /><%@ include file="..." %>
+When does inclusion occur? 
+Request time               Page translation time
+What is included? 
+Output of page             Actual content of file
+How many servlets result?      
+Two (main page and             One (included file is inserted into main page,
+included page each become      then that page is translated into a servlet)
+a separate servlet)
+                                                                                                                                       
+With most servers, if you use the include directive and change the included file,
+you also have to update the modification date of the main page. Some operating systems have commands that update the modification 
+date without your actually editing
+the file (e.g., the Unix touch command), but a simple portable alternative is to
+include a JSP comment in the top-level page. Update the comment whenever the
+included file changes. For example, you might put the modification date of the
+included file in the comment, as below.
+<%-- Navbar.jsp modified 9/1/03 --%>
+<%@ include file="Navbar.jsp" %>
+ 
+

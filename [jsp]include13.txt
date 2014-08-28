@@ -1,0 +1,55 @@
+Relative URLs that do not start with a slash are interpreted relative to the location
+of the main page. Relative URLs that start with a slash are interpreted relative to the
+base Web application directory, not relative to the server root.
+
+Do not use complete HTML documents for your included pages. Include 
+only the HTML tags appropriate to the place where the included files 
+will be inserted.
+
+jsp:include Action                                  include Directive
+What does basic syntax look 
+like? <jsp:include page="..." />                    <%@ include file="..." %>
+
+When does inclusion occur? 
+Request time                                        Page translation time
+
+What is included? 
+Output of page                                      Actual content of file
+
+How many servlets result?                           
+                                                    One (included file is 
+Two (main page and included page each become        inserted into main page, 
+a separate servlet                                  then that page is translated 
+                                                    into a servlet)
+
+Can included page set response headers that affect 
+the main page?
+No                                                  Yes
+
+Can included page define fields or methods that main page uses?
+No                                                  Yes
+
+Does main page need to be updated when included page changes?
+No                                                  Yes
+ 
+What is the equivalent servlet code?  
+include method of 
+RequestDispatcher                                   None
+
+Where is it discussed? 
+Section 13.1                                        Section 13.2 (this section)
+
+reserve the include directive for situations for which you really
+need the extra power it affords.
+
+With most servers, if you use the include directive and change the included file,
+you also have to update the modification date of the main page. 
+
+The XML-compatible equivalent of
+<%@ include file="..." %>
+is
+<jsp:directive.include file="..." />
+When this form is used, both the main page and the included file must use
+XML-compatible syntax throughout
+
+

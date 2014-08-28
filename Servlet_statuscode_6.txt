@@ -1,0 +1,44 @@
+As we saw in the previous chapter, a request from a browser or other client consists
+of an HTTP command (usually GET or POST), zero or more request headers (one or
+more in HTTP 1.1, since Host is required), a blank line, and, only in the case of
+POST requests, some query data. A typical request looks like the following.
+
+When a Web server responds to a request, the response typically consists of a status line, some response headers, a blank line, and the document. A typical response
+looks like this:
+HTTP/1.1 200 OK
+Content-Type: text/html
+Header2: ...
+
+The status line consists of the HTTP version (HTTP/1.1 in the preceding example), a status code (an integer; 200 in the example), and a very short message corresponding to the status code (OK in the example). In most cases, the headers are
+optional except for Content-Type, which specifies the MIME type of the document that follows.
+
+When you want to set an arbitrary status code, do so with the setStatus method of HttpServletResponse.
+Set status codes before sending any document content to the client.
+
+• public void sendRedirect(String url)
+The 302 status code directs the browser to connect to a new location. 
+The sendRedirect method generates a 302 response along with a 
+Location header giving the URL of the new document. Either an 
+absolute or a relative URL is permitted; the system automatically 
+translates relative URLs into absolute ones before putting them in the 
+Location header.
+
+• public void sendError(int code, String message)
+The 404 status code is used when no document is found on the server. 
+The sendError method sends a status code (usually 404) along with 
+a short message that is automatically formatted inside an HTML 
+document and sent to the client. 
+
+What if you want to send users to a certain site but set a cookie on the user’s browser first? No problem: return both a Set-Cookie response header (by means of response.addCookie—see Chapter 8) and a 302 status code (by means of response.sendRedirect);
+
+public void doGet(HttpServletRequest request,
+ HttpServletResponse response)
+ throws ServletException, IOException {
+ String userAgent = request.getHeader("User-Agent");
+ if ((userAgent != null) &&
+ (userAgent.indexOf("MSIE") != -1)) {
+response.sendRedirect("http://home.netscape.com");
+ } else {
+response.sendRedirect("http://www.microsoft.com");
+ }
+ }

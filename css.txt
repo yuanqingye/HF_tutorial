@@ -1,0 +1,34 @@
+Javascript CSS
+<script>
+document.getElementById("p2").style.color="blue";
+</script>
+
+onclick="document.getElementById('id1').style.color='red'"
+
+Normal CSS
+<style type="text/css">
+p
+{
+color:red
+}
+.blue
+{
+color:orange;
+text-align:center;
+}
+</style>
+
+HTML css
+style="width: 750px; height: 200px; overflow:scroll"
+
+JQuery css
+(this).css("color","red");
+(this).css("background-color","red")
+(this).css({"color":"red","font-size","9"})
+
+Inline:style="color:a;margin-left:20px",
+internal:<style type="text/css">
+body {background-color:yellow;}
+p {color:blue;}
+</style>
+external:<link rel="stylesheet" type="text/css" href="mystyle.css">

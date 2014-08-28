@@ -1,0 +1,9 @@
+Medications can be entered and/or prescribed from the Patient Chart-Medication List,Encounter SOAP Medication Hx or Prescribe sections
+
+Enter the diagnosis codes using one of the four methods and click on the desired code.
+1.Diagnosis Panels created during setup
+2.Patient's Problem List
+3.Patient History
+4.Search by code or description
+
+what is the "check out" process

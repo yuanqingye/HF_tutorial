@@ -1,0 +1,30 @@
+Learn more about BatchSaving - since sometime you need to save in batch instead of save in a for loop one item at a time.
+
+Clob/Blob have special handling - see sample DAOs.
+
+Beware of connection leaks - if you do not specifically call getConnection() in your method - you are safe, else always call closeAll() in finally.
+
+SQL queries - they are TEMPLATE oriented.
+
+In the concrete class you identify the tablename, primary key, provide the mapping rules from column to POJO(SELECT stmt), POJO instance vars to columns(INSERT, UPDATE).
+
+template method:find,buildinsert,insert,save
+
+Use ResultSetMetaDate to get the column names
+Use ResultSet to get the column values
+create a Map(getColumnMap() is used)
+
+protected Long getSequence(){
+return getSequence("CCARE_IP_ADDRESS_SEQ");
+}
+
+write SQL queries-always prepared statement
+
+Override getSequence() method;
+Create ColumnEnum to avoid spelling mistakes
+So right now you have three places to write column names
+(BuildColumn,LoadColumn,ColumnNames)
+
+executeTransactions() method make sure you don't do only one part of the transactions.
+
+TransactionSteps is an important Interface.

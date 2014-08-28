@@ -1,0 +1,200 @@
+package com.hfc.ui.context;
+
+import com.hfc.service.BulkEligibilityUploaderTest;
+import com.hfc.service.PrecertInquirySenderTest;
+import com.hfc.service.ReferralInquiryRequestSenderTest;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+public class AllTests extends TestCase {
+	
+    public static Test suite() {
+        TestSuite suite = new TestSuite("Test for com.hfc.service");
+        //$JUnit-BEGIN$
+        suite.addTestSuite(TestCSIViewContext.class);
+        suite.addTestSuite(TestEligViewContext.class);
+        //$JUnit-END$
+        return suite;
+    }
+}
+
+
+1   /*
+    2    * Copyright 2006 Google Inc.
+    3    * 
+    4    * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+    5    * use this file except in compliance with the License. You may obtain a copy of
+    6    * the License at
+    7    * 
+    8    * http://www.apache.org/licenses/LICENSE-2.0
+    9    * 
+   10    * Unless required by applicable law or agreed to in writing, software
+   11    * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+   12    * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+   13    * License for the specific language governing permissions and limitations under
+   14    * the License.
+   15    */
+   16   package junit.framework;
+   17   
+   18   /**
+   19    * Translatable version of JUnit's <code>TestCase</code>.
+   20    */
+   21   public class TestCase extends Assert implements Test {
+   22   
+   23     private String name;
+   24   
+   25     public int countTestCases() {
+   26       return 1;
+   27     }
+   28   
+   29     public String getName() {
+   30       return name;
+   31     }
+   32   
+   33     public void runBare() throws Throwable {
+   34       setUp();
+   35       try {
+   36         runTest();
+   37       } finally {
+   38         try {
+   39           tearDown();
+   40         } catch (Throwable e) {
+   41           // ignore any exceptions thrown from teardown
+   42         }
+   43       }
+   44     }
+   45   
+   46     public void setName(String name) {
+   47       this.name = name;
+   48     }
+   49   
+   50     public String toString() {
+   51       return getName() + "(" + this.getClass().getName() + ")";
+   52     }
+   53   
+   54     /**
+   55      * Do not override this method, the generated class will override it for you.
+   56      */
+   57     protected void doRunTest(String name) throws Throwable {
+   58     }
+   59   
+   60     protected void runTest() throws Throwable {
+   61       assertNotNull(name);
+   62       doRunTest(name);
+   63     }
+   64   
+   65     protected void setUp() throws Exception {
+   66     }
+   67   
+   68     protected void tearDown() throws Exception {
+   69     }
+   70   
+   71   }
+
+
+http://stackoverflow.com/questions/2635839/junit-confusion-use-extend-testcase-or-test
+
+package de.vogella.junit.first;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+@RunWith(Parameterized.class)
+public class MyParameterizedClassTest {
+
+  private int multiplier;
+
+  public MyParameterizedClassTest(int testParameter) {
+    this.multiplier = testParameter;
+  }
+
+  // creates the test data
+  @Parameters
+  public static Collection<Object[]> data() {
+    Object[][] data = new Object[][] { { 1 }, { 5 }, { 121 } };
+    return Arrays.asList(data);
+  }
+
+  @Test
+  public void testMultiplyException() {
+    MyClass tester = new MyClass();
+    assertEquals("Result", multiplier * multiplier,
+        tester.multiply(multiplier, multiplier));
+  }
+
+}
+
+package com.vogella.junit.first;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class MyClassTest {
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void testExceptionIsThrown() {
+    MyClass tester = new MyClass();
+    tester.multiply(1000, 5);
+  }
+
+  @Test
+  public void testMultiply() {
+    MyClass tester = new MyClass();
+    assertEquals("10 x 5 must be 50", 50, tester.multiply(10, 5));
+  }
+}  
+
+7.5. Testing exception
+The @Test (expected = Exception.class) annotation is limited as it can only test for one exception. To test exceptions, you can use the following test pattern.
+
+try {
+   mustThrowException(); 
+   fail();
+} catch (Exception e) {
+   // expected
+   // could also check for message of exception, etc.
+} 
+
+
+Annotation	Description
+@Test 
+public void method()
+
+The @Test annotation identifies a method as a test method.
+@Test (expected = Exception.class)	 Fails if the method does not throw the named exception.
+@Test(timeout=100)	 Fails if the method takes longer than 100 milliseconds.
+@Before 
+public void method()	 This method is executed before each test. It is used to prepare the test environment (e.g., read input data, initialize the class).
+@After 
+public void method()	 This method is executed after each test. It is used to cleanup the test environment (e.g., delete temporary data, restore defaults). It can also save memory by cleaning up expensive memory structures.
+@BeforeClass 
+public static void method()	 This method is executed once, before the start of all tests. It is used to perform time intensive activities, for example, to connect to a database. Methods marked with this annotation need to be defined as static to work with JUnit.
+@AfterClass 
+public static void method()	 This method is executed once, after all tests have been finished. It is used to perform clean-up activities, for example, to disconnect from a database. Methods annotated with this annotation need to be defined as static to work with JUnit.
+@Ignore	 Ignores the test method. This is useful when the underlying code has been changed and the test case has not yet been adapted. Or if the execution time of this test is too long to be included.
+
+
+
+
+{"content-type":"application/x-www-form-urlencoded","javax.servlet.forward.request_uri":"/electronic/pm/action.do","connection":"keep-alive","host":"localhost:8080","accept-language":"en-US,en;q=0.8,zh-CN;q=0.6,zh;q=0.4","accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8","javax.servlet.forward.context_path":"","origin":"http://localhost:8080","user-agent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36","TEMPLATE_FLAG":"true","MEMBER_ID":"1541162","cache-control":"max-age=0","cookie":"LOGOUT_LINK=\"http://www.google.com\"; JSESSIONID=4C0A9946C926FB660CFE9BF86A7089F0.ccare61","javax.servlet.forward.servlet_path":"/electronic/pm/action.do","content-length":"160","CLAIM_ID":"1529747","practid":"211760","accept-encoding":"gzip,deflate,sdch","referer":"http://localhost:8080/electronic/pm_schedule/action.do","defaultPOSFromLastRequest":"15"}
+
+
+
+
+
+<table id="weekTimeCol" style="width:50px;float:left;border-collapse:collapse;"><tr class='afterHours'><td class="timeLabel">12:00 AM</td><tr class='afterHours'><td class="timeLabel">12:10 AM</td><tr class='afterHours'><td class="timeLabel">12:20 AM</td><tr class='afterHours'><td class="timeLabel">12:30 AM</td><tr class='afterHours'><td class="timeLabel">12:40 AM</td><tr class='afterHours'><td class="timeLabel">12:50 AM</td><tr class='afterHours'><td class="timeLabel">1:00 AM</td><tr class='afterHours'><td class="timeLabel">1:10 AM</td><tr class='afterHours'><td class="timeLabel">1:20 AM</td><tr class='afterHours'><td class="timeLabel">1:30 AM</td><tr class='afterHours'><td class="timeLabel">1:40 AM</td><tr class='afterHours'><td class="timeLabel">1:50 AM</td><tr class='afterHours'><td class="timeLabel">2:00 AM</td><tr class='afterHours'><td class="timeLabel">2:10 AM</td><tr class='afterHours'><td class="timeLabel">2:20 AM</td><tr class='afterHours'><td class="timeLabel">2:30 AM</td><tr class='afterHours'><td class="timeLabel">2:40 AM</td><tr class='afterHours'><td class="timeLabel">2:50 AM</td><tr class='afterHours'><td class="timeLabel">3:00 AM</td><tr class='afterHours'><td class="timeLabel">3:10 AM</td><tr class='afterHours'><td class="timeLabel">3:20 AM</td><tr class='afterHours'><td class="timeLabel">3:30 AM</td><tr class='afterHours'><td class="timeLabel">3:40 AM</td><tr class='afterHours'><td class="timeLabel">3:50 AM</td><tr class='afterHours'><td class="timeLabel">4:00 AM</td><tr class='afterHours'><td class="timeLabel">4:10 AM</td><tr class='afterHours'><td class="timeLabel">4:20 AM</td><tr class='afterHours'><td class="timeLabel">4:30 AM</td><tr class='afterHours'><td class="timeLabel">4:40 AM</td><tr class='afterHours'><td class="timeLabel">4:50 AM</td><tr class='afterHours'><td class="timeLabel">5:00 AM</td><tr class='afterHours'><td class="timeLabel">5:10 AM</td><tr class='afterHours'><td class="timeLabel">5:20 AM</td><tr class='afterHours'><td class="timeLabel">5:30 AM</td><tr class='afterHours'><td class="timeLabel">5:40 AM</td><tr class='afterHours'><td class="timeLabel">5:50 AM</td><tr class='afterHours'><td class="timeLabel">6:00 AM</td><tr class='afterHours'><td class="timeLabel">6:10 AM</td><tr class='afterHours'><td class="timeLabel">6:20 AM</td><tr class='afterHours'><td class="timeLabel">6:30 AM</td><tr class='afterHours'><td class="timeLabel">6:40 AM</td><tr class='afterHours'><td class="timeLabel">6:50 AM</td><tr class='afterHours'><td class="timeLabel">7:00 AM</td><tr class='afterHours'><td class="timeLabel">7:10 AM</td><tr class='afterHours'><td class="timeLabel">7:20 AM</td><tr class='afterHours'><td class="timeLabel">7:30 AM</td><tr class='afterHours'><td class="timeLabel">7:40 AM</td><tr class='afterHours'><td class="timeLabel">7:50 AM</td><tr class='officeHours'><td class="timeLabel">8:00 AM</td><tr class='officeHours'><td class="timeLabel">8:10 AM</td><tr class='officeHours'><td class="timeLabel">8:20 AM</td><tr class='officeHours'><td class="timeLabel">8:30 AM</td><tr class='officeHours'><td class="timeLabel">8:40 AM</td><tr class='officeHours'><td class="timeLabel">8:50 AM</td><tr class='officeHours'><td class="timeLabel">9:00 AM</td><tr class='officeHours'><td class="timeLabel">9:10 AM</td><tr class='officeHours'><td class="timeLabel">9:20 AM</td><tr class='officeHours'><td class="timeLabel">9:30 AM</td><tr class='officeHours'><td class="timeLabel">9:40 AM</td><tr class='officeHours'><td class="timeLabel">9:50 AM</td><tr class='officeHours'><td class="timeLabel">10:00 AM</td><tr class='officeHours'><td class="timeLabel">10:10 AM</td><tr class='officeHours'><td class="timeLabel">10:20 AM</td><tr class='officeHours'><td class="timeLabel">10:30 AM</td><tr class='officeHours'><td class="timeLabel">10:40 AM</td><tr class='officeHours'><td class="timeLabel">10:50 AM</td><tr class='officeHours'><td class="timeLabel">11:00 AM</td><tr class='officeHours'><td class="timeLabel">11:10 AM</td><tr class='officeHours'><td class="timeLabel">11:20 AM</td><tr class='officeHours'><td class="timeLabel">11:30 AM</td><tr class='officeHours'><td class="timeLabel">11:40 AM</td><tr class='officeHours'><td class="timeLabel">11:50 AM</td><tr class='officeHours'><td class="timeLabel">12:00 PM</td><tr class='officeHours'><td class="timeLabel">12:10 PM</td><tr class='officeHours'><td class="timeLabel">12:20 PM</td><tr class='officeHours'><td class="timeLabel">12:30 PM</td><tr class='officeHours'><td class="timeLabel">12:40 PM</td><tr class='officeHours'><td class="timeLabel">12:50 PM</td><tr class='officeHours'><td class="timeLabel">1:00 PM</td><tr class='officeHours'><td class="timeLabel">1:10 PM</td><tr class='officeHours'><td class="timeLabel">1:20 PM</td><tr class='officeHours'><td class="timeLabel">1:30 PM</td><tr class='officeHours'><td class="timeLabel">1:40 PM</td><tr class='officeHours'><td class="timeLabel">1:50 PM</td><tr class='officeHours'><td class="timeLabel">2:00 PM</td><tr class='officeHours'><td class="timeLabel">2:10 PM</td><tr class='officeHours'><td class="timeLabel">2:20 PM</td><tr class='officeHours'><td class="timeLabel">2:30 PM</td><tr class='officeHours'><td class="timeLabel">2:40 PM</td><tr class='officeHours'><td class="timeLabel">2:50 PM</td><tr class='officeHours'><td class="timeLabel">3:00 PM</td><tr class='officeHours'><td class="timeLabel">3:10 PM</td><tr class='officeHours'><td class="timeLabel">3:20 PM</td><tr class='officeHours'><td class="timeLabel">3:30 PM</td><tr class='officeHours'><td class="timeLabel">3:40 PM</td><tr class='officeHours'><td class="timeLabel">3:50 PM</td><tr class='officeHours'><td class="timeLabel">4:00 PM</td><tr class='officeHours'><td class="timeLabel">4:10 PM</td><tr class='officeHours'><td class="timeLabel">4:20 PM</td><tr class='officeHours'><td class="timeLabel">4:30 PM</td><tr class='officeHours'><td class="timeLabel">4:40 PM</td><tr class='officeHours'><td class="timeLabel">4:50 PM</td><tr class='officeHours'><td class="timeLabel">5:00 PM</td><tr class='officeHours'><td class="timeLabel">5:10 PM</td><tr class='officeHours'><td class="timeLabel">5:20 PM</td><tr class='officeHours'><td class="timeLabel">5:30 PM</td><tr class='officeHours'><td class="timeLabel">5:40 PM</td><tr class='officeHours'><td class="timeLabel">5:50 PM</td><tr class='afterHours'><td class="timeLabel">6:00 PM</td><tr class='afterHours'><td class="timeLabel">6:10 PM</td><tr class='afterHours'><td class="timeLabel">6:20 PM</td><tr class='afterHours'><td class="timeLabel">6:30 PM</td><tr class='afterHours'><td class="timeLabel">6:40 PM</td><tr class='afterHours'><td class="timeLabel">6:50 PM</td><tr class='afterHours'><td class="timeLabel">7:00 PM</td><tr class='afterHours'><td class="timeLabel">7:10 PM</td><tr class='afterHours'><td class="timeLabel">7:20 PM</td><tr class='afterHours'><td class="timeLabel">7:30 PM</td><tr class='afterHours'><td class="timeLabel">7:40 PM</td><tr class='afterHours'><td class="timeLabel">7:50 PM</td><tr class='afterHours'><td class="timeLabel">8:00 PM</td><tr class='afterHours'><td class="timeLabel">8:10 PM</td><tr class='afterHours'><td class="timeLabel">8:20 PM</td><tr class='afterHours'><td class="timeLabel">8:30 PM</td><tr class='afterHours'><td class="timeLabel">8:40 PM</td><tr class='afterHours'><td class="timeLabel">8:50 PM</td><tr class='afterHours'><td class="timeLabel">9:00 PM</td><tr class='afterHours'><td class="timeLabel">9:10 PM</td><tr class='afterHours'><td class="timeLabel">9:20 PM</td><tr class='afterHours'><td class="timeLabel">9:30 PM</td><tr class='afterHours'><td class="timeLabel">9:40 PM</td><tr class='afterHours'><td class="timeLabel">9:50 PM</td><tr class='afterHours'><td class="timeLabel">10:00 PM</td><tr class='afterHours'><td class="timeLabel">10:10 PM</td><tr class='afterHours'><td class="timeLabel">10:20 PM</td><tr class='afterHours'><td class="timeLabel">10:30 PM</td><tr class='afterHours'><td class="timeLabel">10:40 PM</td><tr class='afterHours'><td class="timeLabel">10:50 PM</td><tr class='afterHours'><td class="timeLabel">11:00 PM</td><tr class='afterHours'><td class="timeLabel">11:10 PM</td><tr class='afterHours'><td class="timeLabel">11:20 PM</td><tr class='afterHours'><td class="timeLabel">11:30 PM</td><tr class='afterHours'><td class="timeLabel">11:40 PM</td><tr class='afterHours'><td class="timeLabel">11:50 PM</td></tr></table>
+
+testcomplete
+seleniun
+

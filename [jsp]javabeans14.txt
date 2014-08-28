@@ -1,0 +1,97 @@
+Use beans. Develop separate utility classes structured as 
+beans. Use jsp:useBean, jsp:getProperty, and 
+jsp:setProperty to invoke the code.
+
+separate classes are easier to write,compile, test, debug, and reuse.
+
+beans are merely regular Java classes that follow some simple conventions defined by the JavaBeans specification; beans extend no particular class, are in no particular package, and use no particular interface.
+
+With beans in general, visual manipulation tools and other programs can automatically discover information about classes that follow this format and can create and manipulate the classes without the user having to explicitly write any code.
+
+1. No Java syntax. By using beans, page authors can manipulate Java 
+objects using only XML-compatible syntax: no parentheses, semicolons, or curly braces. This promotes a stronger separation between 
+the content and the presentation and is especially useful in large 
+development teams that have separate Web and Java developers.
+2. Simpler object sharing. When you use the JSP bean constructs, you 
+can much more easily share objects among multiple pages or between 
+requests than if you use the equivalent explicit Java code.
+3. Convenient correspondence between request parameters and 
+object properties. The JSP bean constructs greatly simplify the process of reading request parameters, converting from strings, and putting the results inside objects.
+
+
+A bean class must have a zero-argument (default) constructor
+
+A bean class should have no public instance variables (fields).
+
+Persistent values should be accessed through methods called getXxx and setXxx.
+
+The one exception to this naming convention is with boolean properties: they are permitted to use a method called isXxx to look up their values.
+
+<jsp:useBean id="beanName" class="package.Class" />
+
+<jsp:getProperty name="beanName" property="propertyName" />
+
+<jsp:setProperty name="beanName" property="propertyName" value="propertyValue" />
+
+So, for example, the JSP action <jsp:useBean id="book1" class="coreservlets.Book" /> can normally be thought of as equivalent to the scriptlet
+<% coreservlets.Book book1 = new coreservlets.Book(); %>
+
+This statement usually means “instantiate an object of the class specified by
+Class, and bind it to a variable in _jspService with the name specified by id.”
+
+Note, however, that you use the fully qualified class name
+
+the proper location for individual bean classes is WEB-INF/classes/subdirectoryMatchingPackageName
+
+JAR files containing bean classes should be placed in the WEB-INF/lib directory.
+
+you can specify a scope attribute that associates the bean with more than just the current page.
+
+<jsp:useBean id="thread1" class="mypackage.MyClass" 
+type="java.lang.Runnable" />
+This use results in code similar to the following being inserted into the
+_jspService method.
+java.lang.Runnable thread1 = new myPackage.MyClass();
+
+<jsp:getProperty name="book1" property="title" />
+<%= book1.getTitle() %>
+
+if you don't want to do the type conversion, the following is a good way
+
+<jsp:setProperty name="beanname" property="propname" parameter="paraname">
+if you want to have property and parameter use the same name, then you can just do
+<jsp:setProperty name="beanname" property="pname">
+
+auto populate the property by form parameters
+<jsp:setProperty name="entry" property="*" />  
+
+if a parameter is missing, nothing will be modified or created, even value null,so it is convinient to set a identifiable default values let you know if the property has been populated or modified
+
+consider use of error pages
+
+, two JSP pages or a JSP page and a servlet will share 
+request objects when you use jsp:include (Section 13.1), 
+jsp:forward (Section 13.3), or the include or forward methods 
+of RequestDispatcher
+
+you can use
+<jsp:useBean ...>statements</jsp:useBean>
+The point of using the second form is that the statements between the
+jsp:useBean start and end tags are executed only if a new bean is created,
+
+To mimic a constructor:
+<jsp:useBean id="counter" 
+             class="coreservlets.AccessCountBean"
+             scope="application">
+  <jsp:setProperty name="counter" 
+                   property="firstPage"
+                   value="SharedCounts1.jsp" />
+</jsp:useBean>
+
+
+• Using beans as utility classes that can be tested separately from JSP 
+pages.
+• Using unshared (page-scoped) beans.
+• Sharing request-scoped beans.
+• Sharing session-scoped beans.
+• Sharing application-scoped (i.e., ServletContext-scoped) beans

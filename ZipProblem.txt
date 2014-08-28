@@ -1,0 +1,7 @@
+member_demographic_info.jsp
+patient_information_inc.jsp >> has button to save_patient()
+patient_information.jsp >> has definition of function save_patient()
+
+PatientInformationContext ctx = new PatientInformationContext(request)
+
+PATIENT_SAVE(PatientSaveAction.class), >> ActionEnum

@@ -1,0 +1,46 @@
+By using the JDBC API, you can access a wide variety of SQL databases with exactly the same Java syntax.
+
+1. Load the JDBC driver. To load a driver, you specify the classname 
+of the database driver in the Class.forName method. By doing so, 
+you automatically create a driver instance and register it with the 
+JDBC driver manager. 
+
+2. Define the connection URL. In JDBC, a connection URL specifies 
+the server host, port, and database name with which to establish a 
+connection.
+
+3. Establish the connection. With the connection URL, username, 
+and password, a network connection to the database can be established. Once the connection is established, database queries can be 
+performed until the connection is closed.
+
+4Create a Statement object. Creating a Statement object enables 
+you to send queries and commands to the database.
+
+5. Execute a query or update. Given a Statement object, you can 
+send SQL statements to the database by using the execute, 
+executeQuery, executeUpdate, or executeBatch methods.
+
+6. Process the results. When a database query is executed, a 
+ResultSet is returned. The ResultSet represents a set of rows 
+and columns that you can process by calls to next and various 
+getXxx methods.
+
+7. Close the connection. When you are finished performing queries 
+and processing results, you should close the connection, releasing 
+resources to the database. 
+
+java application-->JDBC API-->JDBC Driver Manager-->JDBC Driver API-->JDBC Driver-->Database
+java application-->JDBC API-->JDBC Driver Manager-->JDBC Driver API-->JDBC-ODBC Bridge-->ODBC Driver-->Database
+
+The driver is the piece of software that knows how to talk to the actual database server
+
+String host = "dbhost.yourcompany.com";
+String dbName = "someName";
+int port = 1234;
+String oracleURL = "jdbc:oracle:thin:@" + host + 
+":" + port + ":" + dbName;
+String sybaseURL = "jdbc:sybase:Tds:" + host + 
+":" + port + ":" + "?SERVICENAME=" + dbName;
+String msAccessURL = "jdbc:odbc:" + dbName;
+
+The first column in a ResultSet row has index 1, not 0.

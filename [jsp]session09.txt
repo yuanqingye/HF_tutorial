@@ -1,0 +1,153 @@
+String sessionID = makeUniqueString();
+HashMap sessionInfo = new HashMap();
+HashMap globalTable = findTableStoringSessions();
+globalTable.put(sessionID, sessionInfo);
+Cookie sessionCookie = new Cookie("JSESSIONID", sessionID);
+sessionCookie.setPath("/");
+response.addCookie(sessionCookie)
+
+1. Accessing the session object associated with the current 
+request. Call request.getSession to get an HttpSession
+object, which is a simple hash table for storing user-specific data.
+
+2. Looking up information associated with a session. Call 
+getAttribute on the HttpSession object, cast the return value 
+to the appropriate type, and check whether the result is null. 
+
+3. Storing information in a session. Use setAttribute with a key 
+and a value.
+
+4. Discarding session data. Call removeAttribute to discard a specific value. Call invalidate to discard an entire session. Call 
+logout to log the client out of the Web server and invalidate all sessions associated with that user.
+
+Call request.getSession before you send any document content to the client which returns null if no session already exists for
+the current client. Here is an example.
+
+HttpSession session = request.getSession(false);(if this is true,then the getsession will create a new session if it couldn't find a new one)
+
+HttpSession session = request.getSession(false);
+if (session == null) {
+printMessageSayingCartIsEmpty();
+} else {
+extractCartAndPrintContents(session);
+}
+
+HttpSession session = request.getSession();
+SomeClass value =
+(SomeClass)session.getAttribute("someIdentifier");
+if (value == null) { // No such object already in session
+value = new SomeClass(...);
+session.setAttribute("someIdentifier", value);
+}
+doSomethingWith(value);
+
+In most cases, you have a specific attribute name in mind and want to find the
+value (if any) already associated with that name. However, you can also discover all
+the attribute names in a given session by calling  getAttributeNames, which
+returns an Enumeration.
+
+Be aware that setAttribute replaces any previous values; to remove a value
+without supplying a replacement, use removeAttribute.
+
+implement HttpSessionBindingListener interface with any attribute objects
+
+In general, session attributes merely have to be of type Object (i.e., they can be
+anything other than null or a primitive like int, double, or boolean). However,
+some application servers support distributed Web applications in which an application is shared across a cluster of physical servers. Session tracking needs to still work
+in such a case, so the system needs to be able to move session objects from machine
+to machine. Thus, if you run in such an environment and you mark your Web application as being distributable, you must meet the additional requirement that session
+attributes implement the Serializable interface.
+
+• Remove only the data your servlet created. You can call removeAttribute("key") to discard the value associated with the specified key. This is the most common approach
+
+Delete the whole session (in the current Web application). You can call invalidate to discard an entire session. Just remember that doing so causes all of that user’s session data to be lost, not just the session data that your servlet or JSP page created. So, all the servlets and JSP pages in a Web application have to agree on the cases for which invalidate may be called
+
+public void setAttribute(String name, Object value) This method associates a value with a name. If the object supplied to setAttribute implements the HttpSessionBindingListener interface, 
+the object’s valueBound method is called after it is stored in the session. Similarly, if the previous value implements HttpSessionBindingListener, its valueUnbound method is called.
+
+public void removeAttribute(String name)
+This method removes any values associated with the designated name. If the value being removed implements HttpSessionBindingListener, its valueUnbound method is called.
+
+public Object getAttribute(String name)
+This method extracts a previously stored value from a session object. It returns null if no value is associated with the given name. 
+
+public Enumeration getAttributeNames()
+This method returns the names of all attributes in the session.
+
+public void invalidate()
+This method invalidates the session and unbinds all objects associated with it. Use this method with caution; remember that sessions are associated with 
+users (i.e., clients), not with individual servlets or JSP pages. So, if you invalidate a session, you might be destroying data that another servlet or JSP page is using.
+
+public void logout()
+This method logs the client out of the Web server and invalidates all sessions associated with that client
+
+Notice,mistake may be taken:
+HttpSession session = request.getSession();
+if (session.isNew()) {
+doStuffForNewbies();
+} else {
+doStuffForReturnVisitors(); // Wrong!
+}
+
+Yes, if isNew returns true, then as far as you can tell this is the user’s first visit (at least within the session timeout). But if isNew returns false, it 
+merely shows that they have visited the Web application before, not that they have visited your servlet or JSP page before.
+
+public long getCreationTime()
+This method returns the time in milliseconds since midnight, January 1, 1970 (GMT) at which the session was first built. To get a value useful for printing, 
+pass the value to the Date constructor or the setTimeInMillis method of GregorianCalendar.
+
+public long getLastAccessedTime()
+This method returns the time in milliseconds since midnight, January 1, 1970 (GMT) at which the session was last accessed by the client. 
+
+The analogous situation in the servlet world is one in which the server is trying to
+decide if it can throw away your HttpSession object. Just because you are not currently using the session does not mean the server can throw it away. Maybe you will be
+back (submit a new request) soon? If you quit your browser, thus causing the
+browser-session-level cookies to be lost, the session is effectively broken. But, as with the
+case of getting in your car and leaving Wal-Mart, the server does not know that you quit
+your browser. So, the server still has to wait for a period of time to see if the session has
+been abandoned. Sessions automatically become inactive when the amount of time
+between client accesses exceeds the interval specified by getMaxInactiveInterval.
+When this happens, objects stored in the HttpSession object are removed
+(unbound). Then, if those objects implement the HttpSessionBindingListener
+interface, they are automatically notified. The one exception to the “the server waits
+until sessions time out” rule is if invalidate or logout is called. This is akin to your
+explicitly telling the Wal-Mart clerk that you are leaving, so the server can immediately
+remove all the items from the session and destroy the session object. 
+
+The bad news: lots of other code has to change. In particular, if any of your pages contain links back to your own site, you have to explicitly add the session data to the
+URL. Now, the servlet API provides methods to add this information to whatever URL you specify. The problem is that you have to call these methods;
+
+There are two possible situations in which you might use URLs that refer to your own site. 
+The first one is where the URLs are embedded in the Web page that the servlet generates. These URLs should be passed through the  encodeURL method of
+HttpServletResponse. The method determines if URL rewriting is currently inuse and appends the session information only if necessary. The URL is returned
+unchanged otherwise. 
+
+Here’s an example:
+String originalURL = someRelativeOrAbsoluteURL;
+String encodedURL = response.encodeURL(originalURL);
+out.println("<A HREF=\"" + encodedURL + "\">...</A>");
+
+he second situation in which you might use a URL that refers to your own site is
+in a sendRedirect call (i.e., placed into the Location response header). In this
+second situation, different rules determine whether session information needs to be
+attached, so you cannot use  encodeURL. Fortunately,  HttpServletResponse
+supplies an encodeRedirectURL method to handle that case. Here’s an example:
+String originalURL = someURL; 
+String encodedURL = response.encodeRedirectURL(originalURL);
+response.sendRedirect(encodedURL);
+
+The following snippet shows the general approach for session tracking when an immutable object will be stored.
+HttpSession session = request.getSession();
+SomeImmutableClass value =
+(SomeImmutableClass)session.getAttribute("someIdentifier");
+if (value == null) { // No such object already in session
+value = new SomeImmutableClass(...);
+} else {
+value = new SomeImmutableClass(calculatedFrom(value));
+}
+session.setAttribute("someIdentifier", value);
+doSomethingWith(value);
+This approach contrasts with the approach used in the next section (Section 9.7)
+with a mutable (modifiable) data structure. In that approach, the object is allocated
+and setAttribute is called only when there is no such object already in the session. That is, the contents of the object change each time, but the session maintains
+the same object reference.

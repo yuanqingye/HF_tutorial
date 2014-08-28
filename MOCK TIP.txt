@@ -1,0 +1,34 @@
+http://stackoverflow.com/questions/6455359/creating-a-mock-httpservletrequest-out-of-a-url-string
+Simplest ways to mock an HttpServletRequest:
+
+Create an anonymous subclass:
+
+HttpServletRequest mock = new HttpServletRequest ()
+{
+    private final Map<String, String[]> params = /* whatever */
+
+    public Map<String, String[]> getParameterMap()
+    {
+        return params;
+    }
+
+    public String getParameter(String name)
+    {
+        String[] matches = params.get(name);
+        if (matches == null || matches.length == 0) return null;
+        return matches[0];
+    }
+
+    // TODO *many* methods to implement here
+};
+Use jMock, Mockito, or some other general-purpose mocking framework:
+
+HttpServletRequest mock = context.mock(HttpServletRequest.class); // jMock
+HttpServletRequest mock2 = Mockito.mock(HttpServletRequest.class); // Mockito
+Use HttpUnit's ServletUnit and don't mock the request at all.
+
+Spring has just that
+
+http://static.springsource.org/spring/docs/3.0.x/api/org/springframework/mock/web/MockHttpServletRequest.html
+EDIT: it's in the spring-test module (if you are using maven).
+

@@ -1,0 +1,79 @@
+1. Use the FORM element to create an HTML form.
+2. Use input elements to collect user data.
+3. Place a submit button near the bottom of the form.
+
+advantage:
+1No difference for get and post handling
+2No decoding
+3No chopping
+4No worry about duplicationg,missing...etc
+
+An empty String is returned if the parameter exists but has no value (i.e., the user left the corresponding textfield empty when submitting the form), and null is returned if there was no
+such parameter.
+
+Parameter names are case sensitive so, for example, request.getParameter("Param1") and request.getParameter("param1") are not interchangeable.
+
+If the same parameter name might appear in the form data more than once, you
+should call getParameterValues (which returns an array of strings) instead of
+getParameter (which returns a single string corresponding to the first occurrence
+of the parameter). The return value of getParameterValues is null for nonexistent parameter names and is a one-element array when the parameter has only a single value.
+
+getParameterNames & getParameterMap
+return enum and map
+
+Rather than reading individual form parameters, you can access the query data directly
+by calling getReader or getInputStream on the HttpServletRequest and
+then using that stream to parse the raw input. Note, however, that if you read the data
+in this manner, it is not guaranteed to be available with getParameter.
+
+The first case in which you might read and parse the data yourself is when the data
+comes from a custom client rather than by an HTML form. The most common custom client is an applet; applet-servlet communication.
+
+The second situation in which you might read the data yourself is when the data is
+from an uploaded file. HTML supports a FORM element (<INPUT
+TYPE="FILE"...>) that lets the client upload a file to the server. Unfortunately,
+the servlet API defines no mechanism to read such files. So, you need a third-party
+library to do so.
+
+So, you are left with two choices: read the parameter in one character set and convert it to another, or use an autodetect feature provided with some character sets.
+For the first option, you would read the parameter of interest, use getBytes to
+extract the raw bytes, then pass those bytes to the String constructor along with the
+name of the desired character set. Here is an example that converts a parameter to
+Japanese:
+String firstNameWrongEncoding = request.getParameter("firstName");
+String firstName = 
+new String(firstNameWrongEncoding.getBytes(), "Shift_JIS");
+For the second option, you would use a character set that supports detection and
+conversion from the default set. A full list of character sets supported in Java is available at http://java.sun.com/j2se/1.4.1/docs/guide/intl/encoding.doc.html. For
+example, to allow input in either English or Japanese, you might use the following.
+request.setCharacterEncoding("JISAutoDetect");
+String firstName = request.getParameter("firstName");
+
+Check if:
+1 The value is null
+2 The value is empty string
+3 The value is not in proper form
+
+String param = request.getParameter("someName");
+if ((param == null) || (param.trim().equals(""))) {
+doSomethingForMissingValues(...);
+} else {
+doSomethingWithParameter(param);
+}
+
+Also need escape:>,<,& and " sometimes especially they are in request
+&gt,&lt,&amp,&quot;
+
+The gist, though, is that an ordinary Java object is considered to be a bean if the class uses private fields and has methods that follow the get/
+set naming convention. The names of the methods (minus the word “get” or “set”
+and with the first character in lower case) are called properties. For example, an arbitrary Java class with a getName and setName method is said to define a bean that
+has a property called name. 
+
+• Users should not have to reenter values that they already supplied.
+• Missing form fields should be marked prominently
+
+• Have the same servlet present the form, process the data, and present the results.
+• Have one servlet present the form; have a second servlet process the data and present the results. 
+• Have a JSP page “manually” present the form; have a servlet or JSP page process the data and present the results. 
+• Have a JSP page present the form, automatically filling in the fields with values obtained from a data object. Have a servlet 
+or JSP page process the data and present the results. 

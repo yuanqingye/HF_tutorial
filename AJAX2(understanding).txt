@@ -1,0 +1,148 @@
+It will be good for asynchronous means that every tool will not change when we scroll down the page;
+
+Ajax transfer partial data which make the pages load fewer data(no content needed in long run)
+
+1 Browser right now host applications not just content;
+2 User will interact with the server more implicit rather than explicit
+3 Since the Ajax code is not trivial and take great effect, we must put enough effort into it
+4 The server tried to send the data rather than content
+
+¦ Introducing the technologies behind Ajax
+¦ Using Cascading Style Sheets to define look and feel
+¦ Using the Document Object Model to define the user interface structure
+¦ Using XMLHttpRequest to asynchronously contact the server
+
+Ajax isn’t a single technology. Rather, it’s a collection of four technologies that 
+complement one another. Table 2.1 summarizes these technologies and the role 
+that each has to play.(javascript,css,dom and XMLHttpRequest object)
+
+<html>
+<head>
+<link rel='stylesheet' type='text/css' 
+  href='hello.css' />          
+<script type='text/javascript' 
+  src='hello.js'></script>   
+</head>
+<body>
+<p id='hello'>hello</p>
+<div id='empty'></div>   
+</body>
+</html>
+
+Our addNode() function uses the standard document.create-
+Element() and document.createTextNode() methods. createElement() can be 
+used to create any HTML element, taking the tag type as an argument, such as
+  var childEl=document.createElement("div");
+createTextNode() creates a DOM node representing a piece of text, commonly 
+found nested inside heading, div, paragraph, and list item tags.
+  var txtNode=document.createTextNode("some text");
+The DOM standard treats text nodes as separate from those representing HTML
+elements. They can’t have styles applied to them directly and hence take up much 
+less memory. The text represented by a text node may, however, be styled by the 
+DOM element containing it.
+ Once the node, of whatever type, has been created, it must be attached to the 
+document before it is visible in the browser window. The DOM node method 
+appendChild() is used to accomplish this:
+  el.appendChild(childEl);
+
+empty.style.border="solid green 2px"; 
+empty.style.width="200px";
+
+A shortcut: Using the innerHTML property
+function addListItemUsingInnerHTML(el,text){
+  el.innerHTML+="<div class='programmed'>"+text+"</div>";
+}
+
+The IFrame has been styled as being invisible by setting its width and height to 
+zero pixels. We could use a styling of display:none, but certain browsers will opti-
+mize based on this and not bother to load the document!
+
+Using callback functions to monitor the request
+The second part of the equation for handling asynchronous communications is 
+setting up a reentry point in your code for picking up the results of the call once it 
+has finished. This is generally implemented by assigning a callback function, that 
+is, a piece of code that will be invoked when the results are ready, at some unspec-
+ified point in the future. The window.onload function that we saw in listing 2.9 is a 
+callback function.
+ Callback functions fit the event-driven programming approach used in most 
+modern  UI toolkits—keyboard presses, mouse clicks, and so on will occur at 
+unpredictable points in the future, too, and the programmer anticipates them by 
+writing a function to handle them when they do occur. When coding UI events in 
+JavaScript, we assign functions to the onkeypress,  onmouseover, and similarly 
+named properties of an object. When coding server request callbacks, we encoun-
+ter similar properties called onload and onreadystatechange.
+
+var READY_STATE_UNINITIALIZED=0;
+var READY_STATE_LOADING=1;         
+var READY_STATE_LOADED=2;          
+var READY_STATE_INTERACTIVE=3;     
+var READY_STATE_COMPLETE=4;      
+var req;
+function sendRequest(url,params,HttpMethod){
+  if (!HttpMethod){
+    HttpMethod="GET";
+  }
+  req=getXMLHTTPRequest();
+  if (req){
+    req.onreadystatechange=onReadyStateChange;
+    req.open(HttpMethod,url,true);
+    req.setRequestHeader
+         ("Content-Type", "application/x-www-form-urlencoded");
+    req.send(params);
+  }
+}
+
+function onReadyStateChange(){
+  var ready=req.readyState;       
+  var data=null;
+  if (ready==READY_STATE_COMPLETE){
+    data=req.responseText;        
+  }else{
+    data="loading...["+ready+"]"; 
+  }
+  //... do something with the data...
+}
+
+First, we alter our sendRequest() function to tell the request object what its call-
+back handler is, before we send it off. Second, we define the handler function, 
+which we have rather unimaginatively called onReadyStateChange(). 
+
+ What sets Ajax apart is not the technologies that it employs but the interac-
+tion model that it enables through the use of those technologies. The web-
+based interaction model to which we are accustomed is not suited to sovereign 
+applications, and new possibilities begin to emerge as we break away from that 
+interaction model.
+
+We already saw some elementary refactoring at work in our examples in 
+chapter 2, when we moved the JavaScript, HTML, and stylesheets into separate 
+files. However, the JavaScript is starting to get rather long at 120 lines or so and 
+is mixing together low-level functionality (such as making requests to the server) 
+with code that deals specifically with our list object. As we begin to tackle bigger 
+projects, this single JavaScript file (and single stylesheet, for that matter) will 
+suffer. The goal that we’re pursuing—creating small, easily readable, easily 
+changeable chunks of code that address one particular issue—is often called sep-
+aration of responsibilities.
+
+The facade pattern:Many interface
+The adapter pattern: in one interface, using different logic or code which apply to many systems
+
+With the Observer pattern, responsibility is apportioned appropriately between the event source and the event handler. Handlers take responsibility for 
+registering and unregistering themselves. The event source takes responsibility for maintaining a list of registered parties and firing notifications when the event occurs. The pattern has a long history of use in event-driven UI programming, and we’ll return to Observer when we discuss JavaScript events in more detail in chapter 4. And, as we’ll see, it can also be used in our own code objects independ-ently of the browser’s mouse and key event processing.
+
+Command(stack) pattern
+
+The main components of the Model-View-Controller pattern. The View and Model do not interact directly but always through the Controller. The Controller can be thought of as a thin boundary layer that allows the Model and View to communicate but enforces clear separation of the codebase, improving flexibility and maintainability of the code over time.
+
+Most proponents of MVC on the Web treat the generated HTML page, and the code that generates it, as the View, rather than what the user actually sees when that page renders. In the case of an Ajax application serving data to a JavaScript client, the View from this perspective is the XML document being returned to the client in the HTTP response. Separating the generated document from the busi-ness logic does require a little discipline, then.
+
+Database, Object Module,XML Stream,HTML browser
+
+Refactoring the domain model:Object-relational Mapping tools
+Separating content from presentation
+
+var description="";
+for (var i in MyObj){
+  var property=MyObj[i];
+  description+=i+" = "+property+"\n";
+}
+alert(description);

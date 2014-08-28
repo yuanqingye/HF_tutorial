@@ -1,0 +1,1 @@
+Your servlet gets deployed in a container, which is basically the actual Web server that will take care of all the protocol complexities. (The most populare are Tomcat and Jetty)

@@ -1,0 +1,60 @@
+In JSP, there are three main types of directives: page, include, and taglib.
+
+beans are just classes that follow some simple naming and structure conventions.
+
+By default, the servlet imports  java.lang.*,  javax.servlet.*,javax.servlet.jsp.*,javax.servlet.http.*
+
+Never write JSP  code that relies on any server-specific classes being imported automatically; doing so makes your code nonportable.
+
+Note that, although the JSP pages go in the normal HTML directories of the server, the classes you write that are used by JSP pages must be placed in the special Java-code directories
+
+Note: JSP does not ignore white space—JSP usually generates HTML in which most white space is ignored by the browser, but JSP itself maintains the white space and sends it to the client.
+
+It is not easy for human being to remember the pics
+
+write a page that can be either excel format or html format depends on your setting
+
+The isELIgnored attribute controls whether the JSP 2.0 Expression Language
+(EL) is ignored (true) or evaluated normally (false).
+
+attribute values cannot be computed at runtime, nor can page directives be
+conditionally inserted as can template text. So, the following attempt results in Excel
+content regardless of the result of the checkUserRequest method.
+<% boolean usingExcel = checkUserRequest(request); %>
+<% if (usingExcel) { %>
+<%@ page contentType="application/vnd.ms-excel" %>
+<% } %>
+
+<%@ page buffer="sizekb" %>
+<%@ page buffer="none" %>
+
+<%@ page autoFlush="true" %> <%-- Default --%>
+<%@ page autoFlush="false" %>
+
+<%@ page info="Some Message" %>
+
+<jsp:directive.directiveType attribute="value" />
+For example, the XML equivalent of 
+<%@ page import="java.util.*" %>
+is 
+<jsp:directive.page import="java.util.*" />
+
+<%@ page language="cobol" %>
+For now, don’t bother with this attribute since java is both the default and the
+only legal choice. 
+
+The isThreadSafe attribute controls whether the servlet that results from the JSP
+page will allow concurrent access (the default) or will guarantee that no servlet
+instance processes more than one request at a time (isThreadSafe="false").
+Use of the isThreadSafe attribute takes one of the following two forms.
+<%@ page isThreadSafe="true" %> <%-- Default --%>
+<%@ page isThreadSafe="false" %>
+
+<%! private int idNum = 0; %>
+<% 
+synchronized(this) {
+String userID = "userID" + idNum;
+out.println("Your ID is " + userID + ".");
+idNum = idNum + 1; 
+}
+%>

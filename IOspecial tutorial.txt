@@ -1,0 +1,62 @@
+InputStreamReader input = new InputStreamReader(System.in);
+
+The following is a learning tool designed to explain the basic use of select classes from the java.io package, as well as classes used in conjunction with input and output. The following classes will be covered:
+
+System
+InputStreamReader
+BufferedReader
+File
+BufferedWriter
+String Tokenizer
+FileReader
+FileWriter
+
+StringTokenizer st = new StringTokenizer( " this is a test " );
+While (st.hasMoreTokens ()) { Println(st.nextToken( ) ); }
+
+countTokens( )     Calculates the number of tokens contained in a tokenizable string from the current token.
+
+nextToken (String delim)     Returns the next string Token from a tokenizable string. Counting tokens after calling next token would reduce the token count by one. The current token has been advanced by one.
+
+hasMoreTokens( )     Tests if a tokenizable string has more tokens.
+
+nextElement( )     Returns the next object Token from a tokenizable string
+
+filename.delete() delete file in the folder
+
+Convert is to string
+StringWriter writer = new StringWriter();
+IOUtils.copy(inputStream, writer, encoding);
+String theString = writer.toString();
+
+or 
+public static String convertStreamToString(java.io.InputStream is) {
+    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+    return s.hasNext() ? s.next() : "";
+}
+
+String myString = IOUtils.toString(myInputStream, "UTF-8");
+
+InputStream in = /* your InputStream */;
+InputStreamReader is = new InputStreamReader(in);
+StringBuilder sb=new StringBuilder();
+BufferedReader br = new BufferedReader(is);
+String read = br.readLine();
+
+while(read != null) {
+    //System.out.println(read);
+    sb.append(read);
+    read =br.readLine();
+
+}
+return sb.toString();
+
+ObjectInputStream ois = new ObjectInputStream(fis);
+int i = ois.readInt();
+String today = (String) ois.readObject();
+Date date = (Date) ois.readObject();
+ois.close();
+
+IOUtil.transfer(is, content);
+
+This is the proper way to transform inputstream into string:http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string

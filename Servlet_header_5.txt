@@ -1,0 +1,36 @@
+Always check that the result of request.getHeader is non-null before using it.
+
+GET /servlet/Search?keywords=servlets+jsp HTTP/1.1
+Accept: image/gif, image/jpg, */*
+Accept-Encoding: gzip
+Connection: Keep-Alive
+Cookie: userID=id456578
+Host: www.somebookstore.com
+Referer: http://www.somebookstore.com/findbooks.html
+User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) 
+
+Accept
+Accept-Charset
+Accept-Encoding
+Accept-Language
+Authorization
+Content-Length
+Connection
+Cookie request.getCookies()
+Host
+If-Modified_since servlets don’t need to deal directly with this header. Instead, they should just implement the getLastModified method
+If-Unmodified-Since
+Referer
+User-Agent
+
+5.4Page Encoding
+String encodings = request.getHeader("Accept-Encoding");
+ return((encodings != null) &&
+ (encodings.indexOf("gzip") != -1));
+ if(isgzipaccept)
+ PrintWriter out=new PrintWriter(new GZIPOutputStream(response.getOutputStream()))
+ Need to be closed
+
+5.5Differentiating among different browser types("User-Agent")
+5.6Referer: getHeader("Referer");
+5.7CGI technology

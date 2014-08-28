@@ -1,0 +1,55 @@
+Benefits of Cookies
+1Identifying a user during an e-commerce session.
+2Remembering usernames and passwords
+3Customizing sites.
+4Focusing advertising
+
+Sending Cookies to the Client
+1. Creating a Cookie object:You call the Cookie constructor with a cookie name and a cookie value
+2. Setting the maximum age:use setMaxAge to specify how long (in seconds) the cookie should be valid.. 
+   Setting the maximum age to 0 instructs the browser to delete the cookie.
+3. Placing the Cookie into the HTTP response headers:response.addCookie
+
+You create a cookie by calling the Cookie constructor, which takes two strings: the
+cookie name and the cookie value. Neither the name nor the value should contain
+white space or any of the following characters:
+ [ ] ( ) = , " / ? @ : ;
+
+If you create a cookie and send it to the browser, by default it is a session-level
+cookie: a cookie that is stored in the browser’s memory and deleted when the user
+quits the browser. 
+
+Reading Cookies from the Client
+1 Call request.getCookies
+2 Loop Down the Cookie Array
+String cookiename="some names";
+Cookie[] cookies=request.getCookies();
+if(cookies!=null){
+for(int i=0;i<cookies.length;i++)
+Cookie c=Cookies[i]
+if(cookiename.equals(c.getname())){
+do some thing with c.getValue();}}
+
+public void setComment(String comment)
+public String getComment()
+
+public void setDomain(String domainPattern)
+public String getDomain()
+
+public String getName()
+
+public void setMaxAge(int lifetime)
+public int getMaxAge()
+
+public void setPath(String path)
+public String getPath()
+
+To specify that a cookie apply to all URLs on your site, use 
+cookie.setPath("/").
+
+public void setSecure(boolean secureFlag)
+public boolean getSecure()
+
+More generally, in object-oriented languages, an API usually includes a description of a set of class definitions, with a set of behaviors associated with those classes. This abstract concept is associated with the real functionality exposed, or made available, by the classes that are implemented in terms of class methods (or more generally by all its public components hence all public methods, but also possibly including any internal entity made public, like fields, constants, nested objects, enums, etc.).
+The API in this case can be conceived of as the totality of all the methods publicly exposed by the classes (usually called the class interface). This means that the API prescribes the methods by which one interacts with/handles the objects derived from the class definitions.
+More generally, one can see the API as the collection of all the kinds of objects one can derive from the class definitions, and their associated possible behaviors. Again: the use is mediated by the public methods, but in this interpretation, the methods are seen as a technical detail of how the behavior is implemented

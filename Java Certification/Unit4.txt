@@ -1,0 +1,30 @@
+ Unlike the casting rules, all conver-
+sion rules are enforced at compile time.
+(byte->short)char->int->long->float->double
+
+? If one of the operands is a double, the other operand is converted to a double.
+? Else if one of the operands is a float, the other operand is converted to a float.
+? Else if one of the operands is a long, the other operand is converted to a long.
+? Else both operands are converted to ints.
+The rules for object reference conversion can be stated as follows:
+? An interface type can be converted only to an interface type or to Object. If the new type 
+is an interface, it must be a superinterface of the old type.
+? A class type can be converted to a class type or to an interface type. If converting to a class 
+type, the new type must be a superclass of the old type. If converting to an interface type, 
+the old class must implement the interface.
+? An array may be converted to the class Object, to the interface Cloneable or Serializable, 
+or to an array. Only an array of object reference types can be converted to an array, and the 
+old element type must be convertible to the new element type.
+
+compile rules for casting
+? When both Oldtype and Newtype are classes, one class must be a subclass of the other.
+? When both Oldtype and Newtype are arrays, both arrays must contain reference types 
+(not primitives), and it must be legal to cast an element of Oldtype to an element of 
+Newtype.
+? You can always cast between an interface and a nonfinal object.
+
+runtime rules for casting
+?If Newtype is a class, the class of the expression being converted must be Newtype or must 
+inherit from Newtype.
+?If Newtype is an interface, the class of the expression being converted must implement 
+Newtype.

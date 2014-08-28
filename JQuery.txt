@@ -1,0 +1,608 @@
+Jquery UI
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+$.post(ehrActionLink(), param, function(data){
+				getMyPage('Documents', '/electronic/ehr/ehr_document.jsp', '', new Array('zebraStripe()'));
+			});
+Chaining
+The jQuery library contains the following features:
+$.fn.something = function{}
+this allows you to extend jQuery with your own functions.
+For example, $.fn.something = function{} will allow you to use $("#element").something().
+$.fn is also synonymous with jQuery.fn which might make your Google searches easier.
+
+HTML/DOM manipulation
+CSS manipulation
+HTML event methods
+Effects and animations
+AJAX
+Utilities
+
+Basic syntax is: $(selector).action()
+
+A $ sign to define/access jQuery
+A (selector) to "query (or find)" HTML elements
+A jQuery action() to be performed on the element(s)
+Examples:
+
+$(this).hide() - hides the current element.
+$("p").hide() - hides all <p> elements.
+$(".test").hide() - hides all elements with class="test".
+$("#test").hide() - hides the element with id="test".
+
+Syntax	Description	Example
+$("*")	Selects all elements	
+$(this)	Selects the current HTML element	
+$("p.intro")	Selects all <p> elements with class="intro"	
+$("p:first")	Selects the first <p> element	
+$("ul li:first")	Selects the first <li> element of the first <ul>	
+$("ul li:first-child")	Selects the first <li> element of every <ul>	
+$("[href]")	Selects all elements with an href attribute	
+$("a[target='_blank']")	Selects all <a> elements with a target attribute value equal to "_blank"	
+$("a[target!='_blank']")	Selects all <a> elements with a target attribute value NOT equal to "_blank"	
+$(":button")	Selects all <button> elements and <input> elements of type="button"	
+$("tr:even")	Selects all even <tr> elements	
+$("tr:odd")	Selects all odd <tr> elements	
+
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").toggle();
+  });
+});
+
+fadeOut()=slideUp();
+fadeIn()=slideDown();
+
+CSS format:
+#panel,#flip
+{
+padding:5px;
+text-align:center;
+background-color:#e5eecc;
+border:solid 1px #c3c3c3;
+}
+
+use stop() to stop animation in the middle;
+
+chaining is allowed in JQuery:$("#p1").css("color","red").slideUp(2000).slideDown(2000);
+
+need use call back like:
+$("*").click(function(){
+$().hide(1000,function(){
+alert("whatever you like");
+})
+})
+
+attr("href") to get attributes;
+val() to get form field values;
+html() to get element values(include mark up);
+text() to get element content;
+
+callback function for JQuery:html(),text() and val()
+  $("#test2").html(function(i,origText){
+    return "Old html: " + origText + " New html: Hello <b>world!</b>
+    (index: " + i + ")"; 
+  });
+ 
+$("#w3s").attr("href","http://www.w3schools.com/jquery");
+$("#w3s").attr({
+    "href" : "http://www.w3schools.com/jquery",
+    "title" : "W3Schools jQuery Tutorial"
+  });
+  
+$("ol").append("<li>Appended item</li>");
+
+We will look at four jQuery methods that are used to add new content:
+append() - Inserts content at the end of the selected elements
+prepend() - Inserts content at the beginning of the selected elements
+after() - Inserts content after the selected elements
+before() - Inserts content before the selected elements
+
+To remove elements and content, there are mainly two jQuery methods:
+
+remove() - Removes the selected element (and its child elements)
+empty() - Removes the child elements from the selected element
+$("p").remove(".last") remove all p element within class last
+
+.important
+{
+font-weight:bold;
+font-size:xx-large;
+}
+.blue
+{
+color:blue;
+}
+
+$("button").click(function(){
+  $("h1,h2,p").addClass("blue");
+  $("div").addClass("important");
+});
+You can also specify multiple classes within the addClass() method:
+$("button").click(function(){
+  $("#div1").addClass("important blue");
+});
+removeClass(),toggleClass()
+
+css({"propertyname":"value","propertyname":"value",...});
+$("#div1").width(500).height(500);
+
+$.post(URL,data,callback);
+$.get(URL,callback);
+$("button").click(function(){
+  $.post("demo_test_post.asp",
+  {
+    name:"Donald Duck",
+    city:"Duckburg"
+  },
+  function(data,status){
+    alert("Data: " + data + "\nStatus: " + status);
+  });
+});
+
+typically when you refer to an object you would use a selector like this :
+
+$(this).jqueryfunction()
+if u would need an element within this object you would use :
+
+$('typicalselector',this).jqueryfunction()
+
+registry is an object id
+$("#"+registry).toggle();
+
+function toggleRegistry(registry){
+	$(".registry_details").each(function(){
+		if($(this).attr("id")==registry) {
+			$("#"+registry).toggle();
+			} else {
+				$(this).hide();
+				}								 
+										 });
+										 }
+										 
+The noConflict() method releases the hold on the $ shortcut identifier, so that other scripts can use it.
+You can of course still use jQuery, simply by writing the full name instead of the shortcut:	
+$.noConflict();
+jQuery(document).ready(function(){})
+
+You can also create your own shortcut very easily. The noConflict() method returns a reference to jQuery, that you can save in a  variable, for later use. Here is an example:
+var jq = $.noConflict();
+jq(document).ready(function(){})
+
+If you have a block of jQuery code which uses the $ shortcut and you do not want to change it all, you can pass the $ sign in as a parameter to the ready method. This allows you to access jQuery using $, inside this function - outside of it, you will have to use "jQuery":
+$.noConflict();
+jQuery(document).ready(function($){$("button").click(function(){
+    $("p").text("jQuery is still working!");
+  });})
+  
+The each() method specifies a function to run for each matched element.
+Tip: return false can be used to stop the loop early.
+$(selector).each(function(index,element))
+Required. A function to run for each matched element.
+index - The index position of the selector
+element - The current element (the "this" selector can also be used)
+
+Attach Data to an Element Using an Object
+$(selector).data(object)
+
+Attach Data to an Element
+$(selector).data(name,value)
+
+Return Data from an Element
+$(selector).data(name)
+Optional. Specifies the name of data to retrieve.
+
+If no name is specified, this method will return all stored data for the element as an object
+
+
+$("button").click(function(){
+  x=$("p").get(0);
+  $("div").text(x.nodeName + ": " + x.innerHTML);
+});
+$(selector).get(index)
+
+Index of First Matched Element, Relative to Sibling elements.
+Get the index position of the first matched selected element relative to its sibling elements.
+$(selector).index()
+
+Get the index position of an element, relative to the selector.
+The element can be specified using a DOM element, or a jQuery selector.
+$(selector).index(element)
+
+$(document).ready(function(){
+  personObj=new Object();
+  personObj.firstname="John";
+  personObj.lastname="Doe";
+  personObj.age=50;
+  personObj.eyecolor="blue"; 
+  $("button").click(function(){
+    $("div").text($.param(personObj));
+  });
+});
+
+Definition and Usage
+The param() method creates a serialized representation of an array or an object.
+The serialized values can be used in the URL query string when making an AJAX request.
+Syntax
+$.param(object,trad)
+trad Optional. A Boolean value specifying whether or not to use the traditional style of param serialization.
+
+Definition and Usage
+The removeData() method removes data previously set with the data() method.
+Syntax
+$(selector).removeData(name)
+
+Definition and Usage
+The size() method returns the number of elements matched by the jQuery selector.
+Syntax
+$(selector).size()
+alert($("li").size());
+
+Definition and Usage
+The toArray() method returns the elements matched by the jQuery selector as an array.
+Syntax
+$(selector).toArray()
+
+$("button").click(function(){
+  x=$("li").toArray()
+  for (i=0;i<x.length;i++)
+    {
+    alert(x[i].innerHTML);
+    }
+});
+
+use of mapping for on method{event:function,event:function...}
+ $("p").on({
+    mouseover:function(){$("body").css("background-color","lightgray");},  
+    mouseout:function(){$("body").css("background-color","lightblue");}, 
+    click:function(){$("body").css("background-color","yellow");}  
+  });
+  
+using trigger to trigger an event  
+$("p").on("myOwnEvent", function(event, showName){
+      $(this).text(showName + "! What a beautiful name!").show();
+    });
+    $("button").click(function(){
+      $("p").trigger("myOwnEvent",["Anja"]);
+});
+
+using the format on(event,(selector),data,function,(map))
+
+function handlerName(event) 
+{
+  alert(event.data.msg);
+}
+
+$(document).ready(function(){
+  $("p").on("click", {msg: "You just clicked me!"}, handlerName)
+});
+
+
+define method on future event
+$(document).ready(function(){
+  $("div").on("click","p",function(){
+    $(this).slideToggle();
+  });
+  $("button").click(function(){
+    $("<p>This is a new paragraph.</p>").insertAfter("button");
+  });
+});
+
+If you need a scroll, please try this
+<script>
+x=0;
+$(document).ready(function(){
+  $("div").scroll(function(){
+    $("span").text(x+=1);
+  });
+});
+</script>
+</head>
+<body>
+
+<p>Try the scrollbar in the div</p>
+<div style="border:1px solid black;width:200px;height:100px;overflow:scroll;">In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since.
+<br><br>
+'Whenever you feel like criticizing anyone,' he told me, just remember that all the people in this world haven't had the advantages that you've had.'</div>
+<p>Scrolled <span>0</span> times.</p>
+
+
+Return the CSS property value:
+$(selector).css(property)
+
+Set the CSS property and value:
+$(selector).css(property,value)
+
+Set CSS property and value using a function:
+$(selector).css(property,function(index,currentvalue))
+
+Set multiple properties and values:
+$(selector).css({property:value, property:value, ...})
+
+$(document).ready(function(){
+  var x;
+  $("#btn1").click(function(){
+    x=$("p").detach();
+  });
+  $("#btn2").click(function(){
+    $("body").prepend(x);
+  });
+});
+
+jQuery.each( collection, callback(indexInArray, valueOfElement) )
+collection
+Type: Object
+The object or array to iterate over.
+callback(indexInArray, valueOfElement)
+Type: Function()
+The function that will be executed on every object.
+
+The e can be used to obtain specific information about the click (left, right or center; coordinates clicked; DOM object clicked on), but this specific code sample doesn't use it.
+
+See http://api.jquery.com/category/events/event-object/ for details about what's available.
+
+share|improve this answer
+answered Oct 12 '11 at 13:55
+
+Blazemonger
+26.7k42445
+But who passes the 'e' argument? The browser? – contactmatt Oct 12 '11 at 13:56
+From the link: The event object is guaranteed to be passed to the event handler. – asawyer Oct 12 '11 at 14:00
+1	  
+Any event handler automatically creates it and passes it. I suppose that the OS is technically the creator of it. It's part of the magic. – Blazemonger Oct 12 '11 at 14:01
+2	  
+@mblase75: jQuery creates it, and it's not magic at all. The original event is fired by the browser's DOM, jQuery catches and standardizes it and then calls your event handler functions. – Tomalak Oct 12 '11 at 14:08
+
+Definition and Usage
+The closest() method returns the first ancestor of the selected element.
+
+closest()
+Begins with the current element
+Travels up the DOM tree and returns the first (single) ancestor that matches the passed expression
+The returned jQuery object contains zero or one element
+
+parents()
+Begins with the parent element
+Travels up the DOM tree and returns all ancestors that matches the passed expression
+The returned jQuery object contains zero or more than one element
+
+Other related methods:
+
+parent() - returns the direct parent element of the selected element
+parentsUntil() - returns all ancestor elements between two given arguments
+
+Example: Iterates over items in an array, accessing both the current item and its index.
+
+$.each( ['a','b','c'], function(i, l){
+   alert( "Index #" + i + ": " + l );
+ });
+Example: Iterates over the properties in an object, accessing both the current item and its key.
+
+$.each( { name: "John", lang: "JS" }, function(k, v){
+   alert( "Key: " + k + ", Value: " + v );
+ });
+ 
+ $("li:last").prev("li").addClass("class-to-add")
+ $('li').eq($('li').length-2).addClass("extra")
+ 
+ $('#'+tbodyId)
+   .find('tr')
+   .slice( newRowStart, newRowStart + rowsToShow ) // inclusive of starting point
+  .show();
+  
+  Set content using a function:
+  
+$(selector).html(function(index,currentcontent))
+
+Return the value attribute:
+$(selector).val()
+
+Set the value attribute:
+$(selector).val(value)
+
+Set the value attribute using a function:
+$(selector).val(function(index,currentvalue))
+Parameter	Description
+value	Required. Specifies the value of the value attribute
+function(index,currentvalue)	Optional. Specifies a function that returns the value to set.
+index - Returns the index position of the element in the set
+currentvalue - Returns the current value attribute of selected elements
+
+Return the value of an attribute:
+$(selector).attr(attribute)
+
+Set the attribute and value:
+$(selector).attr(attribute,value)
+
+Set attribute and value using a function:
+$(selector).attr(attribute,function(index,currentvalue))
+
+Set multiple attributes and values:
+$(selector).attr({attribute:value, attribute:value,...})
+
+var message = "Spoon!";
+$( "#foo" ).bind( "click", {
+  msg: message
+}, function( event ) {
+  alert( event.data.msg );
+});
+message = "Not in the face!";
+$( "#bar" ).bind( "click", {
+  msg: message
+}, function( event ) {
+  alert( event.data.msg );
+});
+This time the variable is not referred to directly within the handlers; instead, the variable is passed in by value through eventData, 
+which fixes the value at the time the event is bound. The first handler will now display Spoon! while the second will alert Not in the face!
+
+See the .trigger() method reference for a way to pass data to a handler at the time the event happens rather than when the handler is bound.
+
+you can use two nested functions to make the function being assigned to an element but not working at the very beginning time.
+
+$('.a.b')
+If you want an intersection, just write the selectors together without spaces in between. So for an element that has an ID of a with classes b and c, you would write:
+$('#a.b.c');
+$('.a,.b') means union;
+
+Turn a jQuery object into an array
+
+var obj = $( "li" );
+var arr = $.makeArray( obj );
+
+jquery, for $.ajax({a,b,dataType,success:function(response){$.each(function(){})}});
+
+if you didn't set dataType to json, you will get the response char by char for each method
+
+$(document).ready(function(){
+  $(document).ajaxStart(function(){
+    $("#wait").css("display","block");
+  });
+  $(document).ajaxComplete(function(){
+    $("#wait").css("display","none");
+  });
+  $("button").click(function(){
+    $("#txt").load("demo_ajax_load.asp");
+  });
+});
+
+
+1
+2
+3
+4
+5
+//Create a new jQuery.Event object without the "new" operator.
+var e = jQuery.Event( "click" );
+ 
+// trigger an artificial click event
+jQuery( "body" ).trigger( e );
+As of jQuery 1.6, you can also pass an object to jQuery.Event() and its properties will be set on the newly created Event object.
+
+Example:
+
+// Create a new jQuery.Event object with specified event properties.
+var e = jQuery.Event( "keydown", { keyCode: 64 } );
+ 
+// trigger an artificial keydown event with keyCode 64
+jQuery( "body" ).trigger( e );
+
+I think the advantage of using this approach is that if you want to attach another event to the nested div, you can just use
+
+$("#nested").on('click', function(event) {
+    event.stopPropagation();
+    // some action
+});
+
+$("#container").on('click', function(event) {
+    alert("container was clicked");
+});
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>event.preventDefault demo</title>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ 
+<a href="http://jquery.com">default click action is prevented</a>
+<div id="log"></div>
+ 
+<script>
+$( "a" ).click(function( event ) {
+  event.preventDefault();
+  $( "<div>" )
+    .append( "default " + event.type + " prevented" )
+    .appendTo( "#log" );
+});
+</script>
+ 
+</body>
+</html>
+
+This property can be useful for getting previous return values of custom events.
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>event.result demo</title>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ 
+<button>display event.result</button>
+<p></p>
+ 
+<script>
+$( "button" ).click(function( event ) {
+  return "hey";
+});
+$( "button" ).click(function( event ) {
+  $( "p" ).html( event.result );
+});
+</script>
+ 
+</body>
+</html>
+
+Description: Describes the nature of the event.
+Example:
+On all anchor clicks, alert the event type.
+
+$( "a" ).click(function( event ) {
+  alert( event.type ); // "click"
+});
+
+For key or mouse events, this property indicates the specific key or button that was pressed.
+$( "#whichkey" ).on( "keydown", function( event ) {
+  $( "#log" ).html( event.type + ": " +  event.which );
+});
+
+Description: The other DOM element involved in the event, if any.
+
+version added: 1.1.4event.relatedTarget
+For mouseout, indicates the element being entered; for mouseover, indicates the element being exited.
+
+Example:
+On mouseout of anchors, alert the element type being entered.
+$( "a" ).mouseout(function( event ) {
+  alert( event.relatedTarget.nodeName ); // "DIV"
+});
+
+(function($){
+    $('body').on('keydown', 'input', function(ev) {
+        if (ev.which == 13) {
+            var enterEv = $.extend({}, ev, { type: 'enterKey' });
+            return $(this).trigger(enterEv);
+        }
+    });
+
+    $.fn.enterKey = function(selector, data, fn) {
+        return this.on('enterKey', selector, data, fn);
+    };
+})(jQuery);
+
+contains(is)
+Select all <p> elements containing "is":
+$("p:contains(is)")
+The :contains() selector selects elements containing the specified string.
+
+The string can be contained directly in the element as text, or in a child element.
+
+This is mostly used together with another selector to select the elements containing the text in a group (like in the example above).
+
+Note: The text is case sensitive.
+
+http://stackoverflow.com/questions/7079011/jquery-multiple-id-selectors
+$("#upload_link,#upload_link2,#upload_link3").each(function(){
+    $(this).upload({
+        //whateveryouwant
+    });
+});
+
+attribute-data:
+http://stackoverflow.com/questions/5205411/get-value-of-an-attribute-of-the-clicked-element
+
+check box value(parameter)
+http://stackoverflow.com/questions/6806177/how-to-set-get-values-of-checkboxes-from-a-servlet-dynamically

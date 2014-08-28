@@ -1,0 +1,76 @@
+http://www.techonthenet.com/oracle/functions/to_date.php
+
+You have just learned how to output a DATE value using TO_CHAR. Now what about inputting a DATE value? This is done through a function called TO_DATE, which converts a string to a DATE value, again according to the DATE format. Normally, you do not have to call TO_DATE explicitly: Whenever Oracle expects a DATE value, it will automatically convert your input string using TO_DATE according to the default DATE format "DD-MON-YY". For example, to insert a tuple with a DATE attribute, you can simply type:
+insert into x values(99, '31-may-98');
+Alternatively, you may use TO_DATE explicitly:
+insert into x
+values(99, to_date('1998/05/31:12:00:00AM', 'yyyy/mm/dd:hh:mi:ssam'));
+The general usage of TO_DATE is:
+TO_DATE(<string>, '<format>')
+where the <format> string has the same options as in TO_CHAR.
+Finally, you can change the default DATE format of Oracle from "DD-MON-YY" to something you like by issuing the following command in sqlplus:
+
+alter session set NLS_DATE_FORMAT='<my_format>';
+The change is only valid for the current sqlplus session.
+
+Two interesting things to note here:
+You can use double quotes to make names case sensitive (by default, SQL is case insensitive), or to force spaces into names. Oracle will treat everything inside the double quotes literally as a single name. In this example, if "Current Time" is not quoted, it would have been interpreted as two case insensitive names CURRENT and TIME, which would actually cause a syntax error.
+DUAL is built-in relation in Oracle which serves as a dummy relation to put in the FROM clause when nothing else is appropriate. For example, try "select 1+2 from dual;".
+
+You can compare DATE values using the standard comparison operators such as =, !=, >, etc.
+You can subtract two DATE values, and the result is a FLOAT which is the number of days between the two DATE values. In general, the result may contain a fraction because DATE also has a time component. For obvious reasons, adding, multiplying, and dividing two DATE values are not allowed.
+You can add and subtract constants to and from a DATE value, and these numbers will be interpreted as numbers of days. For example, SYSDATE+1 will be tomorrow. You cannot multiply or divide DATE values.
+With the help of TO_CHAR, string operations can be used on DATE values as well. For example, to_char(<date>, 'DD-MON-YY') like '%JUN%' evaluates to true if <date> is in June.
+
+Date values are stored in date table columns in the form of a timestamp.
+
+SQL offers a built-in function called GETDATE() that returns the current date in the form of a SQL timestamp.
+Select GETDATE();
+
+The syntax for the to_date function is:
+to_date( string1, [ format_mask ], [ nls_language ] )
+
+string1 is the string that will be converted to a date.
+
+format_mask is optional. This is the format that will be used to convert string1 to a date.
+
+nls_language is optional. This is the nls language used to convert string1 to a date.
+to_date('2003/07/09', 'yyyy/mm/dd')	would return a date value of July 9, 2003
+to_date('070903', 'MMDDYY')	would return a date value of July 9, 2003
+to_date('20020315', 'yyyymmdd')	would return a date value of Mar 15, 2002
+
+protected void setPreparedStatementValues(PreparedStatement _ps, List _values) {
+		try {
+			for (int count = 1; count <= _values.size(); count++) {
+				Object insertValue = _values.get(count - 1);
+				if (insertValue == null) {
+					_ps.setNull(count, Types.NULL);
+				} else if (insertValue instanceof String) {
+					_ps.setString(count, (String) insertValue);
+				} else if (insertValue instanceof Long) {
+					_ps.setLong(count, ((Long) insertValue).longValue());
+				} else if (insertValue instanceof java.util.Date) {
+					_ps.setTimestamp(count, new java.sql.Timestamp(((java.util.Date) insertValue).getTime()));
+				} else if (insertValue instanceof Integer) {
+					_ps.setInt(count, ((Integer) insertValue).intValue());
+				} else if (insertValue instanceof BigDecimal) {
+					_ps.setBigDecimal(count, (BigDecimal) insertValue);
+				} else if (insertValue instanceof Blob) {
+					_ps.setBlob(count, (Blob) insertValue);
+				} else if (insertValue instanceof Clob) {
+					_ps.setClob(count, (Clob) insertValue);
+				} else {
+					throw new IllegalStateException("Not yet mapped!" + insertValue);
+				}
+			}
+		} catch (SQLException e) {
+			throw new InfrastructureException(e);
+		}
+	}
+
+insert into new_table select * from old_table
+If you want to create NEW_TABLE based on the records in OLD_TABLE ...
+create table new_table as select * from old_table
+
+106 change email=rgira@healthfusion.com
+daily.report.path=C:/aetna/dailyreport/

@@ -1,0 +1,24 @@
+With a static import, you can import the name “GREEN” into your namespace:
+import static java.awt.Color.GREEN;
+myColor = GREEN;
+public static float poundsToMicrograms(float pounds) {
+  return pounds * KGS_PER_LB * 1.0e6f;
+}
+Any source file can import this method as follows:
+import static measure.Scales.poundsToMicrograms(); 
+
+asVariables class is loaded.
+Automatic variables (also known as method local variables are not initialized by the system; 
+every automatic variable must be explicitly initialized before being used. For example, this 
+method will not compile:
+1. public int wrong() {
+2.   int i;
+3.   return i+5;
+4. }
+1. public double fourthRoot(double d) {
+2.   double result;
+3.     if (d >= 0) {
+4.       result = Math.sqrt(Math.sqrt(d));
+5.     }
+6.     return result;
+7. }

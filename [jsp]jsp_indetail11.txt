@@ -1,0 +1,11 @@
+The XML equivalent of <% Java Code %> is 
+<jsp:scriptlet>Java Code</jsp:scriptlet>
+
+Another use of scriptlets is to conditionally output HTML or other content that is not within any JSP tag;This behavior means that scriptlets need not contain complete Java statements and that code blocks left open can affect the static HTML or JSP outside the scriptlets.
+
+For initialization and cleanup in JSP pages, use JSP declarations to override jspInit or jspDestroy, not init or destroy.
+
+JSP declarations result in code that is placed inside the servlet class definition but outside the _jspService method. Since fields and methods can be declared in any order, it does not matter whether the code from declarations goes at the top or bottom of the servlet.
+
+The XML equivalent of <%! Field or Method Definition %> is 
+<jsp:declaration>Field or Method Definition</jsp:declaration>

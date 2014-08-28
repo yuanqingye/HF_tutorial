@@ -1,0 +1,597 @@
+Data Dictionary will be the key for the oracle SQL.
+
+Inner join part of another table
+SELECT t1.*, tbl.maxDate
+FROM dbo.tableName t1
+INNER JOIN
+( SELECT t2.id, MAX(t2.vpis) AS maxDate FROM dbo.tableName t2 GROUP BY t2.id ) tbl 
+ON t1.id = tbl.id
+
+If you want to update NEW_TABLE based on the records in OLD_TABLE ...
+insert into new_table select * from old_table
+
+If you want to create NEW_TABLE based on the records in OLD_TABLE ...
+create table new_table as select * from old_table
+
+INSERT INTO MyTable  (PriKey, Description)
+SELECT ForeignKey, Description FROM SomeView;
+
+Get part of the table record
+SELECT column_name(s)
+FROM table_name
+WHERE ROWNUM <= number
+
+MySQL / SQL Server / Oracle / MS Access:
+
+CREATE TABLE Persons
+(
+P_Id int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255),
+UNIQUE (P_Id),
+CONSTRAINT uc_PersonID UNIQUE (P_Id,LastName)
+)
+
+SQL UNIQUE Constraint on ALTER TABLE
+
+To create a UNIQUE constraint on the "P_Id" column when the table is already created, use the following SQL:
+
+MySQL / SQL Server / Oracle / MS Access:
+
+ALTER TABLE Persons
+ADD UNIQUE (P_Id)
+
+ALTER TABLE Persons
+DROP CONSTRAINT uc_PersonID
+
+select table_name from all_tables where table_name like 'plan%';
+
+UPDATE fillinblank_phrase SET sentence = REPLACE(sentence, 'detretis', 'detritus') where sentence like '%detretis'
+SELECT REPLACE(t.column, 'est1', 'rest1') FROM TABLE t
+
+select sysdate from dual
+
+CREATE FUNCTION CheckHasProfile(@Field VARCHAR(MAX))
+RETURNS BIT
+WITH SCHEMABINDING
+AS BEGIN
+    DECLARE @Result BIT
+
+    IF @Field IS NULL OR LEN(@Field) <= 0
+        SET @Result = 0
+    ELSE
+        SET @Result = 1
+
+    RETURN @Result
+END
+
+nvl(first,second) will replace the first with the second if the first is null
+
+orderByClause(sql, PatientEnum.ACTIVE, "DESC");
+		sql.append(" , TYPE_OF_PLAN ASC");
+		
+the value of the foreign key must be equal to the candidate key's value in some row of the primary table or else have no value, i.e., the NULL value.[2] This rule is called a referential integrity constraint between the two tables.[5] Because violations of referential integrity constraints can be the source of many database problems, most database management systems enforce referential integrity constraints
+
+Its not required to say "ON DELETE NO ACTION" because oracle supports ON DELETE CASCADE/ON DELETE SET NULL and if you do not specify ON DELETE CASCADE or ON DELETE SET NULL, by default it is set to "NO ACTION".
+
+
+Define a table with primary key to reference:
+CREATE TABLE t1 (c1 NUMBER PRIMARY KEY);
+Inline foreign key (part of column definition):
+CREATE TABLE t2 (
+        c1 NUMBER PRIMARY KEY,
+        c2 NUMBER REFERENCES t1(c1) );
+Out-of-line foreign key (after column definitions):
+CREATE TABLE t3 (
+        c1 NUMBER,
+        c2 NUMBER,
+        CONSTRAINT t1_fk FOREIGN KEY (c1) REFERENCES t1 ?(c1)? ON DELETE CASCADE);
+
+Create Table MyTable
+(id int not null,
+name char(50) default  'MyDefaultValue')
+
+CREATE OR REPLACE TRIGGER trigger_name
+  AFTER DELETE ON parent_table
+  FOR EACH ROW
+BEGIN
+  DELETE FROM child_table
+   WHERE parent_id = :old.parent_id;
+ <<repeat for each child table>>
+END;
+
+CREATE TABLE products
+( product_id numeric(10) not null,
+  supplier_id numeric(10),
+  supplier_name varchar2(50),
+  CONSTRAINT fk_supplier_comp
+    FOREIGN KEY (supplier_id, supplier_name)
+    REFERENCES supplier(supplier_id, supplier_name)
+    ON DELETE SET NULL
+);
+
+ALTER TABLE table_name
+add CONSTRAINT constraint_name
+   FOREIGN KEY (column1, column2, ... column_n)
+   REFERENCES parent_table (column1, column2, ... column_n)
+   ON DELETE SET NULL;
+   
+SELECT department, SUM(sales) as "Total sales"
+FROM order_details
+GROUP BY department
+HAVING SUM(sales) > 1000;
+
+If the following ALTER SESSION command was issued:
+ALTER SESSION SET TIME_ZONE = '-7:0';
+And then the following SQL statement was executed:
+select current_date
+from dual;
+
+NVL() replace column value with default when null shows up
+
+Each SQL statement within the SQL INTERSECT query must have the same number of fields in the result sets with similar data types.
+
+The syntax for the SQL INTERSECT query is:
+select field1, field2, . field_n
+from tables
+INTERSECT
+select field1, field2, . field_n
+from tables;
+
+select supplier_id
+from suppliers
+MINUS
+select supplier_id
+from orders;
+
+CONSTRAINT fk_column
+    FOREIGN KEY (column1, column2, ... column_n)
+    REFERENCES parent_table (column1, column2, ... column_n)
+
+ALTER SEQUENCE CPO_SEQ INCREMENT BY -24;
+SELECT CPO_SEQ.NEXTVAL FROM dual;
+ALTER SEQUENCE CPO_SEQ INCREMENT BY 1;
+COMMIT
+
+C (check constraint on a table)
+P (primary key)
+U (unique key)
+R (referential integrity)
+V (with check option, on a view)
+O (with read only, on a view)
+
+I doubt if this one works, but you may check:
+
+SELECT 
+        OBJECT_NAME(f.parent_object_id) TableName,
+        COL_NAME(fc.parent_object_id,fc.parent_column_id) ColName
+        FROM sys.foreign_keys AS f
+        INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
+        INNER JOIN sys.tables t ON t.OBJECT_ID = fc.referenced_object_id
+        WHERE OBJECT_NAME (f.referenced_object_id) = 'YourTableName'
+        
+ALTER TABLE Orders
+ADD CONSTRAINT fk_PerOrders
+FOREIGN KEY (P_Id)
+REFERENCES Persons(P_Id);
+
+release the not null constraint on column:
+alter table MYTABLE modify (MYCOLUMN null);
+
+ALTER TABLE Persons
+ADD CONSTRAINT chk_Person CHECK (P_Id>0 AND City='Sandnes')
+
+ALTER TABLE Persons
+DROP CONSTRAINT chk_Person
+
+CREATE TABLE Persons
+(
+P_Id int NOT NULL CHECK (P_Id>0),
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Address varchar(255),
+City varchar(255)
+)
+
+ALTER TABLE TableA ADD CONSTRAINT CK_BothDepartsNotNull
+CHECK (departA IS NOT NULL OR departB IS NOT NULL)
+
+SELECT a.table_name, a.column_name, a.constraint_name, c.owner, 
+       -- referenced pk 
+       c.r_owner, c_pk.table_name r_table_name, c_pk.constraint_name r_pk 
+  FROM all_cons_columns a 
+  JOIN all_constraints c ON a.owner = c.owner 
+                        AND a.constraint_name = c.constraint_name 
+  JOIN all_constraints c_pk ON c.r_owner = c_pk.owner 
+                           AND c.r_constraint_name = c_pk.constraint_name 
+ WHERE c.constraint_type = 'R' 
+   AND a.table_name = 'ADDITIONALLOCATIONIDS' 
+
+This sql will get all the foreign key and constraints on it and their parent table.
+
+(GET ALL CONSTRAINTS FOR THE TABLE)
+SELECT *
+  FROM user_cons_columns
+ WHERE table_name = 'ORDER_RESULT_DETAIL';
+ 
+(If table not in the default schema, then use)
+select * from all_cons_columns WHERE table_name = 'ORDER_RESULT_DETAIL';
+(add this line if the owner is not in the current schema)
+
+AND owner = '<schema owner of the table>'
+(If you want to see more details of the constraints)
+SELECT *
+  FROM user_constraints
+ WHERE table_name = 'ORDER_RESULT_DETAIL'
+
+
+Syntax	
+Usage
+
+TYPE record_type_name IS RECORD (column_name1 datatype, column_name2 datatype, ...);
+
+Define a composite datatype, where each field is scalar.
+
+col_name table_name.column_name%type;
+
+Dynamically define the datatype of a column based on a database column.
+
+record_name record_type_name;
+
+Declare a record based on a user-defined type.
+
+record_name table_name%ROWTYPE;
+
+Dynamically declare a record based on an entire row of a table. Each column in the table corresponds to a field in the record.
+
+
+SELECT * INTO record_name 
+FROM table_name 
+[WHERE clause]; 
+
+select id, case when name='Rafeal Nadal' then 'OK' 
+else 'not OK' 
+END AS "Name of nadal"
+from qingye
+
+You can also do ascending and descending. So if you wanted Type Descending but Title Ascending:
+SELECT * FROM games ORDER BY Type DESC, Title ASC
+
+insert into tab1(cod, type, descript)
+select 1, 'RED', 'MY COLOR'
+from dual
+connect by rownum <= 10000
+;
+
+INSERT INTO tab2 (col_a, col_b, col_c)
+SELECT            cod,   type,  descrip
+FROM    tab1
+START WITH  cod = 1
+CONNECT BY  cod = 1
+       AND  LEVEL <= 10000;
+       
+select max(fname) over (rank() order by some_factor) from MyTbl
+
+WITH summary AS (
+    SELECT o.order_result_id, 
+           o.test_order_id, 
+           ROW_NUMBER() OVER(PARTITION BY o.test_order_id 
+                                 ORDER BY o.quick_result DESC) AS rk
+      FROM order_result o)
+SELECT s.*
+  FROM summary s
+ WHERE s.rk = 1;
+ 
+SELECT *
+  FROM(SELECT workflowid, salesRepId, quantityAssigned,
+              quantityLeft, month, year
+              , ROW_NUMBER()
+                OVER (PARTITION BY salesRepId
+                          ORDER BY workflowid) AS rownumber
+         FROM sm_salesRepWorkflow)
+ WHERE rownumber = 1; 
+ 
+ by default, null is always the biggest (last in ascending order and first in descending order)
+ 
+ can be changed by ORDER BY commission_pct DESC NULLS LAST;
+ 
+ SELECT * FROM (SELECT T.TEST_ORDER_ID,OS.HL7 FROM TEST_ORDER T INNER JOIN (SELECT * FROM (SELECT O.*,ROW_NUMBER() OVER (PARTITION BY O.TEST_ORDER_ID ORDER BY DBMS_LOB.SUBSTR(O.HL7,1,400) NULLS FIRST) R FROM ORDER_RESULT O)O1 WHERE R=1) OS ON 
+OS.TEST_ORDER_ID=T.TEST_ORDER_ID WHERE T.ENCOUNTER_NOTES IS NOT NULL) H WHERE H.HL7 IS NOT NULL;
+
+This one make sure that each test order that has encounter notes must have a non-electric record
+
+ALTER TRIGGER trigger_name DISABLE;
+ALTER TABLE table_name DISABLE ALL TRIGGERS;
+
+CREATE OR REPLACE TRIGGER orders_before_delete
+BEFORE DELETE
+   ON orders
+   FOR EACH ROW
+   
+DECLARE
+   v_username varchar2(10);
+   
+BEGIN
+
+   -- Find username of person performing the DELETE on the table
+   SELECT user INTO v_username
+   FROM dual;
+   
+   -- Insert record into audit table
+   INSERT INTO orders_audit
+   ( order_id,
+     quantity,
+     cost_per_item,
+     total_cost,
+     delete_date,
+     deleted_by )
+   VALUES
+   ( :old.order_id,
+     :old.quantity,
+     :old.cost_per_item,
+     :old.total_cost,
+      sysdate,
+      v_username );
+      
+END;
+
+create table t( x int,
+constraint x_greater_than_zero check ( x > 0 )
+deferrable initially immediate
+)
+
+set constraint x_greater_than_zero deferred;
+set constraint x_greater_than_zero immediate;
+
+DECLARE  var_rows number(5);
+BEGIN
+  UPDATE employee 
+  SET salary = salary + 1000;
+  IF SQL%NOTFOUND THEN
+    dbms_output.put_line('None of the salaries where updated');
+  ELSIF SQL%FOUND THEN
+    var_rows := SQL%ROWCOUNT;
+    dbms_output.put_line('Salaries for ' || var_rows || 'employees are updated');
+  END IF; 
+END; 
+
+Block Structures: PL SQL consists of blocks of code, which can be nested within each other. Each block forms a unit of a task or a logical module. PL/SQL Blocks can be stored in the database and reused.
+
+Procedural Language Capability: PL SQL consists of procedural language constructs such as conditional statements (if else statements) and loops like (FOR loops).
+
+Better Performance: PL SQL engine processes multiple SQL statements simultaneously as a single block, thereby reducing network traffic.
+variable_name datatype [NOT NULL := value ];
+
+1) We can directly assign values to variables. 
+    The General Syntax is:         
+
+  variable_name:=  value;
+2) We can assign values to variables directly from the database columns by using a SELECT.. INTO statement. The General Syntax is:
+SELECT column_name
+INTO variable_name 
+FROM table_name 
+[WHERE condition]; 
+
+constant_name CONSTANT datatype := VALUE;
+
+
+Attributes
+
+Return values
+
+Example
+
+%FOUND
+
+TRUE, if fetch statement returns at least one row.	
+Cursor_name%FOUND
+
+FALSE, if fetch statement doesn’t return a row.
+%NOTFOUND
+
+TRUE, , if fetch statement doesn’t return a row.	Cursor_name%NOTFOUND
+FALSE, if fetch statement returns at least one row.
+%ROWCOUNT
+
+The number of rows fetched by the fetch statement	
+Cursor_name%ROWCOUNT
+
+If no row is returned, the PL/SQL statement returns an error.
+%ISOPEN
+
+TRUE, if the cursor is already open in the program	
+Cursor_name%ISNAME
+
+FALSE, if the cursor is not opened in the program.
+
+RENAME tab1 TO tab1_old;
+CREATE TABLE tab1 AS SELECT id, <the rest of your columns> FROM tab1_old;
+
+SQL the table name inside can not be called
+
+create or replace
+PROCEDURE MIGRATE_CHARGE AS 
+  v_claimid number(12) := null;
+  v_charegid number(12) := null;
+  v_practiceid number(12) := null;
+  v_thread_id number(12) := null;
+  v_errmsg varchar2(1000) := '';
+  -- for primary claim with partial posted
+  CURSOR priClimid is 
+    select distinct c.claimid, c.charge_id, c.practice_id from ar_claims c join claim_payment_xref x on c.claimid = x.claimid 
+    where c.charge_id is not null and c.primary_claimid is null and c.THREAD_ID is null 
+        and x.void_date is null and x.post_date is null and x.partial_post_date is not null;
+  
+  -- for COB not fully posted
+  CURSOR cobClmid is
+    select distinct c.claimid, c.charge_id, c.practice_id from ar_claims c left join claim_payment_xref x on c.claimid = x.claimid 
+    where c.charge_id is not null and c.primary_claimid is not null and c.THREAD_ID is null
+        and (x.claimid is null or (x.void_date is null and x.post_date is null));
+BEGIN
+  open priClimid;
+    LOOP
+     FETCH priClimid INTO v_claimid, v_charegid, v_practiceid;
+     EXIT WHEN priClimid%Notfound;
+     BEGIN
+      v_thread_id := ARCLAIMS_PKG.CHECK_AND_UPDATE_THREAD_ID(v_claimid);
+      v_errmsg :=payment_posting.updatecharge(v_charegid, v_thread_id, v_practiceid);
+       commit;
+     EXCEPTION
+     WHEN OTHERS THEN
+     rollback;
+     END ;
+
+    
+    END LOOP;
+  close priClimid;
+  
+  open cobClmid;
+    LOOP
+     FETCH cobClmid INTO v_claimid, v_charegid, v_practiceid;
+     EXIT WHEN cobClmid%Notfound;
+     BEGIN
+           v_thread_id := ARCLAIMS_PKG.CHECK_AND_UPDATE_THREAD_ID(v_claimid);
+          v_errmsg :=payment_posting.updatecharge(v_charegid, v_thread_id, v_practiceid);
+           commit;
+     EXCEPTION
+     WHEN OTHERS THEN
+     rollback;
+     END ;
+
+    END LOOP;
+  close cobClmid;
+END;
+
+The CLOB data type is similar to the TEXT data type except that the CLOB data type provides the following advantages:
+
+An application program can read from or write to any portion of the CLOB object.
+Access times can be significantly faster because an application program can access any portion of a CLOB object.
+Default characteristics are relatively easy to override. Database administrators can override default characteristics for sbspace at the column level. Application programmers can override some default characteristics for the column when they create a CLOB object.
+You can use the equals operator (=) to test whether two CLOB values are equal.
+A CLOB object is recoverable in the event of a system failure and obeys transaction isolation modes when the DBA or application programmer specifies it. (Recovery of CLOB objects requires that your database system has the necessary resources to provide buffers large enough to handle CLOB objects.)
+You can use the CLOB data type to provide large storage for a user-defined data type.
+DataBlade developers can create indexes on CLOB data types.
+The disadvantages of the CLOB data type are as follows:
+
+It is allocated in whole disk pages, so a short item wastes space.
+Restrictions apply on how you can use a CLOB column in an SQL statement. (See Using Smart Large Objects.)
+It is not available with all Informix database servers.
+
+You can use a BLOB data type to store any data that a program can generate: graphic images, satellite images, video clips, audio clips, or formatted documents saved by any word processor or spreadsheet. The database server permits any kind of data of any length in a BLOB column.
+
+Like CLOB objects, BLOB objects are stored in whole disk pages in separate disk areas from normal row data.
+The advantage of the BLOB data type, as opposed to CLOB, is that it accepts any data. Otherwise, the advantages and disadvantages of the BLOB data type are the same as for the CLOB data type.
+
+Answer: With respect to a sequence, the cache option specifies how many sequence values will be stored in memory for faster access.
+
+The downside of creating a sequence with a cache is that if a system failure occurs, all cached sequence values that have not be used, will be "lost". This results in a "gap" in the assigned sequence values. When the system comes back up, Oracle will cache new numbers from where it left off in the sequence, ignoring the so called "lost" sequence values.
+
+Note: To recover the lost sequence values, you can always execute an ALTER SEQUENCE command to reset the counter to the correct value.
+
+Nocache means that none of the sequence values are stored in memory. This option may sacrifice some performance, however, you should not encounter a gap in the assigned sequence values.
+
+Question: How do we set the LASTVALUE value in an Oracle Sequence?
+
+Answer: You can change the LASTVALUE for an Oracle sequence, by executing an ALTER SEQUENCE command.
+
+For example, if the last value used by the Oracle sequence was 100 and you would like to reset the sequence to serve 225 as the next value. You would execute the following commands.
+
+ALTER SEQUENCE seq_name
+INCREMENT BY 124;
+
+SELECT seq_name.nextval FROM dual;
+
+ALTER SEQUENCE seq_name
+INCREMENT BY 1;
+Now, the next value to be served by the sequence will be 225.
+
+How to execute a PL/SQL Function?
+A function can be executed in the following ways.
+
+1) Since a function returns a value we can assign it to a variable.
+
+employee_name :=  employer_details_func;
+If ‘employee_name’ is of datatype varchar we can store the name of the employee by assigning the return type of the function to it.
+
+2) As a part of a SELECT statement
+
+SELECT employer_details_func FROM dual;
+3) In a PL/SQL Statements like,
+
+dbms_output.put_line(employer_details_func);
+This line displays the value returned by the function.
+
+CREATE SEQUENCE HFOWNER.DEFAULT_VITAL_SIGN_SEQ 
+MINVALUE 1 
+START WITH 1 
+INCREMENT BY 1 
+CACHE 10; 
+
+CREATE INDEX HFOWNER.DEFAULT_VITALSIGN_PRACID_INDEX 
+ON HFOWNER.DEFAULT_VITAL_SIGN_OPTIONS (PRACTICE_ID) TABLESPACE HFINDEX; 
+
+CREATE INDEX HFOWNER.DEFAULT_VITALSIGN_PROVID_INDEX
+ON HFOWNER.DEFAULT_VITAL_SIGN_OPTIONS (PROVIDER_ID) TABLESPACE HFINDEX;
+
+CREATE INDEX HFOWNER.DEFAULT_VITALSIGN_RTID_INDEX
+ON HFOWNER.DEFAULT_VITAL_SIGN_OPTIONS (REALTIMEUSERID) TABLESPACE HFINDEX;
+
+--MAKE SURE EACH PROVIDER_ID AND PRACTICE_ID PAIR CAN ONLY HAVE 1 VALUE
+ALTER TABLE HFOWNER.DEFAULT_VITAL_SIGN_OPTIONS
+ADD CONSTRAINT UNI_PRACTICE_PROVIDER_PAIR UNIQUE (PRACTICE_ID,PROVIDER_ID);
+COMMIT;
+
+select count(*) over (partition by test_order_id) c from order_result;
+
+A view can be defined as a virtual table or a stored query
+
+If you want to insert into a view which is consist of multiple tables, use:
+CREATE TRIGGER TRGI_VW_PAYMENT ON VW_LAST_PAYMENT_DETAILS
+INSTEAD OF INSERT
+AS
+BEGIN
+    INSERT INTO STUDENT_PAYMENT
+    SELECT STD_ID,PAY_AMT,PAY_DATE
+    FROM INSERTED
+END
+
+SELECT N.*, M.LAST_NAME ||', '|| M.FIRST_NAME as MEMBER_NAME FROM NOTES N LEFT JOIN MEMBER M  " +
+						"on N.MEMBER_ID = M.MEMBER_ID  WHERE N.NOTES_ID = ? AND N.PRACTICE_ID = ?";
+						
+SELECT o.*, od.* from order_result o,order_result_detail od where o.order_result_id=od.order_result_id and o.order_result_category not in (1,2,3);						
+
+TableA LEFT OUTER JOIN TableB is equivalent to TableB RIGHT OUTER JOIN Table A.
+
+In Oracle, (+) denotes the "optional" table in the JOIN. So in your first query, it's a P LEFT OUTER JOIN S. In your second query, it's S RIGHT OUTER JOIN P. They're functionally equivalent.
+
+In the terminology, RIGHT or LEFT specify which side of the join always has a record, and the other side might be null. So in a P LEFT OUTER JOIN S, P will always have a record because it's on the LEFT, but S could be null.
+
+select *
+from user_tab_columns
+where table_name = 'ORDER_RESULT'
+order by column_id
+
+= NULL is always unknown (this is piece of 3 state logic), but WHERE clause treats it as false and drops from the result set. So for NULL you should use IS NULL
+Reasons are described here: http://stackoverflow.com/questions/1843451/why-does-null-null-evaluate-to-false-in-sql-server
+
+select 
+b.uniqueness, a.index_name, a.table_name, a.column_name 
+from all_ind_columns a, all_indexes b
+where a.index_name=b.index_name 
+and a.table_name = upper('ENC_ORDER_RD_XREF')
+order by a.table_name, a.index_name, a.column_position;
+
+SELECT
+    name, email, COUNT(*)
+FROM
+    users
+GROUP BY
+    name, email
+HAVING 
+    COUNT(*) > 1
+    
+select table_name||': '||comments from dictionary;
+
+When making OUTER JOINs (ANSI-89 or ANSI-92), filtration location matters because criteria specified in the ON clause is applied before the JOIN is made. Criteria against an OUTER JOINed table provided in the WHERE clause is applied after the JOIN is made. This can produce very different result sets. In comparison, it doesn't matter for INNER JOINs if the criteria is provided in the ON or WHERE clauses -- the result will be the same.

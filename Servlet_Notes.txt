@@ -1,0 +1,136 @@
+remember that the user submits two kinds of 
+data: explicit (i.e., HTML form data) and implicit (i.e., HTTP request headers)
+
+• It is regular Java code. There are new APIs, but no new syntax.
+• It has unfamiliar import statements. The servlet and JSP APIs are 
+not part of the Java 2 Platform, Standard Edition (J2SE); they are a 
+separate specification (and are also part of the Java 2 Platform, 
+Enterprise Edition—J2EE).
+• It extends a standard class (HttpServlet). Servlets provide a rich 
+infrastructure for dealing with HTTP.
+• It overrides the doGet method. Servlets have different methods to 
+respond to different types of HTTP commands.
+
+But, with servlets and JSP, they could start with a free server: Apache Tomcat
+(either standalone, embedded in the regular Apache Web server, or embedded in
+Microsoft IIS). Once the project starts to become successful, they could move to a
+server like Caucho Resin that had higher performance and easier administration but
+that is not free. But none of their servlets or JSP pages have to be rewritten. If their
+project becomes even larger, they might want to move to a distributed (clustered)
+environment. No problem: they could move to Macromedia JRun Professional,
+which supports distributed applications (Web farms). Again, none of their servlets or
+JSP pages have to be rewritten. If the project becomes quite large and complex, they
+might want to use Enterprise JavaBeans (EJB) to encapsulate their business logic.
+So, they might switch to BEA WebLogic or Oracle9i AS. Again, none of their servlets
+or JSP pages have to be rewritten. Finally, if their project becomes even bigger, they
+might move it off of their Linux box and onto an IBM mainframe running IBM WebSphere. But once again, none of their servlets or JSP pages have to be rewritten.
+
+Both doGet and doPost take two arguments: an HttpServletRequest and an
+HttpServletResponse. The HttpServletRequest lets you get at all of the
+incoming data; the class has methods by which you can find out about information
+such as form (query) data, HTTP request headers, and the client’s hostname. The
+HttpServletResponse lets you specify outgoing information such as HTTP status
+codes (200, 404, etc.) and response headers (Content-Type, Set-Cookie, etc.).
+Most importantly, HttpServletResponse lets you obtain a PrintWriter that
+you use to send document content back to the client. For simple servlets, most of the
+effort is spent in println statements that generate the desired page. Form data,
+HTTP request headers, HTTP responses, and cookies are all discussed in the following chapters.
+
+Compile servlet,move class to directory,using default address host/servlet/servletname or a custom URL defined i the web.xml.
+
+A servlet that generate html
+1. Tell the browser that you’re sending it HTML. 
+2. Modify the println statements to build a legal Web page. 
+3. Check your HTML with a formal syntax validator.
+response.setContentType("text/html");
+
+Excel spreadsheets (content type application/
+vnd.ms-excel—see Section 7.3), JPEG images (content type image/jpeg—see
+Section 7.5), and XML documents (content type text/xml).
+
+When the servlet is first created, its init method is invoked, so init is where you
+put one-time setup code. After this, each user request results in a thread that calls the
+service method of the previously created instance. Multiple concurrent requests
+normally result in multiple threads calling service simultaneously, although your
+servlet can implement a special interface (SingleThreadModel) that stipulates that
+only a single thread is permitted to run at any one time. The service method then
+calls doGet, doPost, or another doXxx method, depending on the type of HTTP
+request it received. Finally, if the server decides to unload a servlet, it first calls the
+servlet’s destroy method.
+
+Most of the time, your servlets deal only with per-request data, and doGet or
+doPost are the only life-cycle methods you need. Occasionally, however, you want to
+perform complex setup tasks when the servlet is first loaded, but not repeat those
+tasks for each request. The init method is designed for this case; it is called when
+the servlet is first created, and not called again for each user request. So, it is used for
+one-time initializations, just as with the init method of applets. The servlet is normally created when a user first invokes a URL corresponding to the servlet, but you
+can also specify that the servlet be loaded when the server is first started (see the
+chapter on the web.xml file in Volume 2 of this book). 
+
+
+In the previous example, the init method computed some data that was used by the
+doGet and getLastModified methods. Although this type of general initialization
+is quite common, it is also common to control the initialization by the use of initialization parameters. To understand the motivation for init parameters, you need to
+understand the categories of people who might want to customize the way a servlet
+or JSP page behaves. There are three such groups:
+1. Developers.
+2. End users.
+3. Deployers.
+
+public void init() throws ServletException {
+ // Round to nearest second (i.e., 1000 milliseconds)
+ modTime = System.currentTimeMillis()/1000*1000;
+ for(int i=0; i<numbers.length; i++) {
+ numbers[i] = randomNum();
+ }
+ }
+ Developers change the behavior of a servlet by changing the code. End users
+ change the behavior of a servlet by providing data to an HTML form (assuming that
+ the developer has written the servlet to look for this data). But what about deployers?
+ There needs to be a way to let administrators move servlets from machine to
+ machine and change certain parameters (e.g., the address of a database, the size of a
+ connection pool, or the location of a data file) without modifying the servlet source
+ code. Providing this capability is the purpose of init parameters.
+ Because the use of servlet initialization parameters relies heavily on the deployment descriptor (web.xml), we postpone details and examples on init parameters
+ until the deployment descriptor chapter in Volume 2 of this book. But, here is a brief
+preview:
+
+1. Use the web.xml servlet element to give a name to your servlet.
+2. Use the web.xml servlet-mapping element to assign a custom 
+URL to your servlet. You never use default URLs of the form 
+http://.../servlet/ServletName when using init parameters. In fact, 
+these default URLs, although extremely convenient during initial 
+development, are almost never used in deployment scenarios.
+3. Add init-param subelements to the web.xml servlet element to 
+assign names and values of initialization parameters.
+4. From within your servlet’s init method, call getServletConfig
+to obtain a reference to the ServletConfig object.
+5. Call the getInitParameter method of ServletConfig with the 
+name of the init parameter. The return value is the value of the init 
+parameter or null if no such init parameter is found in the web.xml
+file.
+
+public class YourServlet extends HttpServlet
+implements SingleThreadModel {
+...
+}
+If you implement this interface, the system guarantees that there is never more
+than one request thread accessing a single instance of your servlet.
+
+In most cases, it
+does so by queuing all the requests and passing them one at a time to a single servlet
+instance. However, the server is permitted to create a pool of multiple instances,
+each of which handles one request at a time.
+
+3.8 Servlet Debugging
+1.Use print statements.
+2.Use an integrated debugger in your IDE.
+3.Use the log file
+4.Apache Log4J
+*5.Write separate classes.
+6. Plan ahead for missing or malformed data.
+be sure to consider the possibility that it was entered incorrectly or omitted altogether
+7. Look at the HTML source.
+8. Look at the request data separately
+9. Look at the response data separately.
+10. Stop and restart the server.
