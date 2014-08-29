@@ -1,0 +1,5 @@
+You've added an extra level of abstraction by calling the method with reflection. The reflection layer wraps any exception in an InvocationTargetException, 
+which lets you tell the difference between an exception actually caused by a failure in the reflection call (maybe your argument list wasn't valid, for example) 
+and a failure within the method called.
+Just unwrap the cause within the InvocationTargetException and you'll get to the original one.
+Use the getCause() method on the InvocationTargetException to retrieve the original exception.

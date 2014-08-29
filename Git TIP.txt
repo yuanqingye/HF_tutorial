@@ -1,0 +1,10 @@
+https://www.atlassian.com/git/tutorial/undoing-changes
+sillabus(synopsis)
+
+http://webcache.googleusercontent.com/search?q=cache:8f-ycW0OMMEJ:stackoverflow.com/questions/1514054/how-do-i-delete-a-local-repository-in-git+&cd=1&hl=en&ct=clnk&gl=us
+How to remove local git.
+
+http://stackoverflow.com/questions/4114095/revert-to-a-previous-git-commit
+http://stackoverflow.com/questions/927358/undo-the-last-git-commit
+revert to last commit.
+
