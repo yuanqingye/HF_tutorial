@@ -60,3 +60,11 @@ ois.close();
 IOUtil.transfer(is, content);
 
 This is the proper way to transform inputstream into string:http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
+
+LineNumberReader lineReader = 
+                 new LineNumberReader(new BufferedReader(new InputStreamReader(is)));
+String line;
+while((line=lineReader.readLine())!=null){
+    String[] lineElements = new String[4];
+    lineElements = line.split(",");
+	}

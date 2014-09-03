@@ -76,3 +76,5 @@ public class YourTestCase {
         Mockito.verify(mockObj, times(2)).methodToMock();
     }
 }
+
+verify(dependency, never()).someMethod()
