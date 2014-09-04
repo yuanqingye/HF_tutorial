@@ -78,3 +78,48 @@ public class YourTestCase {
 }
 
 verify(dependency, never()).someMethod()
+
+The tutorial for easymock:
+http://devlearnings.wordpress.com/2010/05/13/easymock-expectationeasymock-expect-flavours-explained/
+1 expect and return: return value
+2 expect and answer: run a series of procedure
+3 expect and delegate: run the same method on some other object(must implement the same public interface)
+4 expect and throw : throw exception
+
+
+On top of that, since EasyMock 3.3, if you need to use another runner on you tests, a JUnit rule is also available to you. 
+Both have the exact same behavior. Choosing one of the other is a matter of taste.
+
+import static org.easymock.EasyMock.*; 
+import org.easymock.EasyMockRule; 
+import org.easymock.TestSubject; 
+import org.easymock.Mock; 
+import org.junit.Rule; 
+import org.junit.Test; 
+
+public class ExampleTest {
+
+  @Rule 
+  public EasyMockRule mocks = new EasyMockRule(this); 
+  
+  @TestSubject 
+  private ClassUnderTest classUnderTest = new ClassUnderTest(); 
+  
+  @Mock 
+  private Collaborator mock; 
+  
+  @Test 
+  public void testRemoveNonExistingDocument() {
+    replay(mock); 
+    classUnderTest.removeDocument("Does not exist"); 
+  } 
+  
+  http://easymock.org/user-guide.html
+  guide for using easymock(nice mock return stub method,normal mock and strict mock fail to call any method not set up)
+  the call before replay is the method to be verified, you may use expectLastCall().times(3) to make sure how many times being called
+  
+  C cMock = Mockito.spy(new C());
+  Mockito.doNothing().when(cMock).m1();
+
+  Helpful tutorial for mockito:
+  http://docs.mockito.googlecode.com/hg/org/mockito/Mockito.html#5
