@@ -1,0 +1,36 @@
+@RunWith(Suite.class)
+@SuiteClasses({TaskTest.class, 
+                ResourceTest.class,
+                DateForTMSTest.class,
+                AvailableResources.class,
+                Model.class})
+
+package de.vogella.junit.first;
+
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
+public class MyTestRunner {
+  public static void main(String[] args) {
+    Result result = JUnitCore.runClasses(MyClassTest.class);
+    for (Failure failure : result.getFailures()) {
+      System.out.println(failure.toString());
+    }
+  }
+} 
+
+@Test (expected = Exception.class)	Fails if the method does not throw the named exception.
+@Test(timeout=100)	Fails if the method takes longer than 100 milliseconds.
+
+To activate this feature, annotate your test class with @FixMethodOrder(MethodSorters.NAME_ASCENDING).
+
+The default in JUnit 4.11 is to uses a deterministic, but not predictable, order which can also be explicitly specified via the MethodSorters.DEFAULT parameter in the above annotation. You can also use MethodSorters.JVM which uses the JVM defaults, which may vary from run to run.
+
+try {
+   mustThrowException(); 
+   fail();
+} catch (Exception e) {
+   // expected
+   // could also check for message of exception, etc.
+} 
