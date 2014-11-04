@@ -8,7 +8,8 @@ http://stackoverflow.com/questions/4114095/revert-to-a-previous-git-commit
 http://stackoverflow.com/questions/927358/undo-the-last-git-commit
 revert to last commit.
 
-git rm file.txt removes the file from the repo but also deletes it from the local file system.
-
-To remove the file from the repo and not delete it from the local file system use:
+1git rm file.txt removes the file from the repo but also deletes it from the local file system.
+2To remove the file from the repo and not delete it from the local file system use:
 git rm --cached file.txt
+
+I like git stash save -u because you can undo them all with git stash pop
