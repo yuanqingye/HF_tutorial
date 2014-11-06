@@ -595,3 +595,16 @@ HAVING
 select table_name||': '||comments from dictionary;
 
 When making OUTER JOINs (ANSI-89 or ANSI-92), filtration location matters because criteria specified in the ON clause is applied before the JOIN is made. Criteria against an OUTER JOINed table provided in the WHERE clause is applied after the JOIN is made. This can produce very different result sets. In comparison, it doesn't matter for INNER JOINs if the criteria is provided in the ON or WHERE clauses -- the result will be the same.
+
+SELECT CASE <variable> WHEN <value>      THEN <returnvalue>
+                       WHEN <othervalue> THEN <returnthis>
+                                         ELSE <returndefaultcase>
+       END
+FROM <table>
+The extended case:
+
+SELECT CASE WHEN <test>      THEN <returnvalue>
+            WHEN <othertest> THEN <returnthis>
+                             ELSE <returndefaultcase>
+       END
+FROM <table>
