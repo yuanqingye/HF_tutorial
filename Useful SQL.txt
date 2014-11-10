@@ -608,3 +608,14 @@ SELECT CASE WHEN <test>      THEN <returnvalue>
                              ELSE <returndefaultcase>
        END
 FROM <table>
+
+First, I'll start my answer by defining trigger: a trigger is an stored procedure that is run when a row is added, modified or deleted.
+
+Triggers can run BEFORE the action is taken or AFTER the action is taken.
+
+BEFORE triggers are usually used when validation needs to take place before accepting the change. They run before any change is made to the database. Let's say you run a database for a bank. 
+You have a table accounts and a table transactions. If a user makes a withdrawal from his account, you would want to make sure that the user has enough credits in his account for his withdrawal. 
+The BEFORE trigger will allow to do that and prevent the row from being inserted in transactions if the balance in accounts is not enough.
+
+AFTER triggers are usually used when information needs to be updated in a separate table due to a change. They run after changes have been made to the database (not necessarily committed). 
+Let's go back to our back example. After a successful transaction, you would want balance to be updated in the accounts table. An AFTER trigger will allow you to do exactly that.
