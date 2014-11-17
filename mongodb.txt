@@ -1,0 +1,8 @@
+c:\mongodb\bin\mongod --config c:\mongodb\bin\mongodb.config
+
+sort:
+//heaviest unicorns first
+db.unicorns.find().sort({weight: -1})
+//by unicorn name then vampire kills:
+db.unicorns.find().sort({name: 1,
+vampires: -1})
