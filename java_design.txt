@@ -1,0 +1,7 @@
+bridge pattern
+orthogonal seperation:(composition better than inheritance)
+shape: circle(color), square(color)
+color: red, blue
+
+abstract(client) implementation has no bind with implementation of the backhand
+(BL,DAO)(DAO,JDBC interface)
