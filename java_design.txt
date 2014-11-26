@@ -5,3 +5,23 @@ color: red, blue
 
 abstract(client) implementation has no bind with implementation of the backhand
 (BL,DAO)(DAO,JDBC interface)
+
+If we take a look at the dictionary definition of a template we can see that a template is a preset format, used as a starting point for a particular application so that the format does not have to be recreated each time it is used.
+On the same idea is the template method is based. A template method defines an algorithm in a base class using abstract operations that subclasses override to provide concrete behavior.
+
+Intent
+
+- Define the skeleton of an algorithm in an operation, deferring some steps to subclasses.
+- Template Method lets subclasses redefine certain steps of an algorithm without letting them to change the algorithm's structure.
+
+The observer pattern: Class A, can have zero or more observers of type O registered with it. When something in A is changed it notifies all of the observers.
+
+The mediator pattern: You have some number of instances of class X (or maybe even several different types:X, Y & Z), and they wish to communicate with each other
+ (but you don't want each to have explicit references to each other), so you create a mediator class M. Each instance of X has a reference to a shared instance of M,
+ through which it can communicate with the other instances of X (or X, Y and Z).
+
+How you organize it is very important
+Strategy:
+ClaimBandAidStrategy
+
+

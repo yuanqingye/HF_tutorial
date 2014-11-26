@@ -13,3 +13,5 @@ db.unicorns.find()
 .skip(1)
 
 db.unicorns.count({vampires: {$gt: 50}})
+or
+db.unicorns.find({vampires: {$gt: 50}}).count()

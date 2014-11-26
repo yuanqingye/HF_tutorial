@@ -1,0 +1,254 @@
+1
+package com.journaldev.design.strategy;
+2
+ 
+3
+public interface PaymentStrategy {
+4
+ 
+5
+    public void pay(int amount);
+6
+}
+Now we will have to create concrete implementations of algorithms for payment using credit/debit card or through paypal.
+
+01
+package com.journaldev.design.strategy;
+02
+ 
+03
+public class CreditCardStrategy implements PaymentStrategy {
+04
+ 
+05
+    private String name;
+06
+    private String cardNumber;
+07
+    private String cvv;
+08
+    private String dateOfExpiry;
+09
+ 
+10
+    public CreditCardStrategy(String nm, String ccNum, String cvv, String expiryDate){
+11
+        this.name=nm;
+12
+        this.cardNumber=ccNum;
+13
+        this.cvv=cvv;
+14
+        this.dateOfExpiry=expiryDate;
+15
+    }
+16
+    @Override
+17
+    public void pay(int amount) {
+18
+        System.out.println(amount +" paid with credit/debit card");
+19
+    }
+20
+ 
+21
+}
+01
+package com.journaldev.design.strategy;
+02
+ 
+03
+public class PaypalStrategy implements PaymentStrategy {
+04
+ 
+05
+    private String emailId;
+06
+    private String password;
+07
+ 
+08
+    public PaypalStrategy(String email, String pwd){
+09
+        this.emailId=email;
+10
+        this.password=pwd;
+11
+    }
+12
+ 
+13
+    @Override
+14
+    public void pay(int amount) {
+15
+        System.out.println(amount + " paid using Paypal.");
+16
+    }
+17
+ 
+18
+}
+Now our algorithms are ready and we can implement Shopping Cart and payment method will require input as Payment strategy.
+
+01
+package com.journaldev.design.strategy;
+02
+ 
+03
+public class Item {
+04
+ 
+05
+    private String upcCode;
+06
+    private int price;
+07
+ 
+08
+    public Item(String upc, int cost){
+09
+        this.upcCode=upc;
+10
+        this.price=cost;
+11
+    }
+12
+ 
+13
+    public String getUpcCode() {
+14
+        return upcCode;
+15
+    }
+16
+ 
+17
+    public int getPrice() {
+18
+        return price;
+19
+    }
+20
+ 
+21
+}
+01
+package com.journaldev.design.strategy;
+02
+ 
+03
+import java.text.DecimalFormat;
+04
+import java.util.ArrayList;
+05
+import java.util.List;
+06
+ 
+07
+public class ShoppingCart {
+08
+ 
+09
+    //List of items
+10
+    List<Item> items;
+11
+ 
+12
+    public ShoppingCart(){
+13
+        this.items=new ArrayList<Item>();
+14
+    }
+15
+ 
+16
+    public void addItem(Item item){
+17
+        this.items.add(item);
+18
+    }
+19
+ 
+20
+    public void removeItem(Item item){
+21
+        this.items.remove(item);
+22
+    }
+23
+ 
+24
+    public int calculateTotal(){
+25
+        int sum = 0;
+26
+        for(Item item : items){
+27
+            sum += item.getPrice();
+28
+        }
+29
+        return sum;
+30
+    }
+31
+ 
+32
+    public void pay(PaymentStrategy paymentMethod){
+33
+        int amount = calculateTotal();
+34
+        paymentMethod.pay(amount);
+35
+    }
+36
+}
+Notice that payment method of shopping cart requires payment algorithm as argument and doesn’t store it anywhere as instance variable.
+
+Let’s test our setup with a simple program.
+
+01
+package com.journaldev.design.strategy;
+02
+ 
+03
+public class ShoppingCartTest {
+04
+ 
+05
+    public static void main(String[] args) {
+06
+        ShoppingCart cart = new ShoppingCart();
+07
+ 
+08
+        Item item1 = new Item("1234",10);
+09
+        Item item2 = new Item("5678",40);
+10
+ 
+11
+        cart.addItem(item1);
+12
+        cart.addItem(item2);
+13
+ 
+14
+        //pay by paypal
+15
+        cart.pay(new PaypalStrategy("myemail@example.com", "mypwd"));
+16
+ 
+17
+        //pay by credit card
+18
+        cart.pay(new CreditCardStrategy("Pankaj Kumar", "1234567890123456", "786", "12/15"));
+19
+    }
+20
+ 
+21
+}
