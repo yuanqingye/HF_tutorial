@@ -1,0 +1,437 @@
+/*
+ * Copyright HealthFusion, Inc. 2014
+ */
+package com.hfc.data.db.claims.ccm;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.hfc.util.TextUtil;
+/**
+ * Wrapper for CHRONIC_CARE table
+ *
+ * @author Saswati Mishra
+ * @since Dec 03, 2014
+ */
+public class ChronicCare {
+    private Long chronicCareId;
+    private Long memberId;
+    private String chronicCondition;
+    private Date permissionOnFile;
+    private String recentActivity;
+    private Date dateCreated;
+    private Long claimId;
+    private Date claimDateCreated;
+    private Date fromDate;
+    private Date toDate;
+    private Long practiceId;
+    private Long providerId;
+    private ChronicCondition chronicCond;
+    private String[] ICD9List;
+    private String[] ICD10List;
+    private String[] snomedList;
+    // Convenience fields to map JOIN tables
+    private String patientFirstName;
+    private String patientLastName;
+    private List<RecentActivity> activity;
+    /**
+     * <pre>
+     * {
+     *   "id": 12345,
+     *   "type": 1,
+     *   "patient_fname": "Mary",
+     *   "patient_lname": "Jane",
+     *   "cc": [
+     *     {
+     *       "icd9": ["250.0", "Diabetes"]
+     *       "icd10": ["1234.555", "Diabetes Mellitus"]
+     *       "snomed": ["127879797979797", "Good Diabetes"]
+     *     },
+     *     {
+     *       "icd9": ["123.45", "Getting Old"]
+     *       "icd10": ["12876.999", "Getting really old"]
+     *       "snomed": ["989798787", "Getting really really old"]
+     *     }
+     *   ],
+     *   "activity": [
+     *     {
+     *       "event": "Patient message received",
+     *       "event_dt": "12/12/2014"
+     *     },
+     *     {
+     *       "event": "Lab Ordered",
+     *       "event_dt": "12/13/2014"
+     *     }
+     *   ],
+     *   "last_ccm": "11/12/2015"
+     * }
+     * </pre>
+     *
+     * @author Rumpa
+     *
+     */
+    private static class ChronicCareJSON {
+        long id;
+        int type;
+        String patient_fname;
+        String patient_lname;
+        List<ChronicCondition> cc;
+        List<ActivityJSON> activity;
+    }
+    private static class ActivityJSON {
+        String event;
+        String event_dt;
+        public ActivityJSON(String _event, Date _event_dt) {
+            event = _event;
+            event_dt = TextUtil.format(_event_dt);
+        }
+    }
+    private static class ChronicCondition {
+        String[] icd9;
+        String[] icd10;
+        String[] snomed;
+    }
+    ChronicCareJSON toJSONObj(TypeEnum _type) {
+        ChronicCareJSON ccjson = new ChronicCareJSON();
+        ccjson.id = this.chronicCareId;
+        ccjson.type = _type.ordinal() + 1;
+        ccjson.patient_fname = this.patientFirstName;
+        ccjson.patient_lname = this.patientLastName;
+        ccjson.activity = new ArrayList<ChronicCare.ActivityJSON>();
+        for (RecentActivity act : activity) {
+            ccjson.activity.add(new ActivityJSON(act.getRecentActivity(), act
+                    .getDateCreated()));
+        }
+        //TODO: Fill in the ChronicCondition logic
+        return ccjson;
+    }
+    public JSONObject toJSON(TypeEnum _type) {
+        try {
+            ChronicCareJSON json = toJSONObj(_type);
+            return new JSONObject(new Gson().toJson(json));
+        } catch (JSONException ex) {
+            return new JSONObject();
+        }
+    }
+    public static enum TypeEnum {
+        READY_TO_BILL, RECENTLY_BILLED, NO_RECENT_ACTIVITY, MEDICARE_FFS;
+    }
+    /**
+     * @return the chronicCareId
+     */
+    public Long getChronicCareId() {
+        return chronicCareId;
+    }
+    /**
+     * @param chronicCareId
+     *            the chronicCareId to set
+     */
+    public void setChronicCareId(Long chronicCareId) {
+        this.chronicCareId = chronicCareId;
+    }
+    /**
+     * @return the memberId
+     */
+    public Long getMemberId() {
+        return memberId;
+    }
+    /**
+     * @param memberId
+     *            the memberId to set
+     */
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
+    }
+    /**
+     * @return the chronicCondition
+     */
+    public String getChronicCondition() {
+        return chronicCondition;
+    }
+    /**
+     * @param chronicCondition
+     *            the chronicCondition to set
+     */
+    public void setChronicCondition(String chronicCondition) {
+        this.chronicCondition = chronicCondition;
+    }
+    /**
+     * @return the permissionOnFile
+     */
+    public Date getPermissionOnFile() {
+        return permissionOnFile;
+    }
+    /**
+     * @param permissionOnFile
+     *            the permissionOnFile to set
+     */
+    public void setPermissionOnFile(Date permissionOnFile) {
+        this.permissionOnFile = permissionOnFile;
+    }
+    /**
+     * @return the recentActivity
+     */
+    public String getRecentActivity() {
+        return recentActivity;
+    }
+    /**
+     * @param recentActivity
+     *            the recentActivity to set
+     */
+    public void setRecentActivity(String recentActivity) {
+        this.recentActivity = recentActivity;
+    }
+    /**
+     * @return the dateCreated
+     */
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+    /**
+     * @param dateCreated
+     *            the dateCreated to set
+     */
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+    /**
+     * @return the claimId
+     */
+    public Long getClaimId() {
+        return claimId;
+    }
+    /**
+     * @param claimId
+     *            the claimId to set
+     */
+    public void setClaimId(Long claimId) {
+        this.claimId = claimId;
+    }
+    /**
+     * @return the claimDateCreated
+     */
+    public Date getClaimDateCreated() {
+        return claimDateCreated;
+    }
+    /**
+     * @param claimDateCreated
+     *            the claimDateCreated to set
+     */
+    public void setClaimDateCreated(Date claimDateCreated) {
+        this.claimDateCreated = claimDateCreated;
+    }
+    /**
+     * @return the fromDate
+     */
+    public Date getFromDate() {
+        return fromDate;
+    }
+    /**
+     * @param fromDate
+     *            the fromDate to set
+     */
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+    /**
+     * @return the toDate
+     */
+    public Date getToDate() {
+        return toDate;
+    }
+    /**
+     * @param toDate
+     *            the toDate to set
+     */
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
+    }
+    /**
+     * @return the practiceId
+     */
+    public Long getPracticeId() {
+        return practiceId;
+    }
+    /**
+     * @param practiceId
+     *            the practiceId to set
+     */
+    public void setPracticeId(Long practiceId) {
+        this.practiceId = practiceId;
+    }
+    /**
+     * @return the providerId
+     */
+    public Long getProviderId() {
+        return providerId;
+    }
+    /**
+     * @param providerId
+     *            the providerId to set
+     */
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
+    /**
+     * @return the iCD9List
+     */
+    public String[] getICD9List() {
+        return ICD9List;
+    }
+    /**
+     * @return the iCD10List
+     */
+    public String[] getICD10List() {
+        return ICD10List;
+    }
+    /**
+     * @return the snomedList
+     */
+    public String[] getSnomedList() {
+        return snomedList;
+    }
+}
+
+Table Design
+PRACTICE
+Initially this column would be filled with 1 for few given taxonomy codes.
+COLUMN NAME
+DATE TYPE
+INDEX
+NOTES
+HAS_CCM	NUMBER(1)	 	1 = Practice uses CCM Feature
+Not needed anymore since the CCM_CONSENT_DATE would be adding the patient to the CHRONIC_CARE table.
+POLICY_INFO
+Why: Save the consent capture date. Once the consent is captured, we do need to store when did they say no and who said no.
+COLUMN NAME
+DATA TYPE
+INDEX
+NOTES
+CCM_CONSENT_DATE	DATE	YES	Capture the date when the CCM consent was marked "Yes"
+MODIFIED_BY_USERID	NUMBER(12)	 	
+Foreign key to REAL_TIME_USERS table
+User ID who marked CCM = Yes
+Every time some one makes a change in MEMBER_POLICY_XREF, audit the table.
+PROVIDER_ID	NUMBER(12)	YES	FKEY TO PROVIDER
+UI Check box is checked if CCM_CONSENT_DATE IS NOT NULL.
+When the CCM Consent is marked "No" - wipe out CCM_CONSENT_DATE.
+How do we determine when was it marked No - look into the AUDIT_POLICY_INFO.
+Trigger:
+Populate the AUDIT_POLICY_INFO table
+Populate the PRACTICE.HAS_CCM column.
+When the CCM_CONSENT_DATE is filled - run through CCM_ELIGBILITY and insert row in CHRONIC_CARE
+ 
+AUDIT_POLICY_INFO
+Why: Save the consent capture date. Once the consent is captured, we do need to store when did they say no and who said no.
+COLUMN NAME
+DATA TYPE
+INDEX
+NOTES
+AUDIT_POLICY_INFO_ID
+NUMBER(12)	PKEY	 
+POLICY_INFO_ID	NUMBER(12)	 	 
+CCM_CONSENT_DATE	DATE	YES	Capture the date when the CCM consent was marked "Yes"
+MODIFIED_BY_USERID	NUMBER(12)	 	
+Foreign key to REAL_TIME_USERS table
+User ID who marked CCM = Yes
+Every time some one makes a change in MEMBER_POLICY_XREF, audit the table.
+PROVIDER_ID	NUMBER(12)	YES	FKEY TO PROVIDER
+DATE_CREATED	DATE	 	 
+RECENT_ACTIVITY
+COLUMN NAME
+COLUMN TYPE
+INDEX
+NOTES
+PKEY	NUMBER(12)	 	 
+MEMBER_ID	NUMBER(12)	 	 
+RECENT_ACTIVITY	VARCHAR(4000)	 	MEDICATION ORDERED LIPITOR - 400MG
+SOAP_AREA	NUMBER(12)	 	MEDICATION, PROBLEM_LIST, ALLERGY ETC.
+DATE_CREATED	DATE	 	 
+CHRONIC_CARE_PKEY	NUMBER(12)	 	FOREIGN KEY TO CHRONIC CARE - WILL BE PRESENT IF NO CLAIM IS CREATED YET.
+Recent Activity will be tied to the CCM_ID.
+Select CCM_ID from CMM where recent_activity_date_created between CCM_FROM_DATE and CCM_TO_DATE and CLAIMID IS NULL and MEMBER_ID = ?
+Events to capture the Recent Activity
+Table Name
+Event
+SOAP_AREA
+Label Creation
+Notes
+PATIENT_RXS	INSERT	6	Medication Ordered : [ Medication_list.drug_name ]	join condition to pull Name : patient_rxs.medication_id = medication_list.medication_id
+PATIENT_RENEWALS 	UPDATE	6	Medication Refill:[ Medication_list.drug_name ]	
+Upon RENEWAL_STATUS = 0 (Ok)
+join condition to pull Name : patient_rxs.medication_id = medication_list.medication_id
+MEDICATION_LIST	INSERT, UPDATE, DELETE	6	Medication edited: [ Medication_list.drug_name ]	For all records who do not have child record in PATIENT_RXS and PATIENT_RENEWALS 
+TEST_ORDER 	INSERT	 	Ordered : [ Lab, Radiology, Consult, Office ] + date ordered	
+TEST_ORDER.ORDER_TYPE Values and mapping :
+ORDER_TYPE
+LABEL
+NULL	Lab
+5	Consult
+6	In Office Lab
+7	Radiology
+ORDER_RESULT	INSERT	 	Order Resulted - [Date]	ORDER_RESULT.DATE_CREATED
+ORDER_RESULT	UPDATE	 	Result Reviewed -[ Date]	ORDER_RESULT.REVIEWED_DATE not null event.
+EHR_ALLERGY_HISTORY	INSERT	2	Allergy Added - [ehr_allergy_history.allergy_name]	 
+EHR_ALLERGY_HISTORY	UPDATE	2	Allergy Updated - [ehr_allergy_history.allergy_name]	 
+PROBLEM_LIST	INSERT	25	
+Condition Added -
+[problem_list.description]
+ 
+PROBLEM_LIST	UPDATE	25	
+Condition Updated -
+[problem_list.description]
+ 
+EHR_MESSAGES	INSERT	40	Patient message sent	
+Ask Karina Serrano (HealthFusion) if correct assumption for EHR_MESSAGES and EHR_MESSAGES_RECEIVER tables.
+First time the staff is sending a message to the patient.
+EHR_MESSAGE.SENDER_ID NOT NULL AND MEMBER_ID NOT NULL
+EHR_MESSAGES	INSERT	40	Staff message received from patient	EHR_MESSAGE.MEMBER_SENDER_ID IS NOT NULL or EHR_MESSAGE.PPUSER_SENDER_ID IS NOT NULL
+ EHR_MESSAGES_RECEIVER	 INSERT	40 	Patient message received	
+EHR_MESSAGES_RECEIVER.PPUSER_RECEIVER_ID IS NOT NULL or
+EHR_MESSAGES.MEMBER_RECEIVER_ID IS NOT NULL
+ENCOUNTER	INSERT	29	Phone encounter documented	ENCOUNTER.TYPE = 1
+CCDA Import TBD	 	 	 	 
+ 
+CHRONIC_CARE
+Column Name
+Column Type
+INDEX
+Notes
+PKEY	NUMBER(12)	 	 
+MEMBER_ID	NUMBER(12)	YES	FKEY TO MEMBER
+CHRONIC_CONDITION	
+CLOB
+VARCHAR2(4000)
+ 	
+Format for keeping ICD9, ICD10, Snomed Code
+ICD9_1^ICD10_1^SNOMED_1,ICD9_2^ICD10_2^SNOMED_2
+SAMPLE: 6929^L259^182782007,71941^M25519^267949000,71941^^267949000,71951^M25619^249918006
+PERMISSION_ON_FILE	DATE	 	INDICATES WHETHER THE PROVIDER HAD GATHERED PATIENT CONSENT
+RECENT_ACTIVITY	CLOB	 	 
+CLAIM_ID	NUMBER(12)	YES	FKEY TO CLAIMS TABLE
+CLAIM_DATE_CREATED	DATE	 	 
+STATUS	NUMBER(12)	 	CONSENT_ON_FILE, HAS_TWO_CONDITION, HAS_NO_CCM_LAST_30_DAYS, READY_TO_BILL, BILLED
+PRACTICE_ID	NUMBER(12)	YES	 
+DATE_CREATED	 	YES	 
+FROM_DATE	DATE	 	Patient Consent Date at the begining. After the first CCM claim of the patient, next date would be last CCM toDate + 1
+TO_DATE	DATE	 	Always FROM_DATE + 30
+PROVIDER_ID	NUMBER(12)	YES	FKEY TO PROVIDER
+As soon as the Consent arrives - add an entry into the CHRONIC_CARE table with FROM_DATE = CCM CONSENT date, TO_DATE = FROM_DATE + 30 - use UI to populate this row.
+The Recent Activity, capture only for members with consent on file. The trigger may check CCM_ELIGIBILITY table to establish should we collect the recent activity.
+New records for the member after the first CCM entry -
+the Nightly oracle job will establish a new entry after running through the CCM_ELIGIBILITY
+
+Ready to Bill: Chronic_care records with - Recent Activity with no claim ID 
+Recently Billed: ClaimID not null and CLAIM_DATE_CREATED < sysdate - 30
+No Recent Activity: Recent Activity is null and today between from_date and to_date
+Table Questions:
+The RECENT_ACTIVITY column is present in both the above mentioned tables. Are these two columns related to each other in any way?
+Recent Activity aggregated for a certain time period - all RECENT ACTIVITY BETWEEN FROM_DATE and TO_DATE, will be present in the CHRONIC_CARE table.
+The RECENT_ACTIVITY column present in RECENT_ACTIVITY table is of type varchar2(4000). Why is it not present as a CLOB?
+The single event label will be generally less than 4000 characters, but since CHRONIC_CARE table we have gathered all the recent activity across the time, it may or may not fit into VARCHAR(4000) hence the choice of CLOB.
+The column SOAP_AREA in table RECENT_ACTIVITY is unclear. What data would it capture exactly. As it is a NUMBER datatype would that mean that it will store id of something?
+This will store EvaluationEntryTypeEnum ordinal value.
+Recent Activity will be tied to the CCM_ID. Select CCM_ID from CMM where recent_activity_date_created between CCM_FROM_DATE and CCM_TO_DATE and CLAIMID IS NULL and MEMBER_ID = ? Will it always return single record ? What happens if it returns more than one rows?
+Yes within a given FROM_DATE and TO_DATE there will be only one CHRONIC_CARE record, hence only one CCM_ID is found.
