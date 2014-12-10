@@ -435,3 +435,204 @@ The column SOAP_AREA in table RECENT_ACTIVITY is unclear. What data would it cap
 This will store EvaluationEntryTypeEnum ordinal value.
 Recent Activity will be tied to the CCM_ID. Select CCM_ID from CMM where recent_activity_date_created between CCM_FROM_DATE and CCM_TO_DATE and CLAIMID IS NULL and MEMBER_ID = ? Will it always return single record ? What happens if it returns more than one rows?
 Yes within a given FROM_DATE and TO_DATE there will be only one CHRONIC_CARE record, hence only one CCM_ID is found.
+
+Requirements - Phase I
+#
+Title
+User Story
+Notes
+1	
+Do not display CCM Billing button to customers who do not have both EHR and PM plans.
+CD-475 - Display CCM Button under "Reports" NEW
+ 	
+In order for this feature to work, the practice must have EHR and PM both. Since recent activity belongs to EHR and CCM Claim will be created in PM.
+ 
+2	
+Patient must have insurance profile payer class "Medicare FFS" to be considered for the list.
+CD-486 - CCM Package PL/SQL NEW
+ 	Payer name does not influence any thing. If the practice marks the Aetna insurance profile with "Medicare FFS" as payer class - that will also show the CCM consent row.
+3	
+Patient must have consent on file tied to a specific provider.
+CD-486 - CCM Package PL/SQL NEW
+Medicare gives permission to a specific provider for a specific patient	
+ 
+4	
+Capture the consent date for the patient by the provider
+CD-474 - Policy Info UI - capture CCM_CONSENT on file. NEW
+ 	 
+4a	If the insurance profile is archived then the CCM entry should be removed.	 	 
+5	
+Upon update of insurance profile, do not update the consent date if already present.
+CD-479 - Consent marked = Yes - Save Consent on File, during an update, do not override the consent on File. NEW
+ 	 
+6	
+Capture the date when the user unchecks the box.
+CD-468 - AUDIT_POLICY_INFO NEW
+ 	 
+7	
+On the day of evaluation to create the ready to bill the patient being evaluated must have 2 chronic active condition in the problem list. The onset date of the condition is not questioned.
+CD-486 - CCM Package PL/SQL NEW
+ 	Patient can acquire the condition on the day of evaluation. The engine will look only at the 2 or more active chronic condition present or not.
+ 	Recent = sysdate - 60	 	 
+8	
+Recent Activity should be captured after the patient consent date.
+CD-486 - CCM Package PL/SQL NEW
+ 	 
+9	
+Recent Activity Event - Any event as specified in CCM_ACTIVITY.
+Any qualifying event without the ENCOUNTER_ID.
+If Encounter Id is present, it belongs to Phone Encounter
+For first claim - all recent activity after consent date are eligible.
+For following claim - all activity after the last CCM claim are eligible until the next claim is created.
+CD-487 - Capture Recent Activity after the patient consent on file arrives. NEW
+ 	 
+10	
+UI Provider drop down - The label is "Consent Provider", list is all rendering provider sorted alphabetically
+CD-488 - CCM UI NEW
+ 	 
+11	
+If the user is context is a provider, pre-select that provider in the drop down.
+CD-488 - CCM UI NEW
+ 	 
+12	
+Ready To Bill, Billed Recently, No Recent Activity - all displays patient for whom patient consent is in file. So do not display "Permission on File" column.
+CD-488 - CCM UI NEW
+ 	
+Question:
+Sort order on the page - patient alphabetically A ~ Z?
+Arnold Mentze (HealthFusion) Yes, order by LAST ASC, FIRST ASC
+13	
+Display the ICD9 and snomed code in the first 3 tabs.
+Problem List ICd9, ICD10, Snomed
+CD-488 - CCM UI NEW CD-476 - JSON Structure representing the CCM UI. NEW
+So it helps the user fix it for claims without ICD9	 
+14	
+FFS Medicare All Patient - Can display patient without permission on file.
+CD-488 - CCM UI NEW
+ 	 
+15	
+Last Claim - indicates the date of last CCM Claim. It does not include the regular claim created outside the CCM interface having CPT : CPT 99495-99496, 90951-90970, or HCPCS G0181-G0182 
+ CD-471 - PL/SQL to aggregate the data for CHRONIC_CARE NEW
+ 	 
+16	
+Ready To Bill
+No regular claim with CPT 99495-99496, 90951-90970, or HCPCS G0181-G0182 between today - 30
+If no prior CCM claim exists :
+Recent Activity after the patient consent date.
+DOS
+FromDate = Patient Consent
+toDate = Most recent Activity
+CCM Date = ToDate
+If prior CCM claim exists:
+CCM DOS = fromDate = Last CCM + (N-1)*30, toDate = fromDate + 30
+CCM Date = toDate
+last CCM claim was before today - 30
+And recent activity also within today - 30
+Last 90 day worth of prospective claim lines are displayed.
+CD-471 - PL/SQL to aggregate the data for CHRONIC_CARE NEW CD-480 - ChronicCareMgmt Filter for "Ready To Bill" NEW CD-486 - CCM Package PL/SQL NEW
+ 
+ 
+ 
+ Assume patient is medicare FFS, patient consent is present and has 2 active chronic conditions on file.
+ 
+17	
+Add the start date of service and end date of service on the UI - now that we are displaying
+CD-488 - CCM UI NEW
+ 	 
+18	
+Billed Recently
+Display all CCM claims created within today - 30
+Does not include claims created outside the CCM interface with the CCM code or CPT 99495-99496, 90951-90970, or HCPCS G0181-G0182 
+ CD-486 - CCM Package PL/SQL NEW CD-481 - ChronicCareMgmt Filter for "Recently Billed" NEW
+ 	  Assume patient is medicare FFS, patient consent is present and has 2 active chronic conditions on file.
+19	
+No Recent Activity
+No regular claim with CPT 99495-99496, 90951-90970, or HCPCS G0181-G0182 between today - 30
+
+
+Similar to "ready to bill" - display only the records with no recent activity - where the date range is
+start date = Last CCM Date + (N-1)* 30
+end date = start date + 30
+Recent Activity is absent after the last CCM claim which was greater than 30 days from today.
+ CD-482 - ChronicCareMgmt Filter for "No Recent Activity" NEW
+
+ Money slipping away, just say hello and get $40!
+ 
+  Assume patient is medicare FFS, patient consent is present and has 2 active chronic conditions on file.
+Question:
+Should we place an exclamation mark on the button?
+Since we are calculating a day in advance, placing a warning sign if they have more than 10 patient in that list - indicates provider is about to lose 400$ if not pursued.
+Answer:
+Since there will be always patients with no recent activity, not necessary
+
+20	
+FFS Medicare All Patients
+Filter patients with ""Medicare FFS" payer class in active insurance profile
+CD-483 - ChronicCareMgmt Filter for "Medicare FFS" NEW
+Patient Consent is irrelevant for the search. Provides the doctor with a scope of pursuing consent from the patient so they can start billing.	
+Question:
+Any category display - "With Consent" and "Without Consent"
+Answer:
+Adding a filter so take out the "Permission on File" column.
+21	
+Every Monday Message "Rendering Provider" with reminder to review CCM if they have records in "Ready to Bill" or "No Recent Activity" tab.
+CD-484 - Message the provider every Monday - if they have "Ready To Bill" available NEW
+ 	 
+22	
+Recent Activity Labels TBD
+CD-487 - Capture Recent Activity after the patient consent on file arrives. NEW
+ 	 
+23	
+Generate User Hold Claim for each checked box on "Ready to Bill"
+Falls through the
+Pick the patient chronic condition ICDs as diagnosis
+Stick the known CPT Code - 99490
+The diagnosis pointer will be all the ICDs added.
+DOS from, To
+Use the provider chosen for the UI Filter as the rendering provider
+Default billing provider for the chosen rendering provider is claim billing provider.
+Pick the medicare ffs payer with the CCM permission on file.
+If there is a another payer who is not "medicare ffs" pick that payer for the COB payer.
+Chronic condition may be snomed - most snomed has icd-9 map so we should be able to pick it.
+If unable to pick the ICD9, we create the user hold claim without the ICD9 codes
+CD-472 - Generate CCM Claim for one claim. NEW
+ 	
+ You can create a user hold claim with out the ICD9
+24	Practice must choose to do CCM and hence crunching only their member	 	
+At present there are 213 practices and 40K patients for those practices who have a "Medicare FFS" profile and 2 chronic and active condition. Based on our current projected design - it will cause a lot of redo log with constant insert and delete of "Ready to Bill" patients. To limit that, we will gather patients for practice who are interested.
+Side effect of the above providers must be enrolled In jan if they do not want to bill. Note: recent activity won't be captured for practice who did not enroll. And that will affect the data mining.
+All the practices who have primary care, automatically turn on.
+Not an issue any more only the CCM Consent patient are considered for evaluation.
+25	
+Recent Activity - Display the disclosure of 20 min visit
+CD-488 - CCM UI NEW
+ 	Arnold Mentze (HealthFusion) Disclaimer will only be displayed on the Ready to Bill tab, that's the only place where it's relevant.
+26	Taxonomy - primary care, internal medicine - get the feature automatically the feature is turned on.	 	No longer needed, since the first consent drives the record collection of the practice patient.
+27	For practices who does not have it turned on, with the very first consent turn the feature on for the practice.	 	 
+28	If ccm consent capture date is in 2014, set the CHRONIC_CARE.FROM_DATE = 1/1/2015	 	 
+Requirements - Phase II
+ 
+#
+Title
+User Story
+Notes
+1	Create a new document type "CCM Consent"	 When the user scans the document and uploads it, we check the box, and pick the associated rendering provider.	 
+2	Possibility - $ sign on CCM Billing if has one ready to bill claim.	 	 
+3	The consent provider list - displays only providers who has at least one consent on file.	 	 
+4	
+Warn the user if they use 99490 during EHR—> P ---> Procedure Code.
+They can use it on the PM side.
+ 	 
+5	Admin feature flag for practices to turn on/off the CCM feature availability to the practice.	 	Currently we will use the taxonomy to mark the most probable practices who might use the CCM feature. Later on, we will expose the feature flag to the customer.
+6	Claim ID - link to claim status?
+
+-- PMS = 22
+-- EHR = 25
+drop table EHR_PMS_PRACTICE;
+create table EHR_PMS_PRACTICE
+as 
+select distinct practice_id from plan_order where
+plan_id =22
+intersect
+select distinct practice_id from plan_order where
+plan_id =25	 	 
