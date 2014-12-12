@@ -1,0 +1,19 @@
+www.mongodb.org
+
+Start Mongodb:
+1. Head over to the official download page and grab the binaries from the first row (the recommended stable version)
+for your operating system of choice. For development purposes, you can pick either 32-bit or 64-bit.
+2. Extract the archive (wherever you want) and navigate to the bin subfolder. Don’t execute anything just yet,
+but know that mongod is the server process and mongo is the client shell - these are the two executables we’ll be
+spending most of our time with.
+3. Create a new text file in the bin subfolder named mongodb. config.
+4. Add a single line to your mongodb.config: dbpath=PATH_TO_WHERE_YOU_WANT_TO_STORE_YOUR_DATABASE_FILES
+. For example, on Windows you might do dbpath=c:\mongodb\data and on Linux you might do dbpath=/var/
+lib/mongodb/data.
+5. Make sure the dbpath you specified exists.
+6. Launch mongod with the --config /path/to/your/mongodb. config parameter
+
+after setup:
+c:\mongodb\bin\mongod --config c:\mongodb\bin\mongodb. config
+Then run this:
+
