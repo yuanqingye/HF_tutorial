@@ -593,3 +593,5 @@ function foo() {
     alert(arguments[i]);
   }
 }
+
+var d = Date.parse("March 21, 2012");

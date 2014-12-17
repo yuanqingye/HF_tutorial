@@ -619,3 +619,15 @@ The BEFORE trigger will allow to do that and prevent the row from being inserted
 
 AFTER triggers are usually used when information needs to be updated in a separate table due to a change. They run after changes have been made to the database (not necessarily committed). 
 Let's go back to our back example. After a successful transaction, you would want balance to be updated in the accounts table. An AFTER trigger will allow you to do exactly that.
+
+select * 
+from
+    all_constraints 
+where
+    r_constraint_name in
+    (select       constraint_name
+    from
+       all_constraints
+    where
+       table_name='MYTAB') 
+;   
