@@ -631,3 +631,11 @@ where
     where
        table_name='MYTAB') 
 ;   
+
+Get Defination of a procedure
+select dbms_metadata.get_ddl(object_type, object_name) 
+from user_objects
+where object_type in ('VIEW', 'PROCEDURE', 'FUNCTION', 'TRIGGER');
+
+select dbms_metadata.get_ddl('VIEW', 'ADMIN_USER_VIEW') from dual;
+

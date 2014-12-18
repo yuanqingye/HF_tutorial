@@ -44,4 +44,40 @@ statement.setFloat(1, i/4);
 You must register the JDBC type of each output parameter, using registerOutParameter, as follows,
 statement.registerOutParameter(n, type);
 
-The default for a database connection is autocommit; that is, each executed statement is automatically committed to the database. Thus, for transaction management you first need to turn off autocommit for the connection by calling setAutoCommit(false). 
+The default for a database connection is autocommit; that is, each executed statement is automatically committed to the database. Thus, for transaction management you first need to turn off autocommit for the connection by calling setAutoCommit(false).
+
+
+Example for executing callable statement
+if (_practiceId == null || _collectionsRuleId == null) {
+			return null;
+		}
+		@SuppressWarnings("rawtypes")
+		Collection coll = null;
+		Connection conn = null;
+		CallableStatement cstmt = null;
+		ResultSet rs = null;
+		try {
+			String SQLTEXT = "{call  COLLECTIONS_MODULE.searchCollectionsRule(?, ?, ?)}";
+			HFLogger.getLogger().info("SQL := " + SQLTEXT);
+			conn = getConnection();
+			cstmt = conn.prepareCall(SQLTEXT);
+			cstmt.setLong(1, _practiceId);
+			cstmt.setLong(2, _collectionsRuleId);			
+			cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+			cstmt.execute();
+			rs = (ResultSet) cstmt.getObject(3);
+			coll = getCollection(rs);
+			return (List<Charge>) coll;
+		} catch (SQLException e) {
+			throw new InfrastructureException(e);
+		} finally {			
+			closeAll(conn, cstmt, null);
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {					
+					e.printStackTrace();
+				}
+			}
+		}
+	 
