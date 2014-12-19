@@ -13,3 +13,6 @@ revert to last commit.
 git rm --cached file.txt
 
 I like git stash save -u because you can undo them all with git stash pop
+
+remove untracked file options
+http://git-scm.com/docs/git-clean
