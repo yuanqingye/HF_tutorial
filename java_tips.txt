@@ -139,3 +139,25 @@ else if(obj instanceof C)
     < is C>
 else
     <is D>
+
+HFLogger.getLogger().info("SQL := " + SQLTEXT);
+			HFTimer t = new HFTimer();
+			t.start();
+			conn = getConnection();
+			t.stop();
+			HFLogger.getLogger().info(t.getFormatTime());
+			t.start();
+			cstmt = conn.prepareCall(SQLTEXT);
+			cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
+			cstmt.setLong(2, _practiceId);
+			cstmt.setLong(3, _claimId);
+			if (_lastBillingUpdate == null) {
+				cstmt.setNull(4, Types.NULL);
+			} else {
+				cstmt.setTimestamp(4, new java.sql.Timestamp(_lastBillingUpdate.getTime()));
+			}
+			cstmt.setLong(5, userId);
+			cstmt.setLong(6, transactionId);
+			cstmt.execute();
+			t.stop();
+			HFLogger.getLogger().info(t.getFormatTime());

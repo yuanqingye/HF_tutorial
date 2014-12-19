@@ -639,3 +639,12 @@ where object_type in ('VIEW', 'PROCEDURE', 'FUNCTION', 'TRIGGER');
 
 select dbms_metadata.get_ddl('VIEW', 'ADMIN_USER_VIEW') from dual;
 
+ V_UPDATE_CASE_SQL            := 'UPDATE COLLECTIONS_CASE SET SECONDARY_STATUS = :1, AMOUNT_DUE = :2, UPDATE_STATUS = :3, STATUS = :4   WHERE COLLECTIONS_CASE_ID = :4' ;
+        EXECUTE IMMEDIATE V_UPDATE_CASE_SQL USING v_secondary_status, v_collection_amount_due,v_update_status,v_status, collectionCaseId;
+        IF(P_description_notes is NOT NULL AND P_description_notes!='Payment') THEN
+           INSERT INTO COLLECTIONS_NOTES(COLLECTIONS_NOTES_ID, COLLECTIONS_CASE_ID, PRACTICE_ID, NOTES) VALUES(COLLECTIONS_NOTES_SEQ.NEXTVAL, collectionCaseId,P_PRACTICEID, P_description_notes);
+        END IF;
+
+Find the location of some sources
+select * from all_source where UPPER(TEXT) like UPPER('%updateCollections%') and name!='PAYMENT_POSTING';
+
