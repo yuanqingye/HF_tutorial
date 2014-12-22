@@ -648,3 +648,15 @@ select dbms_metadata.get_ddl('VIEW', 'ADMIN_USER_VIEW') from dual;
 Find the location of some sources
 select * from all_source where UPPER(TEXT) like UPPER('%updateCollections%') and name!='PAYMENT_POSTING';
 
+Merge when:
+In SQL Server 2008, you can perform insert, update, or delete operations in a single statement using the MERGE statement. The MERGE statement allows you to join a data source with a target table or view, and then perform multiple actions against the target based on the results of that join. For example, you can use the MERGE statement to perform the following operations:
+Conditionally insert or update rows in a target table.
+If the row exists in the target table, update one or more columns; otherwise, insert the data into a new row.
+Synchronize two tables.
+Insert, update, or delete rows in a target table based on differences with the source data.
+The MERGE syntax consists of five primary clauses:
+The MERGE clause specifies the table or view that is the target of the insert, update, or delete operations.
+The USING clause specifies the data source being joined with the target.
+The ON clause specifies the join conditions that determine where the target and source match.
+The WHEN clauses (WHEN MATCHED, WHEN NOT MATCHED BY TARGET, and WHEN NOT MATCHED BY SOURCE) specify the actions to take based on the results of the ON clause and any additional search criteria specified in the WHEN clauses.
+The OUTPUT clause returns a row for each row in the target that is inserted, updated, or deleted.
