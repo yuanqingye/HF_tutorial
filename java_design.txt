@@ -24,4 +24,5 @@ How you organize it is very important
 Strategy:
 ClaimBandAidStrategy
 
-
+visitor Pattern: kind of double dispatch, not only compile time, but run time as well.
+The schema is like this: receptor.accept(visitor){visitor.visit(this)}

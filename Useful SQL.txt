@@ -664,3 +664,6 @@ The OUTPUT clause returns a row for each row in the target that is inserted, upd
 select * from USER_TAB_COLUMNS where table_name = 'CHARGE';
 
 http://www.oracle.com/pls/tahiti/tahiti.catalog_views
+
+select * from ALL_IND_COLUMNS where lower(table_name) = 'mu_numerator_denominator';
+
