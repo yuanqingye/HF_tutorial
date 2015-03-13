@@ -667,3 +667,4 @@ http://www.oracle.com/pls/tahiti/tahiti.catalog_views
 
 select * from ALL_IND_COLUMNS where lower(table_name) = 'mu_numerator_denominator';
 
+select * from user_source where text like '%add_numerator%';
