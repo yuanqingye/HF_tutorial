@@ -294,4 +294,16 @@ end loop;
 exception
 when phenomenon_exception then
 dbms_output.put_line('This is the phenomenon player'||playername);
+raise_application_error(-20001,'see the application error');
 end;
+
+select * from qingye_history;
+
+create or replace trigger trigger_on_qingye 
+before update of city on qingye
+for each row
+when (old.name like '%a%')
+begin
+insert into qingye_history (id,name) values (2,:old.name);
+end;
+

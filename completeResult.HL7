@@ -1,0 +1,136 @@
+MSH|^~\&|1100|RN|HLTFUS|FIRSTCAR|201404271506||ORU^R01|0345|P|2.3
+PID|1|HF1541953|HF1541953||TEST^NATASHA||19470806|F||||||||||0
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|1|^LAB|11543650560^LAB|005009^CBC With Differential/Platelet^L|||201404251222||||||SRC:ST                     SRC:UC|201404251522||||||||201404271506|||F
+OBX|1|NM|005025^WBC^L^6690-2^Leukocytes^LN||3.7|x10E3/uL|3.4-10.8|||N|F|20130909||201404260407|RN
+OBX|2|NM|005033^RBC^L^789-8^Erythrocytes^LN||4.72|x10E6/uL|4.14-5.80|||N|F|20081208||201404260407|RN
+OBX|3|NM|005041^Hemoglobin^L^718-7^Hemoglobin^LN||14.4|g/dL|12.6-17.7|||N|F|20081208||201404260407|RN
+OBX|4|NM|005058^Hematocrit^L^4544-3^Hematocrit^LN||45.1|%|37.5-51.0|||N|F|20081208||201404260407|RN
+OBX|5|NM|015065^MCV^L^787-2^Erythrocyte mean corpuscular volume^LN||96|fL|79-97|||N|F|20081208||201404260407|RN
+OBX|6|NM|015073^MCH^L^785-6^Erythrocyte mean corpuscular hemoglobin^LN||30.5|pg|26.6-33.0|||N|F|20081208||201404260407|RN
+OBX|7|NM|015081^MCHC^L^786-4^Erythrocyte mean corpuscular hemoglobin concentrat^LN||31.9|g/dL|31.5-35.7|||N|F|20081208||201404260407|RN
+OBX|8|NM|105007^RDW^L^788-0^Erythrocyte distribution width^LN||13.4|%|12.3-15.4|||N|F|20081208||201404260407|RN
+OBX|9|NM|015172^Platelets^L^777-3^Platelets^LN||157|x10E3/uL|155-379|||N|F|20130909||201404260407|RN
+OBX|10|NM|015107^Neutrophils^L^770-8^Neutrophils/100 leukocytes^LN||55|%|40-74|||N|F|20130909||201404260407|RN
+OBX|11|NM|015123^Lymphs^L^736-9^Lymphocytes/100 leukocytes^LN||31|%|14-46|||N|F|20130909||201404260407|RN
+OBX|12|NM|015131^Monocytes^L^5905-5^Monocytes/100 leukocytes^LN||11|%|4-12|||N|F|20130909||201404260407|RN
+OBX|13|NM|015149^Eos^L^713-8^Eosinophils/100 leukocytes^LN||2|%|0-5|||N|F|20130909||201404260407|RN
+OBX|14|NM|015156^Basos^L^706-2^Basophils/100 leukocytes^LN||1|%|0-3|||N|F|20010402||201404260407|RN
+OBX|15|NM|015909^Neutrophils (Absolute)^L^751-8^Neutrophils^LN||2.1|x10E3/uL|1.4-7.0|||N|F|20130909||201404260407|RN
+OBX|16|NM|015917^Lymphs (Absolute)^L^731-0^Lymphocytes^LN||1.2|x10E3/uL|0.7-3.1|||N|F|20130909||201404260407|RN
+OBX|17|NM|015925^Monocytes(Absolute)^L^742-7^Monocytes^LN||0.4|x10E3/uL|0.1-0.9|||N|F|20130909||201404260407|RN
+OBX|18|NM|015933^Eos (Absolute)^L^711-2^Eosinophils^LN||0.1|x10E3/uL|0.0-0.4|||N|F|20130909||201404260407|RN
+OBX|19|NM|015941^Baso (Absolute)^L^704-7^Basophils^LN||0.0|x10E3/uL|0.0-0.2|||N|F|20081208||201404260407|RN
+OBX|20|NM|015108^Immature Granulocytes^L^38518-7^Granulocytes.immature/100 leukocytes^LN||0|%|0-2|||N|F|20110523||201404260407|RN
+OBX|21|NM|015911^Immature Grans (Abs)^L^51584-1^Granulocytes.immature^LN||0.0|x10E3/uL|0.0-0.1|||N|F|20100405||201404260407|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|2|^LAB|11543650560^LAB|003772^Urinalysis, Complete^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|013060^Specific Gravity^L^2965-2^Specific gravity^LN||1.015||1.005-1.030|||N|F|19960813||201404260337|RN
+OBX|2|NM|013078^pH^L^5803-2^pH^LN||6.0||5.0-7.5|||N|F|19960813||201404260337|RN
+OBX|3|ST|013045^Urine-Color^L^5778-6^Color^LN||Yellow||Yellow|||N|F|||201404260337|RN
+OBX|4|ST|013052^Appearance^L^5767-9^Appearance^LN||Clear||Clear|||N|F|||201404260337|RN
+OBX|5|ST|013185^WBC Esterase^L^5799-2^Leukocyte esterase^LN||Negative||Negative|||N|F|||201404260337|RN
+OBX|6|ST|013094^Protein^L^20454-5^Protein^LN||Negative||Negative/Trace|||N|F|19960813||201404260337|RN
+OBX|7|ST|013086^Glucose^L^2349-9^Glucose^LN||Negative||Negative|||N|F|||201404260337|RN
+OBX|8|ST|013110^Ketones^L^2514-8^Ketones^LN||Negative||Negative|||N|F|||201404260337|RN
+OBX|9|ST|013102^Occult Blood^L^5794-3^Hemoglobin^LN||Negative||Negative|||N|F|||201404260337|RN
+OBX|10|ST|013104^Bilirubin^L^5770-3^Bilirubin^LN||Negative||Negative|||N|F|||201404260337|RN
+OBX|11|NM|013105^Urobilinogen,Semi-Qn^L^20405-7^Urobilinogen^LN||0.2|EU/dL|0.0-1.9|||N|F|||201404260337|RN
+OBX|12|ST|013106^Nitrite, Urine^L^5802-4^Nitrite^LN||Negative||Negative|||N|F|||201404260337|RN
+OBX|13|TX|012237^Microscopic Examination^L^12235-8^Microscopic observation^LN|||||||N|F|||201404260337|RN
+NTE|1|L|Microscopic follows if indicated.
+OBX|14|ST|333336^Microscopic Examination^L^12235-8^Microscopic observation^LN||See below:|||||N|F|||201404260337|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|3|^LAB|11543650560^LAB|333328^Microscopic Examination^L|||201404251222||||G|||201404251522||||||||201404271506|||F|333336|||003772
+OBX|1|ST|013128^WBC^L^5821-4^Leukocytes^LN||0-5|/hpf|0 -  5|||N|F|19960313||201404260609|RN
+OBX|2|ST|013136^RBC^L^13945-1^Erythrocytes^LN||None seen|/hpf|0 -  3|||N|F|19960313||201404260609|RN
+OBX|3|ST|013148^Epithelial Cells (non renal)^L^5787-7^Epithelial cells^LN||None seen|/hpf|0 - 10|||N|F|||201404260609|RN
+OBX|4|ST|333351^Mucus Threads^L^8247-9^Mucus^LN||Present||Not Estab.|||N|F|20081117||201404260609|RN
+OBX|5|ST|333344^Bacteria^L^5769-5^Bacteria^LN||None seen||None seen/Few|||N|F|19960813||201404260609|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|4|^LAB|11543650560^LAB|322758^Basic Metabolic Panel (8)^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|001032^Glucose, Serum^L^2345-7^Glucose^LN||77|mg/dL|65-99|||N|F|20040126||201404260404|RN
+OBX|2|NM|001040^BUN^L^3094-0^Urea nitrogen^LN||18|mg/dL|6-24|||N|F|20110110||201404260404|RN
+OBX|3|NM|001370^Creatinine, Serum^L^2160-0^Creatinine^LN||1.16|mg/dL|0.76-1.27|||N|F|20080825||201404260418|RN
+OBX|4|NM|100791^eGFR If NonAfricn Am^L^48642-3^Glomerular filtration rate/1.73 sq M.predicted.non^LN||73|mL/min/1.73|    >59|||N|F|||201404260418|RN
+OBX|5|NM|100797^eGFR If Africn Am^L^48643-1^Glomerular filtration rate/1.73 sq M.predicted.bla^LN||84|mL/min/1.73|    >59|||N|F|||201404260418|RN
+OBX|6|NM|011577^BUN/Creatinine Ratio^L^3097-3^Urea nitrogen/Creatinine^LN||16||9-20|||N|F|20110110||201404260418|RN
+OBX|7|NM|001198^Sodium, Serum^L^2951-2^Sodium^LN||143|mmol/L|134-144|||N|F|20111219||201404260357|RN
+OBX|8|NM|001180^Potassium, Serum^L^2823-3^Potassium^LN||4.7|mmol/L|3.5-5.2|||N|F|20080317||201404260357|RN
+OBX|9|NM|001206^Chloride, Serum^L^2075-0^Chloride^LN||104|mmol/L|97-108|||N|F|20080317||201404260357|RN
+OBX|10|NM|001578^Carbon Dioxide, Total^L^2028-9^Carbon dioxide^LN||27|mmol/L|19-28|||N|F|20130617||201404260404|RN
+OBX|11|NM|001016^Calcium, Serum^L^17861-6^Calcium^LN||9.4|mg/dL|8.7-10.2|||N|F|20100104||201404260404|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|5|^LAB|11543650560^LAB|303756^Lipid Panel^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|001065^Cholesterol, Total^L^2093-3^Cholesterol^LN||217|mg/dL|100-199|H||N|F|20120910||201404260424|RN
+OBX|2|NM|001172^Triglycerides^L^2571-8^Triglyceride^LN||58|mg/dL|0-149|||N|F|20120910||201404260421|RN
+OBX|3|NM|011817^HDL Cholesterol^L^2085-9^Cholesterol.in HDL^LN||57|mg/dL|>39|||N|F|20020107||201404260429|RN
+NTE|1|L|According to ATP-III Guidelines, HDL-C >59 mg/dL is considered a
+NTE|2|L|negative risk factor for CHD.
+OBX|4|NM|011916^VLDL Cholesterol Cal^L^13458-5^Cholesterol.in VLDL^LN||12|mg/dL|5-40|||N|F|||201404260421|RN
+OBX|5|NM|012054^LDL Cholesterol Calc^L^13457-7^Cholesterol.in LDL^LN||148|mg/dL|0-99|H||N|F|20120910||201404260429|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|6|^LAB|11543650560^LAB|322755^Hepatic Function Panel (7)^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|001073^Protein, Total, Serum^L^2885-2^Protein^LN||6.7|g/dL|6.0-8.5|||N|F|||201404260418|RN
+OBX|2|NM|001081^Albumin, Serum^L^1751-7^Albumin^LN||4.5|g/dL|3.5-5.5|||N|F|19941205||201404260418|RN
+OBX|3|NM|001099^Bilirubin, Total^L^1975-2^Bilirubin^LN||0.6|mg/dL|0.0-1.2|||N|F|20100426||201404260418|RN
+OBX|4|NM|001222^Bilirubin, Direct^L^1968-7^Bilirubin.glucuronidated+Bilirubin.albumin bound^LN||0.16|mg/dL|0.00-0.40|||N|F|||201404260625|RN
+OBX|5|NM|001107^Alkaline Phosphatase, S^L^6768-6^Alkaline phosphatase^LN||55|IU/L|39-117|||N|F|20131104||201404260421|RN
+OBX|6|NM|001123^AST (SGOT)^L^1920-8^Aspartate aminotransferase^LN||35|IU/L|0-40|||N|F|20010125||201404260418|RN
+OBX|7|NM|001545^ALT (SGPT)^L^1742-6^Alanine aminotransferase^LN||24|IU/L|0-44|||N|F|20121029||201404260418|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|7|^LAB|11543650560^LAB|480640^PSA (Reflex To Free) (Serial)^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|010334^Prostate Specific Ag, Serum^L^2857-1^Prostate specific Ag^LN||1.1|ng/mL|0.0-4.0|||N|F|||201404260435|RN
+NTE|1|L|Roche ECLIA methodology.
+NTE|2|L|                                                                     .
+NTE|3|L|According to the American Urological Association, Serum PSA should
+NTE|4|L|decrease and remain at undetectable levels after radical
+NTE|5|L|prostatectomy. The AUA defines biochemical recurrence as an initial
+NTE|6|L|PSA value 0.2 ng/mL or greater followed by a subsequent confirmatory
+NTE|7|L|PSA value 0.2 ng/mL or greater.
+NTE|8|L|Values obtained with different assay methods or kits cannot be used
+NTE|9|L|interchangeably. Results cannot be interpreted as absolute evidence
+NTE|10|L|of the presence or absence of malignant disease.
+OBX|2|TX|480647^Reflex Criteria^L|||||||N|F|20080327||201404251522|RN
+NTE|1|L|The percent free PSA is performed on a reflex basis only when the
+NTE|2|L|total PSA is between 4.0 and 10.0 ng/mL.
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|8|^LAB|11543650560^LAB|001453^Hemoglobin A1c^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|001464^Hemoglobin A1c^L^4548-4^Hemoglobin A1c/Hemoglobin.total^LN||5.1|%|4.8-5.6|||N|F|20100113||201404260533|RN
+NTE|1|L|                                                       .
+NTE|2|L|         Increased risk for diabetes: 5.7 - 6.4
+NTE|3|L|         Diabetes: >6.4
+NTE|4|L|         Glycemic control for adults with diabetes: <7.0
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|9|^LAB|11543650560^LAB|004259^TSH^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|004264^TSH^L^11579-0^Thyrotropin^LN||1.700|uIU/mL|0.450-4.500|||N|F|20100809||201404260320|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|10|^LAB|11543650560^LAB|081950^Vitamin D, 25-Hydroxy^L|||201404251222|||||||201404251522||||||||201404271506|||F
+OBX|1|NM|081953^Vitamin D, 25-Hydroxy^L^1989-3^Calcidiol^LN||22.6|ng/mL|30.0-100.0|L||N|F|20110920||201404260639|RN
+NTE|1|L|Vitamin D deficiency has been defined by the Institute of
+NTE|2|L|Medicine and an Endocrine Society practice guideline as a
+NTE|3|L|level of serum 25-OH vitamin D less than 20 ng/mL (1,2).
+NTE|4|L|The Endocrine Society went on to further define vitamin D
+NTE|5|L|insufficiency as a level between 21 and 29 ng/mL (2).
+NTE|6|L|1. IOM (Institute of Medicine). 2010. Dietary reference
+NTE|7|L|   intakes for calcium and D. Washington DC: The
+NTE|8|L|   National Academies Press.
+NTE|9|L|2. Holick MF, Binkley NC, Bischoff-Ferrari HA, et al.
+NTE|10|L|   Evaluation, treatment, and prevention of vitamin D
+NTE|11|L|   deficiency: an Endocrine Society clinical practice
+NTE|12|L|   guideline. JCEM. 2011 Jul; 96(7):1911-30.
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|11|^LAB|11543650560^LAB|182949^Occult Blood, Fecal, IA^L|||201404251222|||||||201404251522|UC     CD- |||||||201404271506|||F
+OBX|1|ST|182950^Occult Blood, Fecal, IA^L^29771-3^Hemoglobin.gastrointestinal^LN||Negative||Negative|||N|F|||201404271310|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|12|^LAB|11543650560^LAB|001362^Creatine Kinase,Total,Serum^L|||201404251222|||||||201404251522||||||||201404271506||RN|F
+OBX|1|NM|001362^Creatine Kinase,Total,Serum^L^2157-6^Creatine kinase^LN||537|U/L|24-204|HH||N|F|20010305||201404260436|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|13|^LAB|11543650560^LAB|008847^Urine Culture, Routine^L|||201404251222|||||||201404251522|UC     CD- |||||||201404271506||RN|F
+OBX|1|ST|008847^Urine Culture, Routine^L^630-4^Bacteria identified^LN||Final report|||||N|F|20031013||201404262327|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|14|^LAB|11543650560^LAB|997870^Result^L|||201404251222||||G|||201404251522||||||||201404271506|||F|008847|||008847
+OBX|1|ST|997131^Result 1^L^630-4^Bacteria identified^LN||No growth|||||N|F|||201404262327|RN
+ORC|RE|^LAB|11543650560^LAB||||||201404250000|||1710901921^SCHILLER^K^^^^^N
+OBR|15|^LAB|11543650560^LAB|PDFReport1^PDF Report^L|||201404251222|||||||201404250000|UC     CD- |||||||201404271506|||F
+OBX|1|ED|PDFReport1^PDF Report1^L|00|LCLS^Image^PDF^Base64^EMBEDDED DOCUMENT||||||F||||RN
