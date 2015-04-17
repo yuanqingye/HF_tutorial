@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="https://secure.newcropaccounts.com/V7/webservices" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="https://secure.newcropaccounts.com/V7/webservices" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">A web service that performs drug related functions.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="https://secure.newcropaccounts.com/V7/webservices">
+      <s:element name="DrugSearch">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="includeObsolete" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchBrandGeneric" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchRxOTC" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchDrugSupply" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Credentials">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PartnerName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AccountRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AccountId" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SiteId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PatientRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PatientId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PatientInformationRequester">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="UserType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserId" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugSearchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugSearchResult" type="tns:DrugDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugDetailArray" type="tns:ArrayOfDrugDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Result">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Status" type="tns:StatusType" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlResponse" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RowCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Timing" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="StatusType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Unknown" />
+          <s:enumeration value="OK" />
+          <s:enumeration value="Fail" />
+          <s:enumeration value="NotFound" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfDrugDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugDetail" nillable="true" type="tns:DrugDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DataProvider" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugSubID1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugNameID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GenericName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeaClassCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Dosage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DosageForm" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Route" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TherapeuticClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeaGenericNamedCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeaGenericNamedDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeaLegendCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeaLegendDescription" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Touchdate" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugSearchWithFormulary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="healthplanID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="healthplanTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="includeObsolete" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchBrandGeneric" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchRxOTC" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchDrugSupply" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugSearchWithFormularyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugSearchWithFormularyResult" type="tns:DrugFormularyDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugFormularyDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugFormularyDetailArray" type="tns:ArrayOfDrugFormularyDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDrugFormularyDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugFormularyDetail" nillable="true" type="tns:DrugFormularyDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugFormularyDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="drugDetail" type="tns:DrugDetail" />
+          <s:element minOccurs="0" maxOccurs="1" name="formularyCoverage" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugSearchWithFormularyWithFavorites">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="healthplanID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="healthplanTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="includeObsolete" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchBrandGeneric" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchRxOTC" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchDrugSupply" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="locationId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="providerId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugSearchWithFormularyWithFavoritesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugSearchWithFormularyWithFavoritesResult" type="tns:DrugFormularyFavoriteDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugFormularyFavoriteDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugFormularyFavoriteDetail" type="tns:ArrayOfDrugFormularyFavoriteDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDrugFormularyFavoriteDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugFormularyFavoriteDetail" nillable="true" type="tns:DrugFormularyFavoriteDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugFormularyFavoriteDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DataProvider" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugSubID1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugNameID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GenericName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DeaClassCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Dosage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DosageForm" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Route" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TherapeuticClass" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Touchdate" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formularyCoverage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formularyText" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formularySummary" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="formularyMessage" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="favoritesListStatus" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugDrugInteraction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="currentMedications" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="proposedMedications" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugDrugInteractionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugDrugInteractionResult" type="tns:DrugInteractionResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugInteractionResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugInteractionArray" type="tns:ArrayOfDrugInteraction" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDrugInteraction">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugInteraction" nillable="true" type="tns:DrugInteraction" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugInteraction">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="MechanismOfAction" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Discussion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClinicalEffects" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SeverityLevel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PatientManagement" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PredisposingFactors" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="References" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MonographTitle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug1ID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug1Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug2ID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Drug2Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Performance" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugDrugInteractionV2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="currentMedications" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="proposedMedications" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="severityExclusionMask" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugDrugInteractionV2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugDrugInteractionV2Result" type="tns:DrugInteractionResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugAllergyInteraction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="allergies" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="proposedMedications" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugAllergyInteractionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugAllergyInteractionResult" type="tns:DrugAllergyDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugAllergyDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugAllergyDetailArray" type="tns:ArrayOfDrugAllergyDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDrugAllergyDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugAllergyDetail" nillable="true" type="tns:DrugAllergyDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugAllergyDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="InteractionText" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugsByDiagnosis">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="diagnosisList" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="diagnosisListType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugsByDiagnosisResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugsByDiagnosisResult" type="tns:DrugDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugsByDiagnosisWithFormulary">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="healthplanID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="healthplanTypeID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="diagnosisList" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="diagnosisListType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugsByDiagnosisWithFormularyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugsByDiagnosisWithFormularyResult" type="tns:DrugFormularyDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MaintainProviderDrugFavorites">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="locationId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="providerId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actionCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MaintainProviderDrugFavoritesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MaintainProviderDrugFavoritesResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MaintainProviderDrugFavoritesArray">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="locationId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="providerId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugIds" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actionCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MaintainProviderDrugFavoritesArrayResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MaintainProviderDrugFavoritesArrayResult" type="tns:Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugFoodInteraction">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugFoodInteractionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugFoodInteractionResult" type="tns:DrugFoodDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugFoodDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugFoodDetailArray" type="tns:ArrayOfDrugFoodDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDrugFoodDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugFoodDetail" nillable="true" type="tns:DrugFoodDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugFoodDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="DataProvider" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DrugName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SeverityLevel" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Result" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Line1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Line2" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugPackageDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugConcept" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugConceptType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugPackageDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugPackageDetailsResult" type="tns:DrugPackageDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugPackageDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugPackageDetailArray" type="tns:ArrayOfDrugPackageDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDrugPackageDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="DrugPackageDetail" nillable="true" type="tns:DrugPackageDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugPackageDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PackageInfo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PackageType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PackageSize" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ValidateNDCList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="ndcList" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateNDCListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateNDCListResult" type="tns:NDCValidationDetailResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="NDCValidationDetailResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="ndcValidationDetailArray" type="tns:ArrayOfNDCValidationDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfNDCValidationDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="NDCValidationDetail" nillable="true" type="tns:NDCValidationDetail" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="NDCValidationDetail">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ndc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ndcStatus" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DrugMonograph">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="credentials" type="tns:Credentials" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountRequest" type="tns:AccountRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientRequest" type="tns:PatientRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="patientInformationRequester" type="tns:PatientInformationRequester" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugConcept" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="drugStandardType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="monographFormat" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DrugMonographResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DrugMonographResult" type="tns:DrugMonographResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="DrugMonographResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="result" type="tns:Result" />
+          <s:element minOccurs="0" maxOccurs="1" name="drugMonograph" type="tns:DrugMonograph" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DrugMonograph">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="monograph" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="DrugSearchSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugSearch" />
+  </wsdl:message>
+  <wsdl:message name="DrugSearchSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugSearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugSearchWithFormularySoapIn">
+    <wsdl:part name="parameters" element="tns:DrugSearchWithFormulary" />
+  </wsdl:message>
+  <wsdl:message name="DrugSearchWithFormularySoapOut">
+    <wsdl:part name="parameters" element="tns:DrugSearchWithFormularyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugSearchWithFormularyWithFavoritesSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugSearchWithFormularyWithFavorites" />
+  </wsdl:message>
+  <wsdl:message name="DrugSearchWithFormularyWithFavoritesSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugSearchWithFormularyWithFavoritesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugDrugInteractionSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugDrugInteraction" />
+  </wsdl:message>
+  <wsdl:message name="DrugDrugInteractionSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugDrugInteractionResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugDrugInteractionV2SoapIn">
+    <wsdl:part name="parameters" element="tns:DrugDrugInteractionV2" />
+  </wsdl:message>
+  <wsdl:message name="DrugDrugInteractionV2SoapOut">
+    <wsdl:part name="parameters" element="tns:DrugDrugInteractionV2Response" />
+  </wsdl:message>
+  <wsdl:message name="DrugAllergyInteractionSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugAllergyInteraction" />
+  </wsdl:message>
+  <wsdl:message name="DrugAllergyInteractionSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugAllergyInteractionResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugsByDiagnosisSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugsByDiagnosis" />
+  </wsdl:message>
+  <wsdl:message name="DrugsByDiagnosisSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugsByDiagnosisResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugsByDiagnosisWithFormularySoapIn">
+    <wsdl:part name="parameters" element="tns:DrugsByDiagnosisWithFormulary" />
+  </wsdl:message>
+  <wsdl:message name="DrugsByDiagnosisWithFormularySoapOut">
+    <wsdl:part name="parameters" element="tns:DrugsByDiagnosisWithFormularyResponse" />
+  </wsdl:message>
+  <wsdl:message name="MaintainProviderDrugFavoritesSoapIn">
+    <wsdl:part name="parameters" element="tns:MaintainProviderDrugFavorites" />
+  </wsdl:message>
+  <wsdl:message name="MaintainProviderDrugFavoritesSoapOut">
+    <wsdl:part name="parameters" element="tns:MaintainProviderDrugFavoritesResponse" />
+  </wsdl:message>
+  <wsdl:message name="MaintainProviderDrugFavoritesArraySoapIn">
+    <wsdl:part name="parameters" element="tns:MaintainProviderDrugFavoritesArray" />
+  </wsdl:message>
+  <wsdl:message name="MaintainProviderDrugFavoritesArraySoapOut">
+    <wsdl:part name="parameters" element="tns:MaintainProviderDrugFavoritesArrayResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugFoodInteractionSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugFoodInteraction" />
+  </wsdl:message>
+  <wsdl:message name="DrugFoodInteractionSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugFoodInteractionResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugPackageDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugPackageDetails" />
+  </wsdl:message>
+  <wsdl:message name="DrugPackageDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugPackageDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateNDCListSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateNDCList" />
+  </wsdl:message>
+  <wsdl:message name="ValidateNDCListSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateNDCListResponse" />
+  </wsdl:message>
+  <wsdl:message name="DrugMonographSoapIn">
+    <wsdl:part name="parameters" element="tns:DrugMonograph" />
+  </wsdl:message>
+  <wsdl:message name="DrugMonographSoapOut">
+    <wsdl:part name="parameters" element="tns:DrugMonographResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DrugSoap">
+    <wsdl:operation name="DrugSearch">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Searches for drug information based on the name of the drug.</wsdl:documentation>
+      <wsdl:input message="tns:DrugSearchSoapIn" />
+      <wsdl:output message="tns:DrugSearchSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugSearchWithFormulary">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Searches for drug information based on the name of the drug.  Also returns formulary coverage information.</wsdl:documentation>
+      <wsdl:input message="tns:DrugSearchWithFormularySoapIn" />
+      <wsdl:output message="tns:DrugSearchWithFormularySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugSearchWithFormularyWithFavorites">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Searches for drug information based on the name of the drug.  Also returns formulary coverage information.</wsdl:documentation>
+      <wsdl:input message="tns:DrugSearchWithFormularyWithFavoritesSoapIn" />
+      <wsdl:output message="tns:DrugSearchWithFormularyWithFavoritesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugDrugInteraction">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Searches for information regarding drug/drug interactions based on current and proposed medications.</wsdl:documentation>
+      <wsdl:input message="tns:DrugDrugInteractionSoapIn" />
+      <wsdl:output message="tns:DrugDrugInteractionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugDrugInteractionV2">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Searches for information regarding drug/drug interactions based on current and proposed medications.</wsdl:documentation>
+      <wsdl:input message="tns:DrugDrugInteractionV2SoapIn" />
+      <wsdl:output message="tns:DrugDrugInteractionV2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugAllergyInteraction">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Searches for information regarding drug/allergy interactions based on current and proposed medications.</wsdl:documentation>
+      <wsdl:input message="tns:DrugAllergyInteractionSoapIn" />
+      <wsdl:output message="tns:DrugAllergyInteractionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugsByDiagnosis">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves a list of drugs for a diagnosis list</wsdl:documentation>
+      <wsdl:input message="tns:DrugsByDiagnosisSoapIn" />
+      <wsdl:output message="tns:DrugsByDiagnosisSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugsByDiagnosisWithFormulary">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves a list of drugs for a diagnosis list with formulary coverage</wsdl:documentation>
+      <wsdl:input message="tns:DrugsByDiagnosisWithFormularySoapIn" />
+      <wsdl:output message="tns:DrugsByDiagnosisWithFormularySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MaintainProviderDrugFavorites">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add/deletes to a provider's drug favorites list.</wsdl:documentation>
+      <wsdl:input message="tns:MaintainProviderDrugFavoritesSoapIn" />
+      <wsdl:output message="tns:MaintainProviderDrugFavoritesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MaintainProviderDrugFavoritesArray">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Add/deletes to a provider's drug favorites list.</wsdl:documentation>
+      <wsdl:input message="tns:MaintainProviderDrugFavoritesArraySoapIn" />
+      <wsdl:output message="tns:MaintainProviderDrugFavoritesArraySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugFoodInteraction">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns a list of food interactions for a given drug concept.</wsdl:documentation>
+      <wsdl:input message="tns:DrugFoodInteractionSoapIn" />
+      <wsdl:output message="tns:DrugFoodInteractionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugPackageDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns drug packaging for a given drug concept.</wsdl:documentation>
+      <wsdl:input message="tns:DrugPackageDetailsSoapIn" />
+      <wsdl:output message="tns:DrugPackageDetailsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateNDCList">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns validation information for a given list of comma separated NDCs.</wsdl:documentation>
+      <wsdl:input message="tns:ValidateNDCListSoapIn" />
+      <wsdl:output message="tns:ValidateNDCListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DrugMonograph">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">SUPERSEDED - Refer to the NewCrop Drug web services test and description web page for the new method of obtaining drug monographs.</wsdl:documentation>
+      <wsdl:input message="tns:DrugMonographSoapIn" />
+      <wsdl:output message="tns:DrugMonographSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="DrugHttpPost" />
+  <wsdl:binding name="DrugSoap" type="tns:DrugSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DrugSearch">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugSearch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugSearchWithFormulary">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugSearchWithFormulary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugSearchWithFormularyWithFavorites">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugSearchWithFormularyWithFavorites" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugDrugInteraction">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugDrugInteraction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugDrugInteractionV2">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugDrugInteractionV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugAllergyInteraction">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugAllergyInteraction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugsByDiagnosis">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugsByDiagnosis" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugsByDiagnosisWithFormulary">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugsByDiagnosisWithFormulary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MaintainProviderDrugFavorites">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/MaintainProviderDrugFavorites" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MaintainProviderDrugFavoritesArray">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/MaintainProviderDrugFavoritesArray" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugFoodInteraction">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugFoodInteraction" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugPackageDetails">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugPackageDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateNDCList">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/ValidateNDCList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugMonograph">
+      <soap:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugMonograph" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DrugSoap12" type="tns:DrugSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DrugSearch">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugSearch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugSearchWithFormulary">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugSearchWithFormulary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugSearchWithFormularyWithFavorites">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugSearchWithFormularyWithFavorites" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugDrugInteraction">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugDrugInteraction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugDrugInteractionV2">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugDrugInteractionV2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugAllergyInteraction">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugAllergyInteraction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugsByDiagnosis">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugsByDiagnosis" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugsByDiagnosisWithFormulary">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugsByDiagnosisWithFormulary" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MaintainProviderDrugFavorites">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/MaintainProviderDrugFavorites" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MaintainProviderDrugFavoritesArray">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/MaintainProviderDrugFavoritesArray" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugFoodInteraction">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugFoodInteraction" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugPackageDetails">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugPackageDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateNDCList">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/ValidateNDCList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DrugMonograph">
+      <soap12:operation soapAction="https://secure.newcropaccounts.com/V7/webservices/DrugMonograph" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DrugHttpPost" type="tns:DrugHttpPost">
+    <http:binding verb="POST" />
+  </wsdl:binding>
+  <wsdl:service name="Drug">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">A web service that performs drug related functions.</wsdl:documentation>
+    <wsdl:port name="DrugSoap" binding="tns:DrugSoap">
+      <soap:address location="http://preproduction.newcropaccounts.com/v7/WebServices/Drug.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DrugSoap12" binding="tns:DrugSoap12">
+      <soap12:address location="http://preproduction.newcropaccounts.com/v7/WebServices/Drug.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DrugHttpPost" binding="tns:DrugHttpPost">
+      <http:address location="http://preproduction.newcropaccounts.com/v7/WebServices/Drug.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

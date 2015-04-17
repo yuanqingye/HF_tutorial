@@ -161,3 +161,6 @@ HFLogger.getLogger().info("SQL := " + SQLTEXT);
 			cstmt.execute();
 			t.stop();
 			HFLogger.getLogger().info(t.getFormatTime());
+
+
+values.add(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
